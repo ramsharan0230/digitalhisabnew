@@ -18,10 +18,6 @@ class CreateInvoicePaymentsTable extends Migration
             $table->unsignedBigInteger('invoice_id');
             $table->foreign('invoice_id')->references('id')->on('invoices')->onDelete('cascade');
             $table->string('paid_amount')->nullable();
-            $table->string('total_amount')->nullable();
-            $table->string('paid_date')->nullable();
-            $table->string('rekarks')->nullable();
-            $table->string('paid_date')->nullable();
             $table->timestamps();
         });
     }
