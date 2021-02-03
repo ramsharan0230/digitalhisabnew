@@ -20,8 +20,6 @@ class CreateInvoicePaymentsTable extends Migration
             $table->string('paid_amount')->nullable();
             $table->string('total_amount')->nullable();
             $table->string('paid_date')->nullable();
-            $table->string('rekarks')->nullable();
-            $table->string('paid_date')->nullable();
             $table->timestamps();
         });
     }
