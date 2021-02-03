@@ -173,7 +173,6 @@
                 @foreach($details as $detail)
                   <tr id="{{ $detail->id }}">
 
-                     
                       <td>{{$i}}</td>
                       <td>{{$detail->client_name}}</td>
                       <td>{{$detail->email}}</td>
@@ -308,6 +307,7 @@
     $(document).ready(function(){
       $(document).on('change','.collectionWithVat',function(e){
         e.preventDefault();
+        debugger
         var fieldName = $(this).attr('name'),
                 field = $('input[name=' + fieldName + ']'),
                 optionValue = $(this).val();

@@ -143,32 +143,29 @@
         <table style="width:100%; border:1px solid #000;">
             <thead style="background:#343483;">
                 <tr style="background:#343483;">
-                    <th style="background-color:#343483;padding:7px;color:#fff;font-size:14px;font-weight:600;">SN</th>
+                    <th style="background-color:#343483;padding:7px;color:#fff;font-size:14px;font-weight:600;">SN.</th>
                     <th style="background-color:#343483;padding:7px;color:#fff;font-size:14px;font-weight:600;">Remark</th>
                     <th style="background-color:#343483;padding:7px;color:#fff;font-size:14px;font-weight:600;">P. Type</th>
                     <th style="background-color:#343483;padding:7px;color:#fff;font-size:14px;font-weight:600;">Date</th>
                     <th style="background-color:#343483;padding:7px;color:#fff;font-size:14px;font-weight:600;">Paid</th>
-                    <th style="background-color:#343483;padding:7px;color:#fff;font-size:14px;font-weight:600;">Due</th>
            
                 </tr>
             </thead>
             <tbody>
+                @forelse($data->invoicePayments as $key =>$payment)
+                <?php //dd($payment) ?>
                 <tr style="border:1px;border-color: #ccc;">
-                    <td style="padding:7px;font-size:14px;text-align:center;">1</td>
+                    <td style="padding:7px;font-size:14px;text-align:center;">{{ $key+1 }}</td>
                     <td style="padding:7px;font-size:14px;text-align:center;">Initial Payment</td>
                     <td style="padding:7px;font-size:14px;text-align:center;">Cheque</td>
-                    <td style="padding:7px;font-size:14px;text-align:center;">2020-06-15</td>
-                    <td style="padding:7px;font-size:14px;text-align:center;">200000</td>
-                    <td style="padding:7px;font-size:14px;text-align:center;">1000</td>
+                    <td style="padding:7px;font-size:14px;text-align:center;">{{ $payment->paid_date }}</td>
+                    <td style="padding:7px;font-size:14px;text-align:center;">{{ $payment->paid_amount }}</td>
                 </tr>
-                <tr style="border-bottom:1px solid #ccc;">
-                    <td style="padding:7px;font-size:14px;text-align:center;">2</td>
-                    <td style="padding:7px;font-size:14px;text-align:center;">Initial Payment</td>
-                    <td style="padding:7px;font-size:14px;text-align:center;">Cash</td>
-                    <td style="padding:7px;font-size:14px;text-align:center;">2020-06-15</td>
-                    <td style="padding:7px;font-size:14px;text-align:center;">200000</td>
-                    <td style="padding:7px;font-size:14px;text-align:center;">1000</td>
+                @empty
+                <tr style="border:1px;border-color: #ccc;">
+                    <td colspan="6" style="padding:7px;font-size:14px;text-align:center;">No Payment Found!</td>
                 </tr>
+                @endforelse
                
             </tbody>
         </table>
@@ -179,35 +176,25 @@
             </div>
             <div style="display:flex;">
                 <p style="font-size:14px;margin:0;width:90px;">Due Amount :</p>
-                <span style="font-size:14px;">Rs.2000</span>
+                <span style="font-size:14px;">Rs. {{$data->grand_total-$data->collected_amount}}</span>
             </div>
         </div>
     </section>
  
     <footer>
         <table style="text-align: right; width: 100%;">
-
             <tr>
-
-                    <td >
-                        <span style=" color: red; float: left;"><strong>Note :</strong> This is not tax invoice</span>
-                 </td>
-
-      <td>
-
- <h2>{{$dashboard_setting->organization_name}}</h2>
- <p> <a href="" target="_blank" style="text-decoration: none; color: darkblue;">{{$dashboard_setting->website}}</a></p>
- <p> {{$dashboard_setting->address}}</p>
- <p>  {{$dashboard_setting->email}}</p>
- <p> {{$dashboard_setting->phone_number}}</p>
-
-
-      </td>
-
-</tr>
-
-
-
+                <td >
+                    <span style=" color: red; float: left;"><strong>Note :</strong> This is not tax invoice</span>
+                </td>
+                <td>
+                    <h2>{{$dashboard_setting->organization_name}}</h2>
+                    <p> <a href="" target="_blank" style="text-decoration: none; color: darkblue;">{{$dashboard_setting->website}}</a></p>
+                    <p> {{$dashboard_setting->address}}</p>
+                    <p>  {{$dashboard_setting->email}}</p>
+                    <p> {{$dashboard_setting->phone_number}}</p>
+                </td>
+            </tr>
         </table>
     </footer>
 </div>

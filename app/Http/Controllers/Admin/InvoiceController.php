@@ -57,10 +57,8 @@ class InvoiceController extends Controller
     public function index()
     {
 //       $todaysDateInGregorian = Carbon::now();
-// $currentDateInNepal = $todaysDateInGregorian->addYears(56)->addMonths(8)->addDays(15);
-// dd($currentDateInNepal);
-
-
+    // $currentDateInNepal = $todaysDateInGregorian->addYears(56)->addMonths(8)->addDays(15);
+    // dd($currentDateInNepal);
         $details=$this->invoice->orderBy('created_at','desc')->get();
         return view('admin.invoice.list',compact('details'));
     }
@@ -448,7 +446,7 @@ class InvoiceController extends Controller
         }
     }
     public function payCollectedAmount(Request $request){
-        //dd($request->all());
+        // dd($request->all());
         $message=[
             'tds.required_if'=>'please fill tds amount',
             'transfer_bank.required_if'=>'Please select bank if transfer type is bank'
