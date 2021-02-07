@@ -506,6 +506,8 @@ class InvoiceController extends Controller
             $data['invoice_id']=$invoice->id;
             $data['paid_amount']=$request->amount;
             $data['total_amount']=$invoice->grand_total;
+            $data['remarks']=$request->particular;
+            $data['payment_type']=$request->payment_type;
             $nepali_date=$this->calendar->eng_to_nep(date('Y'),date('m'),date('d'));
             //dd($nepali_date);
             //$nepali_date=$this->calendar->get_nepali_date(date('Y'),date('m'),date('d'));
