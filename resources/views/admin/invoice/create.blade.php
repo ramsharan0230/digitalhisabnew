@@ -114,12 +114,24 @@
                         </div>
                         </div>
                         <div class="row">
-                       <div class="col-lg-6">
-                            <div class="form-group invoice1 vat-wrapp">
-                            <label for="vatShow"><input type="checkbox" id="vatShow" name="vatShow"  > Vat</label>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="description">Descriptions</label>
+                                    <input type="text" class="form-control" placeholder="Fee Descriptions..." id="description" name="fee_description[]">
+                                </div>
                             </div>
-                            <button class="add btn btn-warning">Add Fee Description</button>
-                       </div>
+                            <div class="col-md-5">
+                                <div class="form-group">
+                                    <label for="amount">Amount</label>
+                                    <input type="text" class="form-control qty1" id="amount" name="fee_amount[]" placeholder="Amount...">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group invoice1 vat-wrapp">
+                                    <label for="vatShow"><input type="checkbox" id="vatShow" name="vatShow"  > Vat</label>
+                                </div>
+                                <button class="add btn btn-warning">Add Fee Description</button>
+                            </div>
                        </div>
                         
                         

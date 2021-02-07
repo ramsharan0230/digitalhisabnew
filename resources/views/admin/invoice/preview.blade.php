@@ -153,8 +153,9 @@
                 </tr>
             </thead>
             <tbody>
+                <?php $total_payments = 0 ?>
                 @forelse($data->invoicePayments as $key =>$payment)
-                <?php //dd($payment) ?>
+                <?php $total_payments +=$payment->paid_amount ?>
                 <tr style="border:1px;border-color: #ccc;">
                     <td style="padding:7px;font-size:14px;text-align:center;">{{ $key+1 }}.</td>
                     <td style="padding:7px;font-size:14px;text-align:center;">{{ $payment->remarks }}</td>
@@ -169,6 +170,16 @@
                 @endforelse
                
             </tbody>
+            <tfoot>
+                <th>
+                    <tr>
+                        <td colspan="4">
+                            <span class="float-right">Total</span>
+                        </td>
+                        <td>Rs. {{ $total_payments }}</td>
+                    </tr>
+                </th>
+            </tfoot>
         </table>
         <div style="display:flex;justify-content:space-between;padding:10px 0;">
             <div style="display:flex;">
