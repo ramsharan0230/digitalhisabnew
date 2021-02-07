@@ -2,7 +2,7 @@
 	{{csrf_field()}}
     <div class="form-group">
   		<input type="hidden" name="purchase_id" value="{{$purchase->id}}">
-      	<label>Total Amount</label>
+      	<label>Total Amountsdfasdfasfdasdf</label>
       	<input type="text" name="full_amount" class="form-control full_amount" value="{{$purchase->total}}" readonly="">
     </div>	
   	<div class="form-group">

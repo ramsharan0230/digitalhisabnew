@@ -22,6 +22,7 @@
     </section>
     <!-- customer detail table -->
     <section>
+        
         <table style="width: 100%; font-size: 15px; margin-top: 20px;">
             <tr>
                 <th style="text-align: left; font-weight: 500;"><span style="font-weight: 700;">Name : </span> {{$data->client_name}}</th>
@@ -33,7 +34,7 @@
             </tr>
             <tr>
                 <th style="text-align: left;font-weight: 500; "> <span style="font-weight: 700;">Contact : </span> {{$data->contact}}</th>
-                <th style="text-align: right; font-weight: 500;"><span style="font-weight: 700;">Due Amount: </span> Rs. {{$data->grand_total}}</th>
+                <th style="text-align: right; font-weight: 500;"><span style="font-weight: 700;">Due Amount: </span> Rs. {{$data->grand_total-$data->collected_amount}}</th>
             </tr>
         </table>
     </section>
@@ -152,14 +153,15 @@
                 </tr>
             </thead>
             <tbody>
+                <?php $total_payments = 0 ?>
                 @forelse($data->invoicePayments as $key =>$payment)
-                <?php //dd($payment) ?>
+                <?php $total_payments +=$payment->paid_amount ?>
                 <tr style="border:1px;border-color: #ccc;">
-                    <td style="padding:7px;font-size:14px;text-align:center;">{{ $key+1 }}</td>
-                    <td style="padding:7px;font-size:14px;text-align:center;">Initial Payment</td>
-                    <td style="padding:7px;font-size:14px;text-align:center;">Cheque</td>
+                    <td style="padding:7px;font-size:14px;text-align:center;">{{ $key+1 }}.</td>
+                    <td style="padding:7px;font-size:14px;text-align:center;">{{ $payment->remarks }}</td>
+                    <td style="padding:7px;font-size:14px;text-align:center;">{{ $payment->payment_type }}</td>
                     <td style="padding:7px;font-size:14px;text-align:center;">{{ $payment->paid_date }}</td>
-                    <td style="padding:7px;font-size:14px;text-align:center;">{{ $payment->paid_amount }}</td>
+                    <td style="padding:7px;font-size:14px;text-align:center;">Rs. {{ $payment->paid_amount }}</td>
                 </tr>
                 @empty
                 <tr style="border:1px;border-color: #ccc;">
@@ -168,6 +170,16 @@
                 @endforelse
                
             </tbody>
+            <tfoot>
+                <th>
+                    <tr>
+                        <td colspan="4">
+                            <span class="float-right">Total</span>
+                        </td>
+                        <td>Rs. {{ $total_payments }}</td>
+                    </tr>
+                </th>
+            </tfoot>
         </table>
         <div style="display:flex;justify-content:space-between;padding:10px 0;">
             <div style="display:flex;">

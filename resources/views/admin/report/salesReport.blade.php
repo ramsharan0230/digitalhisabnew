@@ -166,12 +166,13 @@
                 <tbody id="sortable">
                     @php($i=1)
                     @foreach($details as $detail)
+                    <?php //dd($detail->invoice->collected_amount) ?>
                     <tr id="{{ $detail->id }}">
                       <td>{{$i}}</td>
                       <td>{{$detail->vat_date}}</td>
                       <td>{{$detail->sales_to}}</td>
                       <td>{{$detail->total}}</td>
-                      <td>{{$detail->invoice->collected_amount=$detail->invoice->grand_total?'collected':'not complete'}}</td>
+                      <td><button class="{{ $detail->invoice->collected_amount == $detail->invoice->grand_total?'btn btn-primary btn-sm':'btn btn-warning btn-sm' }}">{{$detail->invoice->collected_amount == $detail->invoice->grand_total?'Close':'Open'}}</button></td>
                       
                       <td><a class="btn btn-info edit salesView" href="{{route('reportInvoiceView',$detail->invoice->id)}}" title="Sales View" data-id="{{$detail->id}}" target="_blank"><span class="fa fa-eye"></span></a></td>
                     </tr>
