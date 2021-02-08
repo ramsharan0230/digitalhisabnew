@@ -120,6 +120,7 @@
                 <tbody id="sortable">
                 @php($i=1)
                 @foreach($details as $detail)
+                <?php //dd($detail) ?>
                   <tr id="{{ $detail->id }}">
                       <td>{{$i}}</td>
                       <td>{{$detail->client_name}}</td>

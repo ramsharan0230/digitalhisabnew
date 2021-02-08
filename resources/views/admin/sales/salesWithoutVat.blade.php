@@ -123,8 +123,9 @@
                       <td>{{$detail->client_name}}</td>
                       <td>{{$detail->contact}}</td>
                       <td>{{$detail->nepali_date}}</td>
-                      <td>{{$detail->email}}</td>
+                      <td>{{$detail->email}} </td>
                       <td>{{$detail->grand_total}}</td>
+                      <?php var_dump(\DB::table('sales')->where('invoice_id', $detail->id)->first()) ?>
                   </tr>
                   @php($i++)
                   @endforeach

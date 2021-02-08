@@ -117,12 +117,14 @@
                       <th>Due</th>
                       <th>Date</th>
                       <th>For</th>
+                      <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody id="sortable">
                 @php($i=1)
                 @foreach($details as $detail)
                   <tr id="{{ $detail->id }}">
+                    <?php //dd($detail) ?>
                       <td>{{$i}}</td>
                       <td>{{$detail->purchased_from}}</td>
                       <td>{{$detail->total}}</td>
@@ -130,7 +132,17 @@
                       <td>{{$detail->total-$detail->total_amount_of_purchase_amount_paid}}</td>
                       <td>{{$detail->vat_date}}</td>
                       <td>{{$detail->purchased_item}}</td>
-                      
+                      <td>
+                        <div class="form-group" id="select{{$detail->id}}">
+                          <select class="form-control purchasePayment">
+                            <option disabled="true" selected="true">Make Payment</option>
+                            <option value="partial" data-id="{{$detail->id}}">Partial</option>
+                            @if($detail->collected_type!='partial')
+                            <option value="full" data-id="{{$detail->id}}">Full</option>
+                            @endif
+                          </select>
+                        </div>
+                      </td>
                   </tr>
                   @php($i++)
                   @endforeach
@@ -141,6 +153,7 @@
     </div>
 </div>
 </div>
+@include('admin.purchasePayment.include.modal')
 @endsection
 @push('script')
   <!-- DataTables -->
@@ -164,6 +177,62 @@
       dateFormat: "%y-%m-%d",
       closeOnDateSelect: true,
       // minDate: formatedNepaliDate
+  });
+
+  $(document).ready(function(){
+    $(document).on('change','.purchasePayment',function(e){
+      e.preventDefault();
+      
+      
+      if($(this).val()=='partial'){
+        
+        id=$(this).find(':selected').data('id');
+        $.ajax({
+          method:"post",
+          url:"{{route('partialPurchasePayment')}}",
+          data:{"_token": "{{ csrf_token() }}", id:id},
+          success:function(data){
+            console.log(data);
+            if(data.message=='success'){
+              $('#myModal .modal-body').html(data.html);
+              $('#myModal').modal('show').on('hide', function() {
+                $('#new_passenger').modal('hide')
+                });
+              $('.purchasePayment').prop('selectedIndex',0);
+            }
+            
+          }
+        });
+      }else{
+        id=$(this).find(':selected').data('id');
+        $.ajax({
+          method:"post",
+          url:"{{route('fullPurchasePayment')}}",
+          data:{"_token": "{{ csrf_token() }}", id:id},
+          success:function(data){
+            console.log(data.html);
+            if(data.message=='success'){
+              $('#myModal .modal-body').html(data.html);
+              $('#myModal').modal('show').on('hide', function() {
+                $('#new_passenger').modal('hide')
+              });
+              $('.collectionWithVat').prop('selectedIndex',0);
+              //$('#select'+id).addClass('hidden');
+            }
+          }
+        });
+      }
+
+
+      $(document).on('keyup','.amount',function(){
+        remaining_amount=$('.remaining_amount').val();
+        if(parseInt(remaining_amount)>=parseInt($(this).val())){
+          $('.submitButton').removeClass('hidden');
+        }else{
+          $('.submitButton').addClass('hidden');
+        }
+      });
+    });
   });
    
 </script>

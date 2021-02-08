@@ -191,7 +191,6 @@ table#example1 {
                 <tr>
                   <th>S.N.</th>
                   <th>Date</th>
-                  
                   <th>Purchased From</th>
                   <th>Bill No</th>
                   <th>Date</th>
@@ -199,12 +198,12 @@ table#example1 {
                   <th>Vat Paid</th>
                   <th>Total</th>
                   <th>Round Total(VAT)</th>
-                  <th>Action</th>
                 </tr>
               </thead>
               <tbody id="sortable">
                 @php($i=1)
                 @foreach($details as $detail)
+                <?php //dd($detail) ?>
                 <tr id="{{ $detail->id }}">
                   <td>{{$i}}</td>
                   <td>{{$detail->purchased_from}}</td>
