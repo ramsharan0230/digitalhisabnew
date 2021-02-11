@@ -44,6 +44,7 @@ class ReportController extends Controller
 	}
     public function salesReport(){
     	$details = $this->sales->orderBy('created_at','desc')->get();
+        // dd($details);
     	return view('admin.report.salesReport',compact('details'));
     }
     public function salesSearchByMonth(Request $request){

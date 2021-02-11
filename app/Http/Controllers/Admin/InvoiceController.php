@@ -82,7 +82,7 @@ class InvoiceController extends Controller
      */
     public function store(Request $request)
     {
-       //dd($request->all());
+    //    dd($request->all());
         $message=['client_id.required'=>'Client name is required'];
         $this->validate($request,[
             'email'=>'required|email',
@@ -99,7 +99,7 @@ class InvoiceController extends Controller
         try{
             DB::beginTransaction();
             $client = $this->client->find($request->client_id);
-            $data=$request->except('fee_description','fee_amount');
+            $data=$request->except('fee_description','fee_amount', 'vat_pan', 'bill_no');
             $thumbPath = public_path('images/thumbnail/');
             $data['client_name']=$client->name;
             $data['date']=Carbon::now();
@@ -141,8 +141,17 @@ class InvoiceController extends Controller
             // $data['nepali_date']=$request->date;
             //dd($request->all());
             $id=$this->invoice->create($data);
+
+
             if($request->fee_amount){
                 $this->saveFeeDetail($request->fee_description,$request->fee_amount,$id);
+            }
+            $invoiceRecentlyCreated = DB::table('invoices')->where('id', $id)->first();
+            //  dd($invoiceRecentlyCreated);
+            if($invoiceRecentlyCreated->vat !="0" ){
+                $newSales = DB::table('sales')->insert(['vat_pan'=>$request->vat_pan?$request->vat_pan:'', 'sales_to'=>$invoiceRecentlyCreated->client_name, 'taxable_amount'=>$invoiceRecentlyCreated->total, 'vat_paid'=>$invoiceRecentlyCreated->vat, 'invoice_id'=>$id, 'type'=>'sales', 'particular'=>$request->fee_description[0]?$request->fee_description[0]:'', 'vat_date'=>$invoiceRecentlyCreated->nepali_date]);
+            }else{
+                // $newSales = DB::table('invoices')->insert(['sales_to'=>$invoiceRecentlyCreated->client_name, 'invoice_id'=>$id, 'type'=>'sales', 'particular'=>'asdf', 'vat_date'=>$invoiceRecentlyCreated->nepali_date]);
             }
             DB::commit();
             
@@ -167,7 +176,8 @@ class InvoiceController extends Controller
     public function show($id)
     {
         $detail=$this->invoice->findOrFail($id);
-        return view('admin.invoice.vatDetail',compact('detail'));
+        $sales = $this->sales->where('invoice_id', $id)->first();
+        return view('admin.invoice.vatDetail',compact('detail', 'sales'));
     }
 
     /**
@@ -178,7 +188,6 @@ class InvoiceController extends Controller
      */
     public function edit($id)
     {
-
         $detail=$this->invoice->find($id);
         $datas=$detail->invoiceDetail;
         $clients = $this->client->orderBy('created_at','desc')->get();
@@ -196,7 +205,6 @@ class InvoiceController extends Controller
     {
         $message=['client_id.required'=>'Client name is required'];
         $this->validate($request,[
-            
             'email'=>'required|email',
             'client_address'=>'required|string',
             "fee_description"    => "required|array",
@@ -373,7 +381,9 @@ class InvoiceController extends Controller
             //return response()->json(['message'=>'error']);
         }
     }
-    public function saveVatDetail(Request $request,$id){
+    public function saveVatDetail(Request $request, $id){
+        // dd($request->all());
+
         try{
             $message=[
                 'vat_pan.required'=>'vat or pan number is required'
@@ -405,16 +415,15 @@ class InvoiceController extends Controller
             // $value['vat_date']=$todaysNepaliDate;
             $value['vat_date']=$request->date;
 
-            $sales = $this->sales->create($value);
-            $invoice->sales_id = $sales->id;
-            
-            
+            $sales = $this->sales->where('id', $request->sales_id)->update($value);
+            // dd($sales);
+            $invoice->sales_id = $request->sales_id;
             
             $vat=$this->vat->create($value);
             $invoice->vat_id=$vat->id;
 
             $invoice->save();
-            return redirect()->route('invoice.index')->with('message','Vat detail added successfully');
+            return redirect()->route('invoice.index')->with('message','Vat detail added successfully!');
         }catch(\Exception $e){
             DB::rollback();
              //throw $e;
@@ -544,7 +553,6 @@ class InvoiceController extends Controller
             }
             // if($request->tds){
             //     $data['amount']+=$request->tds;
-
             // }
             $data['invoice_id']=$invoice->id;
             $received = $this->received->create($data);

@@ -148,46 +148,48 @@
                            
                         </div>
                         <div class="row vat hidden">
-                             <div class="col-md-6">
-                                <label>Vat</label>
-                            </div>
-                            <div class="col-md-5">
+                            <div class="col-sm-4">
                                 <div class="form-group">
+                                    <label for="vat">Vat</label>
                                     <input type="text" class="form-control vattotal" value="" readonly name="vat" id="vat" />
                                 </div>
-                            </div>  
-                        </div>
-                        <div class="row total hidden">
-                             <div class="col-md-6">
-                                <label>Total</label>
                             </div>
-                            <div class="col-md-5">
+                            <div class="col-sm-4">
                                 <div class="form-group">
+                                    <label>Total</label>
                                     <input type="number" class="form-control total" value="" readonly name="total" id="total" />
-                                </div>
-                            </div>  
-                        </div>
-                        <div class="row grand_total hidden">
-                             <div class="col-md-6">
-                                <label>Grand Total</label>
+                                </div> 
                             </div>
-                            <div class="col-md-5">
+                            <div class="col-sm-4">
                                 <div class="form-group">
+                                    <label>Grand Total</label>
                                     <input type="text" class="form-control grand_total_value" value=""  name="grand_total" id="grand_total" />
                                 </div>
                             </div>  
                         </div>
-                       
-                        <div class="row">
-                            <div class="col-md-6">
-                                
+                        <div class="total hidden">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="vat_pan">VAT/PAN</label>
+                                        <input type="text" class="form-control" placeholder="Enter your VAT/PAN " name="vat_pan" id="vat_pan" />
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="bill_no">Bill Number</label>
+                                        <input type="text" class="form-control" placeholder="Enter your Bill Number... " name="bill_no" id="bill_no" />
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Amount In Words</label>
+                                        <input type="text" name="words" class="form-control" placeholder="Amount in word...">
+                                    </div>
+                                </div>
                             </div>
-                           
                         </div>
-                        <div class="form-group">
-                            <label>Amount In Words</label>
-                            <input type="text" name="words" class="form-control">
-                        </div>
+                        
                         <div class="form-group">
                             <input type="submit" name="submit" class="btn btn-success" value="submit">
                         </div>

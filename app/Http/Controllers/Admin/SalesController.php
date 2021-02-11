@@ -25,6 +25,7 @@ class SalesController extends Controller
      */
     public function index()
     {
+        // dd($this->sales->orderBy('created_at', 'desc')->get());
         $details = $this->sales->orderBy('created_at','desc')->get();
         return view('admin.sales.list',compact('details'));
     }
