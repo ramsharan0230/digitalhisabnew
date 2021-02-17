@@ -2,17 +2,18 @@
 
 namespace App\Exports;
 
+use App\Models\AnnualBook;
+use App\Models\Daybook;
 use Maatwebsite\Excel\Concerns\FromArray;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
-use App\Models\Daybook;
-use App\Models\Client;
 
-class DaybookExport implements FromArray,ShouldAutoSize, WithHeadings
+class AnnualBookExport implements FromArray,ShouldAutoSize, WithHeadings
 {
     /**
     * @return \Illuminate\Support\Collection
     */
+
     protected $months;
 
     public function __construct()
@@ -36,9 +37,8 @@ class DaybookExport implements FromArray,ShouldAutoSize, WithHeadings
         }
         public function array(): array
 	    {
-
 	    	$daybooks = Daybook::all();
-	    	
+	    	// dd($daybooks);
 	        $data=[];
 	        $value=[];
 	        $i=1;
@@ -60,4 +60,10 @@ class DaybookExport implements FromArray,ShouldAutoSize, WithHeadings
 	        
 	        return $data;
 	    }
+
+
+    // public function collection()
+    // {
+    //     return AnnualBookExport::all();
+    // }
 }

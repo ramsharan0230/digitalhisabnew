@@ -23,6 +23,7 @@ use App\Models\Payment;
 use App\Models\Tds;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\DaybookExport;
+use App\Exports\AnnualBookExport;
 
 class ReportController extends Controller
 {
@@ -270,11 +271,18 @@ class ReportController extends Controller
         return view('admin.report.include.purchaseView',compact('purchase'));
     }
     public function dayBookExport(Request $request){
-
-    
         return Excel::download(new DaybookExport(), 'Daybook.xlsx');
     }
-    
+    //Annual Reports
+    public function annualBookExport(Request $request){
+        return Excel::download(new AnnualBookExport(), 'AnnualBook.xlsx');
+    }
+
+    public function salesSearchByYear(Request $request){
+        $value = $request->value;
+        $details = $this->sales->orderBy('created_at','desc')->whereYear('vat_date',$value)->get();
+        return view('admin.report.include.salesSearchByYear',compact('details'));
+    }
 
 
 }

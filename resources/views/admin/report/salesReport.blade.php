@@ -57,7 +57,7 @@
  
     <div class="box">
       <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-4">
           <div class="box-header"><h3 class="box-title">Custom Date</h3></div>
           <div class="box-body">
             <div class="col-md-5">
@@ -79,7 +79,7 @@
             </div>
           </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-4">
           <div class="box-header"><h3 class="box-title">Year and Month</h3></div>
             <div class="box-body">
                 <div class="erport-wrapp profit-loss-wrapp">
@@ -114,9 +114,28 @@
                     </form>
                 </div>
             </div>
-
            
         </div>
+
+        {{-- filter as year --}}
+        <div class="col-md-4">
+          <div class="box">
+            <div class="box-header"><h3 class="box-title">Year</h3></div>
+            <div class="box-body">
+              <form class="export-form" method="post" action="{{ route('admin.report.daybook-export') }}">
+                @csrf
+                <div class="erport-wrapp profit-loss-wrapp">
+                    <div class="form-group form-group-wrapper">
+                        <label>Input Year</label>
+                        <input class="form-control" name="year" id="year" type="text" placeholder="Input Year">
+                    </div>
+                    <input type="submit" name="Export" value="Export" class="btn btn-info">
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        {{-- end filter Year --}}
       </div>
       
     </div>
@@ -166,7 +185,7 @@
                 <tbody id="sortable">
                     @php($i=1)
                     @foreach($details as $detail)
-                    <?php //dd($detail->invoice->collected_amount) ?>
+                    <?php dd($detail->invoice->invoiceDetail) ?>
                     <tr id="{{ $detail->id }}">
                       <td>{{$i}}</td>
                       <td>{{$detail->vat_date}}</td>
@@ -244,6 +263,28 @@
         });
       });
     });
+
+    $(document).ready(function(){
+      $('#year').on('change',function(){
+        value=$(this).val();
+        debugger
+        segment_2=$('#segment').val();
+        console.log(segment_2);
+        $.ajax({
+          method:'post',
+          url:"{{route('salesSearchByYear')}}",
+          data:{value:value,segment:segment_2},
+          success:function(data){
+            $('.table-striped').remove();
+            $('.append').html(data);
+            
+            $('.export').removeClass('hidden');
+            $('.monthvalue').val(value);
+          }
+        });
+      });
+    });
+    
 
     // $(document).ready(function(){
     //   $('.export').click(function(e){
