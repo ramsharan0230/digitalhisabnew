@@ -39,7 +39,7 @@
             @empty
             
             <tr>
-                <td colspan="5">No Sales fgdfgdfgFound!!</td>
+                <td colspan="5">No Sales Found!!</td>
             </tr>
             @endforelse
             
