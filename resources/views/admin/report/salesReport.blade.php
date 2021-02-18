@@ -122,14 +122,14 @@
           <div class="box">
             <div class="box-header"><h3 class="box-title">Year</h3></div>
             <div class="box-body">
-              <form class="export-form" method="post" action="{{ route('admin.report.daybook-export') }}">
+              <form class="export-form" method="post" action="{{ route('admin.report.annualbook-export') }}">
                 @csrf
                 <div class="erport-wrapp profit-loss-wrapp">
                     <div class="form-group form-group-wrapper">
-                        <label>Input Year</label>
+                        <label for="year">Input Year</label>
                         <input class="form-control" name="year" id="year" type="text" placeholder="Input Year">
                     </div>
-                    <input type="submit" name="Export" value="Export" class="btn btn-info">
+                    <input type="submit" name="Export" value="Export" target="_blank" class="btn btn-info">
                 </div>
               </form>
             </div>
@@ -185,7 +185,6 @@
                 <tbody id="sortable">
                     @php($i=1)
                     @foreach($details as $detail)
-                    <?php dd($detail->invoice->invoiceDetail) ?>
                     <tr id="{{ $detail->id }}">
                       <td>{{$i}}</td>
                       <td>{{$detail->vat_date}}</td>

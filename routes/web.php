@@ -76,7 +76,7 @@ Route::group(['namespace'=>'Admin','middleware'=>['auth'],'prefix'=>'admin'],fun
 			Route::post('custom-profit_and_loss','ReportController@customProfitAndLoss')->name('reportCustomProfitAndLoss');
 			Route::post('daybook-export','ReportController@dayBookExport')->name('dayBookExport');
 			//new report 
-			Route::post('annual-daybook-export','ReportController@annualBookExport')->name('admin.report.daybook-export');
+			Route::post('annual-daybook-export','ReportController@annualBookExport')->name('admin.report.annualbook-export');
 			Route::post('salesSearchByYear','ReportController@salesSearchByYear')->name('salesSearchByYear');
 
 		});

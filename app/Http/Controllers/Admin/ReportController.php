@@ -21,14 +21,16 @@ use App\Repositories\OtherReceived\OtherReceivedRepository;
 use App\Models\Received;
 use App\Models\Payment;
 use App\Models\Tds;
+use PDF;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\DaybookExport;
-use App\Exports\AnnualBookExport;
 
 class ReportController extends Controller
 {
-	public function __construct(SalesRepository $sales,PurchaseRepository $purchase,DaybookRepository $daybook,BalanceRepository $balance,nepali_date $calendar,TdsRepository $tds,VatRepository $vat,VendorRepository $vendor,ClientRepository $client,InvoiceRepository $invoice,SettingRepository $setting,ReceivedRepository $received,PaymentRepository $payment,OtherReceivedRepository $other_received){
-		$this->sales = $sales;
+	public function __construct(SalesRepository $sales,PurchaseRepository $purchase,DaybookRepository $daybook,
+    BalanceRepository $balance,nepali_date $calendar,TdsRepository $tds,VatRepository $vat,VendorRepository $vendor,
+    ClientRepository $client,InvoiceRepository $invoice,SettingRepository $setting,ReceivedRepository $received,PaymentRepository $payment,OtherReceivedRepository $other_received){
+        $this->sales = $sales;
 		$this->purchase = $purchase;
         $this->daybook=$daybook;
         $this->balance = $balance;
@@ -275,7 +277,11 @@ class ReportController extends Controller
     }
     //Annual Reports
     public function annualBookExport(Request $request){
-        return Excel::download(new AnnualBookExport(), 'AnnualBook.xlsx');
+        // dd($request->all());
+        $value = $request->year;
+        $details = $this->sales->orderBy('created_at','desc')->whereYear('vat_date',$value)->get();
+        $pdf = PDF::loadView('pdf.invoice', compact('details'));
+        return $pdf->stream('annual-invoice.pdf');
     }
 
     public function salesSearchByYear(Request $request){
