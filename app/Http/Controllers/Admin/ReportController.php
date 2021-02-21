@@ -215,17 +215,28 @@ class ReportController extends Controller
         return view('admin.tds.include.monthlyTdsReport',compact('details'));
           
     }
+
+    public function vatInvoice($val){
+        $vatInvoice = $this->invoice->whereMonth('nepali_date',$val)->where('vat', '>', 0)->sum('grand_total');
+    }
+
+    public function nonVatInvoice($val){
+        $nonVatInvoice = $this->invoice->whereMonth('nepali_date',$val)->where('vat', '=', 0)->sum('grand_total');
+    }
+
     public function profitAndLoss(){
         $invoices = [];
+        $vatInvoices = [];
+        $nonVatInvoices = [];
         $other_receiveds = [];
         $purchases = [];
         $payments = [];
         $months = ['baishak','jesth','asar','shrawan','bhadra','ashoj','kartik','mangsir','poush','magh','falgun','chaitra'];
         for($i=1;$i<13;$i++){
             if((strlen($i) == 2)){
-              
                $value = $i;
                $invoice = $this->invoice->whereMonth('nepali_date',$value)->sum('grand_total');
+               $vatInvoice = $this->vatInvoice($value);
                $other_received = $this->other_received->whereMonth('date',$value)->sum('amount');
                $purchase = $this->purchase->whereMonth('vat_date',$value)->sum('total');
                $payment = $this->payment->whereMonth('date',$value)->sum('amount');
@@ -233,9 +244,13 @@ class ReportController extends Controller
                array_push($other_receiveds,$other_received);
                array_push($purchases,$purchase);
                array_push($payments,$payment);
+               array_push($vatInvoices, $vatInvoice);
             }else{
-              $value = "0".$i;
+               $value = "0".$i;
                $invoice = $this->invoice->whereMonth('nepali_date',$value)->sum('grand_total');
+            //   not vat
+                $nonVatInvoice = $this->vatInvoice($value);
+            //   non vat end
                $other_received = $this->other_received->whereMonth('date',$value)->sum('amount');
                $purchase = $this->purchase->whereMonth('vat_date',$value)->sum('total');
                $payment = $this->payment->whereMonth('date',$value)->sum('amount');
@@ -243,11 +258,12 @@ class ReportController extends Controller
                array_push($other_receiveds,$other_received);
                array_push($purchases,$purchase);
                array_push($payments,$payment);
+               array_push($nonVatInvoices, $nonVatInvoice);
             }
         }
+        // dd($vatInvoices);
         
-        
-        return view('admin.report.profitAndLoss',compact('invoices','purchases','other_receiveds','payments','months'));
+        return view('admin.report.profitAndLoss',compact('invoices','purchases','other_receiveds','payments','months', 'vatInvoices', 'nonVatInvoices'));
     }
     public function profitAndLossByMonth(Request $request){
         dd('hello');
@@ -280,8 +296,26 @@ class ReportController extends Controller
         // dd($request->all());
         $value = $request->year;
         $details = $this->sales->orderBy('created_at','desc')->whereYear('vat_date',$value)->get();
-        $pdf = PDF::loadView('pdf.invoice', compact('details'));
+        $pdf = PDF::loadView('pdf.annual-report', compact('details'));
         return $pdf->stream('annual-invoice.pdf');
+    }
+
+    //Receipt list Reports
+    public function receiptListExport(Request $request){
+        $value = $request->year;
+        $details = $this->received->orderBy('date','desc')->whereYear('date',$value)->get();
+        $pdf = PDF::loadView('pdf.receipt-list', compact('details'));
+        return $pdf->stream('receipt-list.pdf');
+    }
+
+    //Invoice Reports
+    public function invoiceListExport(Request $request){
+        $value = $request->year;
+        // dd($this->invoice->orderBy('created_at','desc')->whereYear('date', '=', $value)->get());
+        $details = $this->invoice->orderBy('created_at','desc')->get();
+        // dd($details);/
+        $pdf = PDF::loadView('pdf.invoice', compact('details'));
+        return $pdf->stream('invoice-report-list.pdf');
     }
 
     public function salesSearchByYear(Request $request){

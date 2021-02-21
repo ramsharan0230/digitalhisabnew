@@ -14,7 +14,7 @@
     </style>
 </head>
 <body>
-    <h3 style="margin-left: 40%">Annual Invoice Reports</h3>
+    <h3 style="margin-left: 40%">Annual Report</h3>
     <table class="table" style="border">
         <thead>
             <tr>
@@ -26,16 +26,15 @@
             </tr>
         </thead>
         <tbody>
-            <?php $totalAmt = 0; ?>
+            <?php $total = 0; ?>
             @forelse ($details as $key=>$detail)
             <tr>
-                <?php //dd($detail) ?>
                 <td>{{ $key+1 }}.</td>
-                <td>{{ $detail->client_name }}</td>
-                <td>{{ $detail->date }}</td>
-                <td>{{ $detail->collected }}</td>
+                <td>{{ $detail->sales_to }}</td>
+                <td>{{ $detail->vat_date }}</td>
+                <td>{{ $detail->collected==0?"Open":"Close" }}</td>
                 <td>Rs. {{ $detail->total }}</td>
-                <?php $totalAmt +=$detail->total ?>
+                <?php $total +=$detail->total ?>
             </tr>
             @empty
             
@@ -48,7 +47,7 @@
         <tfoot>
             <tr>
                 <td><b>Total.</b> </td>
-                <td colspan="4"><span style="margin-right: 0px; margin-left: 83%">Rs. <b>{{ $totalAmt }}</b></span></td>
+                <td colspan="4"><span style="margin-right: 0px; margin-left: 83%">Rs. <b>{{ $total }}</b></span></td>
             </tr>
         </tfoot>
     </table>
