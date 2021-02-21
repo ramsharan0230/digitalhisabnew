@@ -25,31 +25,43 @@
         </ul>
     </div>
     @endif
-<form method="post" action="{{route('saveVatDetail',$detail->id)}}" enctype="multipart/form-data">
+<form method="post" action="{{route('saveVatDetail', $detail->id)}}" enctype="multipart/form-data">
     {{csrf_field()}}
     <div class="row">
         <div class="col-md-12">
             <div class="box box-primary">
                 <div class="box-header with-heading">
-                    <h3 class="box-title">Add a new vat</h3>
+                    <h3 class="box-title">Update Vat Details</h3>
                 </div>
                 <div class="box-body">
-                    <div class="form-group">
-                         <label>VAT/PAN</label>
-                         <input type="text" name="vat_pan" class="form-control" value="{{old('vat_pan')}}">
-                     </div>
-                     <div class="form-group">
-                         <label>Bill No</label>
-                         <input type="text" name="bill_no" class="form-control" value="{{old('bill_no')}}">
-                     </div>
-                     <div class="form-group">
-                         <label>Bill Image</label>
-                         <input type="file" name="bill_image" class="form-control" >
-                     </div>
-                    <div class="form-group">
-                        <label>Date</label>
-                        <input type="text" id="nepaliDate1" class="bod-picker form-control" name="date" autocomplete="off" value="{{old('date')}}">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <input type="hidden" name="sales_id" value="{{ $sales->id }}">
+                                <label>VAT/PAN</label>
+                                <input type="text" name="vat_pan" class="form-control" value="{{ $sales->vat_pan }}" >
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label>Bill No</label>
+                                <input type="text" name="bill_no" class="form-control" value="{{ $sales->bill_no }}" >
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label>Date</label>
+                                <input type="text" id="nepaliDate1" class="bod-picker form-control" name="date" autocomplete="off" value="{{ $sales->vat_date }}">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Bill Image</label>
+                                <input type="file" name="bill_image" class="form-control" >
+                            </div>
+                        </div>
                     </div>
+                    
                     <div class="form-group">
                         <input type="submit" name="submit" class="btn btn-success">
                     </div>

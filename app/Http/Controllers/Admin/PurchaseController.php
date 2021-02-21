@@ -543,7 +543,6 @@ class PurchaseController extends Controller
     }
     public function toBePaid(){
         $details = $this->purchase->orderBy('created_at','desc')->where('collected',0)->get();
-        
         return view('admin.purchase.toBePaid',compact('details'));
     }
     public function saveVendor(Request $request){
