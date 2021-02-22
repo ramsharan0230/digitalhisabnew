@@ -33,7 +33,7 @@
  
     <div class="box">
       <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-5">
             <div class="box-header"><h3 class="box-title">Custom Date</h3></div>
             <div class="box-body">
               <div class="col-md-5">
@@ -55,42 +55,64 @@
               </div>
             </div>
         </div>
-        <div class="col-md-6">
-            <div class="box-header"><h3 class="box-title">Year and Month</h3></div>
-            <div class="box-body">
-                <div class="erport-wrapp profit-loss-wrapp">
-                    <div class="form-group form-group-wrapper">
-                        <label>Input Year</label>
-                        <input class="form-control" type="text" placeholder="Input Year">
-                    </div>
-                    <div class="form-group select-mont-wrapp top-form-wrapp form-group-wrapper">
-                        <label>Select Month</label>
-                        <select name="month" class="form-control" id="month">
-                          <option disabled="true" selected="true">Select Month</option>
-                          <option value="01">Baishak</option>
-                          <option value="02">Jestha</option>
-                          <option value="03">Ashad</option>
-                          <option value="04">Shrawan</option>
-                          <option value="05">Bhadra</option>
-                          <option value="06">Ashoj</option>
-                          <option value="07">Kartik</option>
-                          <option value="08">Mangsir</option>
-                          <option value="09">Poush</option>
-                          <option value="10">Magh</option>
-                          <option value="11">Falgun</option>
-                          <option value="12">Chaitra</option>
-                        </select>
-                    </div>
+        <div class="col-md-7">
+          <div class="row">
+            <div class="col-sm-7">
+              <div class="box-header"><h3 class="box-title">Year and Month</h3></div>
+                <div class="box-body">
+                    <div class="erport-wrapp profit-loss-wrapp">
+                        <div class="form-group form-group-wrapper">
+                            <label>Input Year</label>
+                            <input class="form-control" type="text" placeholder="Input Year">
+                        </div>
+                        <div class="form-group select-mont-wrapp top-form-wrapp form-group-wrapper">
+                            <label>Select Month</label>
+                            <select name="month" class="form-control" id="month">
+                              <option disabled="true" selected="true">Select Month</option>
+                              <option value="01">Baishak</option>
+                              <option value="02">Jestha</option>
+                              <option value="03">Ashad</option>
+                              <option value="04">Shrawan</option>
+                              <option value="05">Bhadra</option>
+                              <option value="06">Ashoj</option>
+                              <option value="07">Kartik</option>
+                              <option value="08">Mangsir</option>
+                              <option value="09">Poush</option>
+                              <option value="10">Magh</option>
+                              <option value="11">Falgun</option>
+                              <option value="12">Chaitra</option>
+                            </select>
+                        </div>
 
-                    <form class="export-form" method="post" action="{{route('dayBookExport')}}">
-                        {{csrf_field()}}
-                        <input type="hidden" name="month" class="monthvalue" value="">
-                        <input type="hidden" name="type" value="0">
-                        <input type="hidden" name="segment" value="{{Request::segment(2)}}" id="segment">
-                        <input type="submit" name="Export" value="Export" class="btn btn-info">
-                    </form>
+                        <form class="export-form" method="post" action="{{route('dayBookExport')}}">
+                            {{csrf_field()}}
+                            <input type="hidden" name="month" class="monthvalue" value="">
+                            <input type="hidden" name="type" value="0">
+                            <input type="hidden" name="segment" value="{{Request::segment(2)}}" id="segment">
+                            <input type="submit" name="Export" value="Export" class="btn btn-info">
+                        </form>
+                    </div>
                 </div>
             </div>
+            <div class="col-sm-5">
+              <div class="box">
+                <div class="box-header"><h3 class="box-title">Year</h3></div>
+                <div class="box-body">
+                  <form class="export-form" method="post" action="{{ route('admin.report.invoiceListExport') }}">
+                    @csrf
+                    <div class="erport-wrapp profit-loss-wrapp">
+                        <div class="form-group form-group-wrapper">
+                            <label for="year">Input Year</label>
+                            <input class="form-control" name="year" id="year" type="text" placeholder="Input Year">
+                        </div>
+                        <input type="submit" name="Export" value="Export" target="_blank" class="btn btn-info">
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+            
         </div>
       </div>
       

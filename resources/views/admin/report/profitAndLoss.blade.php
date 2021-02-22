@@ -106,8 +106,8 @@
                 <div class="tab-wrapp-container">
                   <ul class="nav nav-tabs table-tab">
                     <li class="active"><a data-toggle="tab" href="#home">Overall</a></li>
-                    <li><a data-toggle="tab" href="#menu1">VAT</a></li>
-                    <li><a data-toggle="tab" href="#menu2">Non VAT</a></li>
+                    <li><a data-toggle="tab" href="#vatInvoices">VAT</a></li>
+                    <li><a data-toggle="tab" href="#nonVatInvoices">Non VAT</a></li>
                   </ul>
                 </div>
             </div>
@@ -143,7 +143,7 @@
                                   $ans = ($invoice+$other_receiveds[$key])-($purchases[$key]+$payments[$key]);
                                   $total+=$ans;
                                   ?>
-                                  {{$ans}}
+                                  <span style="color:{{ $ans<0?"red":"" }}">{{$ans}}</span>
                                 </td>
                                 
                               </tr>
@@ -160,7 +160,7 @@
                        </div>
                   </div>
 
-                  <div id="menu1" class="tab-pane fade">
+                  <div id="vatInvoices" class="tab-pane fade">
                   <div class="box-body append">
                           <table id="example1" class="table table-bordered table-striped">
                             <thead>
@@ -177,7 +177,7 @@
                             
                             <tbody id="sortable">
                               @php($total = 0)
-                              @foreach($invoices as $key=>$invoice)
+                              @foreach($vatInvoices as $key=>$invoice)
                               
                               <tr>
                                 <td>{{$months[$key]}}</td>
@@ -190,7 +190,7 @@
                                   $ans = ($invoice+$other_receiveds[$key])-($purchases[$key]+$payments[$key]);
                                   $total+=$ans;
                                   ?>
-                                  {{$ans}}
+                                  <span style="color:{{ $ans<0?"red":"" }}">{{$ans}}</span>
                                 </td>
                                 
                               </tr>
@@ -206,7 +206,7 @@
                           </div>
                        </div>
                   </div>
-                  <div id="menu2" class="tab-pane fade">
+                  <div id="nonVatInvoices" class="tab-pane fade">
                   <div class="box-body append">
                           <table id="example1" class="table table-bordered table-striped">
                             <thead>
@@ -223,7 +223,7 @@
                             
                             <tbody id="sortable">
                               @php($total = 0)
-                              @foreach($invoices as $key=>$invoice)
+                              @foreach($nonVatInvoices as $key=>$invoice)
                               
                               <tr>
                                 <td>{{$months[$key]}}</td>
@@ -236,7 +236,7 @@
                                   $ans = ($invoice+$other_receiveds[$key])-($purchases[$key]+$payments[$key]);
                                   $total+=$ans;
                                   ?>
-                                  {{$ans}}
+                                  <span style="color:{{ $ans<0?"red":"" }}">{{$ans}}</span>
                                 </td>
                                 
                               </tr>

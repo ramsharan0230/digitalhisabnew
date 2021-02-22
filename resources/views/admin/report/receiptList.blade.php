@@ -10,7 +10,7 @@
    
     <div class="box">
       <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-5">
           <div class="box-header">
             <h3 class="box-title">Custom Date</h3>
           </div>
@@ -35,10 +35,12 @@
             </div>
           </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-7">
             <div class="box-header"><h3 class="box-title">Year and Month</h3></div>
             <div class="box-body">
-                <div class="erport-wrapp profit-loss-wrapp">
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="erport-wrapp profit-loss-wrapp">
                     <div class="form-group form-group-wrapper">
                         <label>Input Year</label>
                         <input class="form-control" type="text" placeholder="Input Year">
@@ -69,7 +71,25 @@
                         <input type="submit" name="Export" value="Export" class="btn btn-info">
                     </form>
                 </div>
-
+                </div>
+                <div class="col-sm-6">
+                  <div class="box">
+                    <div class="box-header"><h3 class="box-title">Year</h3></div>
+                    <div class="box-body">
+                      <form class="export-form" method="post" action="{{ route('admin.report.receiptListExport') }}">
+                        @csrf
+                        <div class="erport-wrapp profit-loss-wrapp">
+                            <div class="form-group form-group-wrapper">
+                                <label for="year">Input Year</label>
+                                <input class="form-control" name="year" id="year" type="text" placeholder="Input Year">
+                            </div>
+                            <input type="submit" name="Export" value="Export" target="_blank" class="btn btn-info">
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
 
         </div>

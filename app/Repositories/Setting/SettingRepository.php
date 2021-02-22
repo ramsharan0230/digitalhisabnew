@@ -1,7 +1,8 @@
 <?php
 namespace App\Repositories\Setting;
 use App\Repositories\Crud\CrudRepository;
-use App\Setting;
+use App\Models\Setting;
+
 class SettingRepository extends CrudRepository implements SettingInterface{
 	public function __construct(Setting $setting){
 		$this->model=$setting;

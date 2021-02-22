@@ -18,4 +18,8 @@ class Invoice extends Model
     public function invoicePayments(){
     	return $this->hasMany('App\Models\InvoicePayment','invoice_id');
     }
+
+    public function sales(){
+    	return $this->hasOne('App\Models\Sales', 'invoice_id');
+    }
 }
