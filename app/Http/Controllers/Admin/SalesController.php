@@ -8,15 +8,17 @@ use App\Repositories\Sales\SalesRepository;
 use App\Repositories\Purchase\PurchaseRepository;
 use App\Repositories\Invoice\InvoiceRepository;
 use App\Repositories\Setting\SettingRepository;
+use App\Repositories\nepalicalendar\nepali_date;
 use App\Models\Invoice;
 
 class SalesController extends Controller
 {
-    public function __construct(SalesRepository $sales,PurchaseRepository $purchase,InvoiceRepository $invoice,SettingRepository $setting){
+    public function __construct(SalesRepository $sales,PurchaseRepository $purchase,InvoiceRepository $invoice,SettingRepository $setting, nepali_date $calendar){
         $this->sales=$sales;
         $this->purchase=$purchase;
         $this->invoice=$invoice;
         $this->setting=$setting;
+        $this->calendar = $calendar;
     }
     /**
      * Display a listing of the resource.
@@ -114,8 +116,18 @@ class SalesController extends Controller
 
         return view('admin.sales.include.salesSearchByMonth',compact('details','total_sales','sales_vat','purchase','purchase_vat'));
     }
-    public function toBeCollected(){
-        $details = $this->invoice->orderBy('created_at','desc')->where('collected',0)->get();
+    public function toBeCollected(Request $request){
+        if(!empty($request->all())){
+            // dd($request->all());
+            // search
+            $nepali_date=$this->calendar->eng_to_nep(date('Y'),date('m'),date('d'));
+            $todaysNepaliDate=$nepali_date['year'].'-'.((strlen($nepali_date['month']) == 2) ? $nepali_date['month'] : "0".$nepali_date['month']).'-'.((strlen($nepali_date['date']) == 2) ? $nepali_date['date'] : "0".$nepali_date['date']);
+            $details = $this->invoice->whereBetween('nepali_date',[$request->start_date,$request->end_date])->get();
+            //search end
+        }else{
+            $details = $this->invoice->orderBy('created_at','desc')->where('collected',0)->get();
+        }   
+
         return view('admin.sales.toBeCollected',compact('details'));
     }
     public function salesView(Request $request){
