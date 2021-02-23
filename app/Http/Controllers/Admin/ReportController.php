@@ -93,6 +93,7 @@ class ReportController extends Controller
     }
     public function tdsToBeCollected(){
         $details=$this->tds->orderBy('date','desc')->where('tds_to_be_paid',0)->get();
+        
         return view('admin.report.tdsToBeCollected',compact('details'));
     }
     public function tdsToBePaid(){
@@ -316,6 +317,16 @@ class ReportController extends Controller
         // dd($details);/
         $pdf = PDF::loadView('pdf.invoice', compact('details'));
         return $pdf->stream('invoice-report-list.pdf');
+    }
+
+    //tdsToBeCollected Reports
+    public function tdsToBeCollectedExport(Request $request){
+        // dd($request->all());
+        $details=$this->tds->where('tds_to_be_paid',0)->whereYear('date', '=', $request->year)
+        ->whereMonth('date', '=', $request->month)->orderBy('date','desc')->get();
+
+        $pdf = PDF::loadView('pdf.tdsToBeCollected_pdf', compact('details'));
+        return $pdf->stream('tdsToBeCollected_pdf.pdf');
     }
 
     public function salesSearchByYear(Request $request){

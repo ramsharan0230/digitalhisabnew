@@ -121,7 +121,7 @@
                     <td>{{$invoice->client_name}}</td>
                     <td>Rs. {{$invoice->grand_total}}</td>
                     <td>{{$invoice->nepali_date}}</td>
-                    <td><a class="btn btn-info edit" href="{{route('invoice.edit',$invoice->id)}}" title="Edit"><span class="fa fa-eye"></span></a></td>
+                    <td><a class="btn btn-info edit" target="_blank" href="{{route('previewInvoice', $invoice->id)}}" title="Edit"><span class="fa fa-eye"></span></a></td>
                     </tr>
                   @endforeach
 
