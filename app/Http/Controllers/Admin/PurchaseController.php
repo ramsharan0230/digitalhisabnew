@@ -40,9 +40,41 @@ class PurchaseController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $details=$this->purchase->orderBy('created_at','desc')->get();
+        if(!empty($request->all())){
+            // search
+            // dd($request->start_date);
+            $start_date = $request->start_date;
+            $start_date = explode('-', $start_date);
+            $sYear = $start_date[0];
+            $sMonth = $start_date[1];
+            $sDay = $start_date[2];
+            $start_date = $this->calendar->nep_to_eng($sYear, $sMonth, $sDay);
+            $month = ($start_date['month']>9?'':'0').$start_date['month'];
+            $day = ($start_date['date']>9?'':'0').$start_date['date'];
+            $start_date = $start_date['year'].'-'.$month.'-'.$day;
+
+            // dd($start_date);
+            // dd($end_date);
+            $end_date = $request->end_date;
+            $end_date = explode('-', $end_date);
+            $eYear = $end_date[0];
+            $eMonth = $end_date[1];
+            $eDay = $end_date[2];
+            $end_date = $eYear.'-'.$eMonth.'-'.$eDay;
+
+            $end_date=$this->calendar->nep_to_eng($eYear, $eMonth, $eDay);
+
+            $emonth = ($end_date['month']>9?'':'0').$end_date['month'];
+            $eday = ($end_date['date']>9?'':'0').$end_date['date'];
+            $end_date = $end_date['year'].'-'.$emonth.'-'.$eday;
+            // dd($start_date, $end_date);
+            $details=$this->purchase->whereBetween('created_at',[$start_date, $end_date])->orderBy('created_at','desc')->get();
+            //search end
+        }else{
+            $details=$this->purchase->orderBy('created_at','desc')->get();
+        }
         return view('admin.purchase.list',compact('details'));
     }
 
