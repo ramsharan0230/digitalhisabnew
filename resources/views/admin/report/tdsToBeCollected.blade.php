@@ -70,11 +70,11 @@
                     <div class="erport-wrapp profit-loss-wrapp">
                         <div class="form-group form-group-wrapper">
                             <label>Input Year</label>
-                            <input class="form-control" type="text" placeholder="Input Year">
+                            <input class="form-control inputYear" type="text" placeholder="Input Year">
                         </div>
                         <div class="form-group select-mont-wrapp top-form-wrapp form-group-wrapper">
                           <label>Select Month</label>
-                          <select name="month" class="form-control" id="month">
+                          <select name="month" class="form-control inputMonth">
                             <option disabled="true" selected="true">Select Month</option>
                             <option value="01">Baishak</option>
                             <option value="02">Jestha</option>
@@ -90,9 +90,10 @@
                             <option value="12">Chaitra</option>
                           </select>
                         </div>
-                        <form class="export-form" method="post" action="{{route('dayBookExport')}}">
+                        <form class="export-form" method="post" action="{{route('admin.report.tdsToBeCollectedExport')}}">
                           {{csrf_field()}}
-                          <input type="hidden" name="month" class="monthvalue" value="">
+                          <input type="hidden" name="month" class="monthvalue">
+                          <input type="hidden" name="year" class="yearvalue">
                           <input type="hidden" name="type" value="0">
                           <input type="hidden" name="segment" value="{{Request::segment(2)}}" id="segment">
                           <input type="submit" name="Export" value="Export" class="btn btn-info">
@@ -140,9 +141,6 @@
                       <th>From</th>
                       <th>Bill No</th>
                       <th>Date</th>
-                      
-                      
-                      
                     </tr>
                 </thead>
                 <tbody id="sortable">
@@ -154,7 +152,6 @@
                       <td>{{$detail->company_name}}</td>
                       <td>{{$detail->bill_no}}</td>
                       <td>{{$detail->date}}</td>
-                      
                   </tr>
                   @php($i++)
                   @endforeach
@@ -245,12 +242,20 @@
     });
   });
 
-   
-
-    
-
-   $('#example1').dataTable( {
-  "pageLength": 100
+  $('#example1').dataTable( {
+    "pageLength": 100
   } );
+
+  $(document).ready(function(){
+    $('.inputMonth').on('change',function(){
+      $('.monthvalue').val($('.inputMonth').val())
+    });
+  });
+
+  $(document).ready(function(){
+    $('.inputYear').on('keyup',function(){
+      $('.yearvalue').val($('.inputYear').val())
+    });
+  });
 </script>
 @endpush

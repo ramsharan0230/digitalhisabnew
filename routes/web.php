@@ -80,6 +80,7 @@ Route::group(['namespace'=>'Admin','middleware'=>['auth'],'prefix'=>'admin'],fun
 			Route::post('annual-daybook-export','ReportController@annualBookExport')->name('admin.report.annualbook-export');
 			Route::post('receipt-list-export','ReportController@receiptListExport')->name('admin.report.receiptListExport');
 			Route::post('invoice-list-export','ReportController@invoiceListExport')->name('admin.report.invoiceListExport');
+			Route::post('tds-to-be-collected-export','ReportController@tdsToBeCollectedExport')->name('admin.report.tdsToBeCollectedExport');
 			Route::post('salesSearchByYear','ReportController@salesSearchByYear')->name('salesSearchByYear');
 
 		});
