@@ -103,9 +103,18 @@ class SalesController extends Controller
         return view('admin.sales.salesWithoutVat',compact('details'));
     }
     public function searchSalesWithoutVat(Request $request){
+
         $details=Invoice::whereMonth('nepali_date',$request->value)->where('vat',0)->orderBy('created_at','desc')->get();
         return view('admin.sales.include.salesWithOutVat',compact('details'));
     }
+
+    public function salesSearchBySalesWithoutVat(Request $request){
+        $details=Invoice::whereBetween('nepali_date', [$request->start_date, $request->end_date])->where('vat',0)->orderBy('created_at','desc')->get();
+        
+        return view('admin.sales.include.salesWithOutVat',compact('details'));
+    }
+
+
     public function salesSearchByMonth(Request $request){
         $value = $request->value;
         $details = $this->sales->orderBy('created_at','desc')->whereMonth('vat_date',$value)->get();

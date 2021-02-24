@@ -10,17 +10,19 @@
                     </tr>
                 </thead>
                 <tbody id="sortable">
-                @php($i=1)
-                @foreach($details as $detail)
+                @forelse($details as $key =>$detail)
                   <tr id="{{ $detail->id }}">
-                      <td>{{$i}}</td>
+                      <td>{{$key+1}}</td>
                       <td>{{$detail->client_name}}</td>
                       <td>{{$detail->contact}}</td>
                       <td>{{$detail->nepali_date}}</td>
                       <td>{{$detail->email}}</td>
                       <td>{{$detail->grand_total}}</td>
                   </tr>
-                  @php($i++)
-                  @endforeach
+                  @empty
+                  <tr>
+                    <td colspan="6">No data Found!</td>
+                  </tr>
+                  @endforelse
                 </tbody>
               </table>
