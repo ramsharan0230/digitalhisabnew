@@ -26,15 +26,15 @@
         <table style="width: 100%; font-size: 15px; margin-top: 20px;">
             <tr>
                 <th style="text-align: left; font-weight: 500;"><span style="font-weight: 700;">Name : </span> {{$data->client_name}}</th>
-                <th style="text-align: right; font-weight: 500;"><span style="font-weight: 700;">Invoice Date : </span> {{ Carbon\Carbon::parse($data->date)->format('F j, Y') }}</th>
+                <th style="text-align: right; font-weight: 500;"><span style="font-weight: 700;">Date : </span> {{ Carbon\Carbon::parse($data->date)->format('F j, Y') }}</th>
             </tr>
             <tr>
                 <th style="text-align: left;font-weight: 500; "> <span style="font-weight: 700;">Address : </span> {{$data->client_address}}</th>
-                <th style="text-align: right; font-weight: 500;"><span style="font-weight: 700;">Total Amount: </span> {{$data->number}}</th>
+                <th style="text-align: right;font-weight: 500; "> <span style="font-weight: 700;">Estimate Number : </span> {{$data->number}}</th>
             </tr>
+
             <tr>
                 <th style="text-align: left;font-weight: 500; "> <span style="font-weight: 700;">Contact : </span> {{$data->contact}}</th>
-                <th style="text-align: right; font-weight: 500;"><span style="font-weight: 700;">Due Amount: </span> Rs. {{$data->grand_total-$data->collected_amount}}</th>
             </tr>
         </table>
     </section>
@@ -187,8 +187,8 @@
                 <span style="font-size:14px;">Open</span>
             </div>
             <div style="display:flex;">
-                <p style="font-size:14px;margin:0;width:90px;">Due Amount :</p>
-                <span style="font-size:14px;">Rs. {{$data->grand_total-$data->collected_amount}}</span>
+                <p style="font-size:14px;margin:0;width:120px;"><b>Due Amount :</b></p>
+                <span style="font-size:14px;"><b>Rs. {{$data->grand_total-$data->collected_amount}}</b></span>
             </div>
         </div>
     </section>
@@ -204,7 +204,7 @@
                     <p> <a href="" target="_blank" style="text-decoration: none; color: darkblue;">{{$dashboard_setting->website}}</a></p>
                     <p> {{$dashboard_setting->address}}</p>
                     <p>  {{$dashboard_setting->email}}</p>
-                    <p> {{$dashboard_setting->phone_number}}</p>
+                    <p> Phone: {{$dashboard_setting->phone_number}}</p>
                 </td>
             </tr>
         </table>
