@@ -10,6 +10,7 @@ use App\Repositories\Invoice\InvoiceRepository;
 use App\Repositories\Setting\SettingRepository;
 use App\Repositories\nepalicalendar\nepali_date;
 use App\Models\Invoice;
+use PDF;
 
 class SalesController extends Controller
 {
@@ -139,6 +140,16 @@ class SalesController extends Controller
 
         return view('admin.sales.toBeCollected',compact('details'));
     }
+
+    public function toBeCollectedPdf(Request $request){
+        $details=$this->invoice->orderBy('created_at','desc')->whereYear('nepali_date',$request->year)->whereMonth('nepali_date',$request->month)->get();
+
+        // $details=Invoice::whereMonth('nepali_date', $request->month)->whereYear('nepali_date', $request->year)->where('vat',0)->orderBy('created_at','desc')->get();
+        
+        $pdf = PDF::loadView('admin.sales.toBeCollectedpdf', compact('details'));
+        return $pdf->stream('to-be-collected.pdf');
+    }
+
     public function salesView(Request $request){
         $sale = $this->sales->findOrFail($request->value);
         return view('admin.sales.saleView',compact('sale'));

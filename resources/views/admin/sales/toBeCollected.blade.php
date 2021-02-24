@@ -62,7 +62,7 @@
                 <div class="erport-wrapp profit-loss-wrapp">
                     <div class="form-group form-group-wrapper">
                         <label>Input Year</label>
-                        <input class="form-control" type="text" placeholder="Input Year">
+                        <input class="form-control inputYear" type="text" placeholder="Input Year">
                     </div>
                     <div class="form-group select-mont-wrapp form-group-wrapper">
                         <label>Select Month</label>
@@ -82,12 +82,13 @@
                           <option value="12">Chaitra</option>
                         </select>
                     </div>
-                    <form class="export-form" method="post" action="{{route('dayBookExport')}}">
+                    <form class="export-form" method="post" action="{{route('toBeCollectedPdf')}}">
                         {{csrf_field()}}
                         <input type="hidden" name="month" class="monthvalue" value="">
+                        <input type="hidden" name="year" class="yearvalue" value="">
                         <input type="hidden" name="type" value="0">
                         <input type="hidden" name="segment" value="{{Request::segment(2)}}" id="segment">
-                        <input type="submit" name="Export" value="Export" class="btn btn-info">
+                        <input type="submit" name="Export" value="Export" class="btn btn-info" formtarget="_blank">
                     </form>
                 </div>
 
@@ -105,7 +106,7 @@
             <div class="box-header">
                 <h3 class="box-title">Data Table</h3>
             </div>
-          <div class="box-body">
+          <div class="box-body append">
               <table id="example1" class="table table-bordered table-striped">
                 <thead>
                     <tr>
@@ -125,7 +126,8 @@
                   <tr id="{{ $detail->id }}">
                       <td>{{$i}}</td>
                       <td>{{$detail->client_name}}</td>
-                      <td>{{$detail->date}}</td>
+                      <td>{{\Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $detail->date )
+                        ->format('d-m-Y')}}</td>
                       <td>{{$detail->grand_total}}</td>
                       <td>{{$detail->collected_amount}}</td>
                       <td>{{$detail->grand_total-$detail->collected_amount}}</td>
@@ -254,12 +256,12 @@
   $(document).ready(function(){
     $('#month').on('change',function(){
       value=$(this).val();
+      year=$('.inputYear').val();
       segment_2=$('#segment').val();
-      console.log(segment_2);
       $.ajax({
         method:'post',
         url:"{{route('invoiceMonthlyReport')}}",
-        data:{value:value,segment:segment_2},
+        data:{value:value,segment:segment_2, year:year},
         success:function(data){
           console.log(data);
           $('.table-striped').remove();
@@ -314,6 +316,10 @@
       });
     });
   });
+
+  $('.inputYear').keyup(function(){
+    $('.yearvalue').val($('.inputYear').val());
+  })
 
 
   $(".bod-picker").nepaliDatePicker({
