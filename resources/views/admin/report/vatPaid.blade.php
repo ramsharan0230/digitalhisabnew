@@ -67,7 +67,7 @@
                       <input type="hidden" name="year" class="yearvalue" value="">
                       <input type="hidden" name="type" value="0">
                       <input type="hidden" name="segment" value="{{Request::segment(2)}}" id="segment">
-                      <input type="submit" name="Export" value="Export" class="btn btn-info">
+                      <input type="submit" name="Export" value="Export" class="btn btn-info" formtarget="_blank">
                   </form>
               </div>
           </div>
