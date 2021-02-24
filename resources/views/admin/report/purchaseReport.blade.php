@@ -96,11 +96,11 @@
                 <div class="erport-wrapp profit-loss-wrapp">
                     <div class="form-group form-group-wrapper">
                         <label>Input Year</label>
-                        <input class="form-control" type="text" placeholder="Input Year">
+                        <input class="form-control" type="text" placeholder="Input Year" class="inputYear" id="inputYear">
                     </div>
                     <div class="form-group select-mont-wrapp form-group-wrapper">
                         <label>Select Month</label>
-                        <select name="month" class="form-control" id="month">
+                        <select name="month" class="form-control inputMonth" id="month" >
                             <option disabled="true" selected="true">Select Month</option>
                             <option value="01">Baishak</option>
                             <option value="02">Jestha</option>
@@ -116,10 +116,11 @@
                             <option value="12">Chaitra</option>
                         </select>
                     </div>
-                    <form class="export-form" method="post" action="{{route('dayBookExport')}}">
+                    <form class="export-form" method="post" action="{{route('purchaseReportPdf')}}">
                         {{csrf_field()}}
-                        <input type="hidden" name="month" class="monthvalue" value="">
+                        <input type="hidden" name="month" class="monthvalue">
                         <input type="hidden" name="type" value="0">
+                        <input type="hidden" name="year" class="yearvalue"> 
                         <input type="hidden" name="segment" value="{{Request::segment(2)}}" id="segment">
                         <input type="submit" name="Export" value="Export" class="btn btn-info">
                     </form>
@@ -217,6 +218,21 @@
         }
     });
 
+    $('#inputYear').on('keyup', function(){
+      $('.yearvalue').val($('#inputYear').val())
+    })
+
+    $('.inputMonth').on('change', function(){
+      console.log($('.inputMonth').val())
+      $('.monthvalue').val($('.inputMonth').val())
+    })
+
+    $(".bod-picker").nepaliDatePicker({
+      dateFormat: "%y-%m-%d",
+      closeOnDateSelect: true,
+      // minDate: formatedNepaliDate
+  });
+
     
 
     $(function () {
@@ -224,9 +240,6 @@
     });
     $('.message').delay(5000).fadeOut(400);
 
-   
-    
-  
       $(".bod-picker").nepaliDatePicker({
       dateFormat: "%y-%m-%d",
       closeOnDateSelect: true,
@@ -238,7 +251,6 @@
         start_date = $('#start_date').val();
         end_date = $('#end_date').val();
         
-        alert(start_date);
         $.ajax({
           method:'post',
           url:"{{route('reportCustomPurchaseReport')}}",
@@ -254,11 +266,12 @@
     $(document).ready(function(){
     $('#month').on('change',function(){
       value = $(this).val();
-
+      inputYear = $('#inputYear').val()
+      
       $.ajax({
         method:"post",
         url:"{{route('reportMonthlyPurchaseReport')}}",
-        data:{month:value},
+        data:{month:value, year: inputYear},
         success:function(data){
           $('.table-striped').remove();
           $('.append').html(data);
