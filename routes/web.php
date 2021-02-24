@@ -51,6 +51,8 @@ Route::group(['namespace'=>'Admin','middleware'=>['auth'],'prefix'=>'admin'],fun
 			Route::post('receipt-search-month','ReportController@receiptSearchByMonth')->name('reportReceiptSearchByMonth');
 			Route::post('custom-receipt-search','ReportController@customReceiptSearch')->name('customReceiptSearch');
 			Route::get('purchase-report','ReportController@purchaseReport')->name('purchaseReport');
+			Route::post('purchase-report-pdf','ReportController@purchaseReportPdf')->name('purchaseReportPdf');
+			
 			Route::post('custom-purchase-report','ReportController@customPurchaseReport')->name('reportCustomPurchaseReport');
 			Route::post('report-purchase-view','ReportController@purchaseView')->name('reportPurchaseView');
 			Route::post('monthly-purchase-report','ReportController@monthlyPurchaseReport')->name('reportMonthlyPurchaseReport');

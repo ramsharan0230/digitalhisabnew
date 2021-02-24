@@ -73,6 +73,15 @@ class ReportController extends Controller
     	$details=$this->purchase->orderBy('created_at','desc')->get();
     	return view('admin.report.purchaseReport',compact('details'));
     }
+
+    public function purchaseReportPdf(Request $request){
+        $details=$this->purchase->orderBy('created_at','desc')->get();
+
+        $pdf = PDF::loadView('admin.purchase.reports.purchaseReportPdf', compact('details'));
+        return $pdf->stream('purchase-report.pdf');
+    }
+
+
     public function customPurchaseReport(Request $request){
         $nepali_date=$this->calendar->eng_to_nep(date('Y'),date('m'),date('d'));
         $todaysNepaliDate=$nepali_date['year'].'-'.((strlen($nepali_date['month']) == 2) ? $nepali_date['month'] : "0".$nepali_date['month']).'-'.((strlen($nepali_date['date']) == 2) ? $nepali_date['date'] : "0".$nepali_date['date']);
@@ -282,8 +291,8 @@ class ReportController extends Controller
     }
     public function monthlyPurchaseReport(Request $request){
         $nepali_date=$this->calendar->eng_to_nep(date('Y'),date('m'),date('d'));
-        $details=$this->purchase->orderBy('created_at','desc')->whereYear('vat_date',$nepali_date['year'])->whereMonth('vat_date',$request->month)->get();
-        return view('admin.report.include.customPurchaseSearch',compact('details','todaysNepaliDate'));
+        $details=$this->purchase->orderBy('created_at','desc')->whereYear('vat_date', $request->year)->whereMonth('vat_date', $request->month)->get();
+        return view('admin.report.include.customPurchaseSearch',compact('details'));
     }
     public function purchaseView(Request $request){
         $purchase = $this->purchase->findOrFail($request->value);
