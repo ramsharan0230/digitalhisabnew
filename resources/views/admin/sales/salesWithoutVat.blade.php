@@ -322,7 +322,25 @@
     //     });
     //   });
     // });
-
+    
+    $(document).ready(function(){
+      $('.customDateSearch').click(function(){
+        start_date = $('#start_date').val()
+        end_date = $('#end_date').val()
+        $.ajax({
+          method:'post',
+          url:"{{route('salesSearchBySalesWithoutVat')}}",
+          data:{start_date:start_date, end_date:end_date},
+          success:function(data){
+            $('.table-striped').remove();
+            $('.append').html(data);
+            
+            $('.export').removeClass('hidden');
+            $('.monthvalue').val(value);
+          }
+        });
+      });
+    });
 
     $(".bod-picker").nepaliDatePicker({
       dateFormat: "%y-%m-%d",

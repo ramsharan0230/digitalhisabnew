@@ -51,6 +51,7 @@ class ReceivedController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request->all());
         $message = ['client_id.required'=>'Client is required'];
         $this->validate($request,['client_id'=>'required|numeric','amount'=>'required','for'=>'required','date'=>'required'],$message);
         try{
