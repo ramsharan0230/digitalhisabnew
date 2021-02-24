@@ -44,7 +44,15 @@ class ReportController extends Controller
         $this->received = $received;
         $this->payment = $payment;
         $this->other_received = $other_received;
+        
 	}
+
+    public function getNepaliDate(){
+        $nepali_date=$this->calendar->eng_to_nep(date('Y'),date('m'),date('d'));
+        $todaysNepaliDate=$nepali_date['year'].'-'.((strlen($nepali_date['month']) == 2) ? $nepali_date['month'] : "0".$nepali_date['month']).'-'.((strlen($nepali_date['date']) == 2) ? $nepali_date['date'] : "0".$nepali_date['date']);
+        return $todaysNepaliDate;
+    }
+
     public function salesReport(){
     	$details = $this->sales->orderBy('created_at','desc')->get();
         // dd($details);
@@ -115,7 +123,8 @@ class ReportController extends Controller
     }
     public function vatPaid(){
         $purchases = $this->purchase->orderBy('created_at','desc')->get();
-        return view('admin.report.vatpaid',compact('purchases'));
+        $todaysNepaliDate = $this->getNepaliDate();
+        return view('admin.report.vatPaid',compact('purchases', 'todaysNepaliDate'));
     }
     public function vendorList(){
         $vendors = $this->vendor->orderBy('created_at','desc')->get();
@@ -201,9 +210,18 @@ class ReportController extends Controller
     public function reportMonthlyVatPaid(Request $request){
         $nepali_date=$this->calendar->eng_to_nep(date('Y'),date('m'),date('d'));
         $purchases=$this->purchase->orderBy('created_at','desc')->whereYear('vat_date',$nepali_date['year'])->whereMonth('vat_date',$request->month)->get();
-        
+        $todaysNepaliDate = $this->getNepaliDate();
         return view('admin.report.include.customVatPaidSearch',compact('purchases','todaysNepaliDate'));
     }
+
+    public function reportMonthlyVatPaidPDF(Request $request){
+        $year = $request->year;
+        $month = $request->month;
+        $details=$this->purchase->orderBy('created_at','desc')->whereYear('vat_date',$year)->whereMonth('vat_date',$month)->get();
+        $pdf = PDF::loadView('admin.report.monthlyVatPaidPdf', compact('details', 'year', 'month'));
+        return $pdf->stream('monthly-vat-paid.pdf');
+    }
+
     public function monthlyTdsToBeCollected(Request $request){
         $nepali_date=$this->calendar->eng_to_nep(date('Y'),date('m'),date('d'));
         $details=Tds::where('tds_to_be_paid',0)->whereYear('date',$nepali_date['year'])->whereMonth('date',$request->month)->orderBy('created_at','desc')->get();

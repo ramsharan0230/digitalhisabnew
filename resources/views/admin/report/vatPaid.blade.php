@@ -41,7 +41,7 @@
               <div class="erport-wrapp profit-loss-wrapp">
                   <div class="form-group form-group-wrapper">
                       <label>Input Year</label>
-                      <input class="form-control" type="text" placeholder="Input Year">
+                      <input class="form-control inputYear" type="text" placeholder="Input Year">
                   </div>
                   <div class="form-group select-mont-wrapp top-form-wrapp form-group-wrapper">
                     <label>Select Month</label>
@@ -61,9 +61,10 @@
                       <option value="12">Chaitra</option>
                     </select>
                   </div>
-                  <form class="export-form" method="post" action="{{route('dayBookExport')}}">
+                  <form class="export-form" method="post" action="{{route('vatPaidExport')}}">
                       {{csrf_field()}}
                       <input type="hidden" name="month" class="monthvalue" value="">
+                      <input type="hidden" name="year" class="yearvalue" value="">
                       <input type="hidden" name="type" value="0">
                       <input type="hidden" name="segment" value="{{Request::segment(2)}}" id="segment">
                       <input type="submit" name="Export" value="Export" class="btn btn-info">
@@ -100,7 +101,7 @@
             <div class="box-header">
                 <h3 class="box-title">Data Table</h3>
             </div>
-          <div class="box-body append">
+            <div class="box-body append">
               <table id="example1" class="table table-bordered table-striped">
                 <thead>
                     <tr>
@@ -131,7 +132,7 @@
                     <p>Total</p>
                     <span>{{$purchases->sum('vat_paid')}}</span>
                 </div>
-          </div>
+            </div>
 
         </div>
     </div>
@@ -158,6 +159,16 @@
   $('#example1').dataTable( {
     "pageLength": 10
   } );
+
+  $('#month').change( function(){
+    $('.monthvalue').val($('#month').val())
+  });
+  $('.inputYear').keyup( function(){
+    $('.yearvalue').val($('.inputYear').val())
+  });
+
+
+
   $(".bod-picker").nepaliDatePicker({
       dateFormat: "%y-%m-%d",
       closeOnDateSelect: true,

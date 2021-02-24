@@ -70,6 +70,9 @@ Route::group(['namespace'=>'Admin','middleware'=>['auth'],'prefix'=>'admin'],fun
 			Route::get('invoice-list','ReportController@invoiceList')->name('reportinvoiceList');
 			Route::post('custom-invoice-search','ReportController@customInvoiceSearch')->name('customInvoiceSearch');
 			Route::post('report-monthly-vat-paid','ReportController@reportMonthlyVatPaid')->name('reportMonthlyVatPaid');
+
+			Route::post('vatPaidExport','ReportController@reportMonthlyVatPaidPDF')->name('vatPaidExport');
+
 			Route::post('monthly-tds-collected','ReportController@monthlyTdsToBeCollected')->name('reportMonthlyTdsCollected');
 			Route::post('custom-tds-collected','ReportController@customTdsCollected')->name('reportCustomTdsCollected');
 			Route::post('custom-tds-paid','ReportController@customTdsPaid')->name('reportCustomTdsPaid');
