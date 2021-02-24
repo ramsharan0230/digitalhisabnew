@@ -299,7 +299,9 @@ class ReportController extends Controller
         return view('admin.report.include.purchaseView',compact('purchase'));
     }
     public function dayBookExport(Request $request){
-        return Excel::download(new DaybookExport(), 'Daybook.xlsx');
+        $year = $request->year;
+        $month = $request->month;
+        return Excel::download(new DaybookExport($month, $year), 'Daybook.xlsx');
     }
     //Annual Reports
     public function annualBookExport(Request $request){

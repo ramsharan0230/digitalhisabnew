@@ -153,7 +153,7 @@ Route::group(['namespace'=>'Admin','middleware'=>['auth'],'prefix'=>'admin'],fun
 		Route::post('received/receipt-modal','ReceivedController@receiptModal')->name('receiptModal');
 		Route::post('received/custom-received-search','ReceivedController@customReceivedSearch')->name('customReceivedSearch');
 		Route::resource('received','ReceivedController');
-		Route::post('daybook/monthly-report','DaybookController@monthlyReport')->name('monthlydaybookReport');
+		Route::post('daybook/monthly-report','DayBookController@monthlyReport')->name('monthlydaybookReport');
 		Route::post('daybook/yearly-report','DaybookController@yearlyReport')->name('yearlydaybookReport');
 		Route::post('saerch-daybook','DayBookController@searchDaybook')->name('searchDaybook');
 		Route::resource('day-book','DayBookController');

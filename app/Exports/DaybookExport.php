@@ -13,11 +13,13 @@ class DaybookExport implements FromArray,ShouldAutoSize, WithHeadings
     /**
     * @return \Illuminate\Support\Collection
     */
-    protected $months;
+    protected $month;
+    protected $year;
 
-    public function __construct()
+    public function __construct($month, $year)
     {
-     	 
+     	$this->month = $month;
+        $this->year = $year;
     }
     public function headings(): array
         {
@@ -36,9 +38,7 @@ class DaybookExport implements FromArray,ShouldAutoSize, WithHeadings
         }
         public function array(): array
 	    {
-
-	    	$daybooks = Daybook::all();
-	    	
+	    	$daybooks = Daybook::whereYear('date', $this->year)->whereMonth('date', $this->month)->get();
 	        $data=[];
 	        $value=[];
 	        $i=1;

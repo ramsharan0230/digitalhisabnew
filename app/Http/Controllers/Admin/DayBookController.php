@@ -97,8 +97,6 @@ class DayBookController extends Controller
     }
     public function monthlyReport(Request $request){
         $nepali_date=$this->calendar->eng_to_nep(date('Y'),date('m'),date('d'));
-        
-        
         $balances=Balance::whereYear('date',$nepali_date['year'])->whereMonth('date',$request->value)->orderBy('created_at','desc')->get();
         return view('admin.daybook.include.monthlyReport',compact('balances'));
     }
