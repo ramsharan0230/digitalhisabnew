@@ -143,8 +143,11 @@ class ReportController extends Controller
         return view('admin.report.include.receiptCustomSearch',compact('details'));
     }
     public function paymentList(){
+        $nepali_date=$this->calendar->eng_to_nep(date('Y'),date('m'),date('d'));
+        $todaysNepaliDate=$nepali_date['year'].'-'.((strlen($nepali_date['month']) == 2) ? $nepali_date['month'] : "0".$nepali_date['month']).'-'.((strlen($nepali_date['date']) == 2) ? $nepali_date['date'] : "0".$nepali_date['date']);
+
         $details = $this->payment->orderBy('created_at','desc')->get();
-        return view('admin.report.paymentList',compact('details'));
+        return view('admin.report.paymentList',compact('details', 'todaysNepaliDate'));
     }
     public function reportMonthlyPayment(Request $request){
         $nepali_date=$this->calendar->eng_to_nep(date('Y'),date('m'),date('d'));
