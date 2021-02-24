@@ -699,11 +699,10 @@ class InvoiceController extends Controller
         return view('admin.invoice.report');
     }
     public function invoiceMonthlyReport(Request $request){
-        
         $nepali_date=$this->calendar->eng_to_nep(date('Y'),date('m'),date('d'));
         
         
-        $details=$this->invoice->orderBy('created_at','desc')->whereYear('nepali_date',$nepali_date['year'])->whereMonth('nepali_date',$request->value)->get();
+        $details=$this->invoice->orderBy('created_at','desc')->whereYear('nepali_date',$request->year)->whereMonth('nepali_date',$request->value)->get();
         
             
         return view('admin.invoice.include.monthlyInvoiceReport',compact('details'));

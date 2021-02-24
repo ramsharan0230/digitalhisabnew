@@ -232,7 +232,7 @@
       <div class="col-md-4">
         <div class="box box-info">
           <div class="box-header with-border">
-            <h3 class="box-title">Recent Collections</h3>
+            <h3 class="box-title">Latest Collections</h3>
             <div class="box-tools pull-right">
               <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
               </button>
@@ -265,7 +265,7 @@
           </div>
             <!-- /.box-body -->
           <div class="box-footer clearfix">
-            <a href="{{route('tds.index')}}" class="btn btn-sm btn-info btn-flat pull-left">View All TDS</a>
+            <a href="{{route('tds.index')}}" class="btn btn-sm btn-info btn-flat pull-left">View All Collections</a>
           </div>
             <!-- /.box-footer -->
         </div>

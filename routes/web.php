@@ -118,6 +118,8 @@ Route::group(['namespace'=>'Admin','middleware'=>['auth'],'prefix'=>'admin'],fun
 			Route::post('salesSearchByMonth','SalesController@salesSearchByMonth')->name('salesSearchByMonth');
 			Route::post('salesSearchBySalesWithoutVat','SalesController@salesSearchBySalesWithoutVat')->name('salesSearchBySalesWithoutVat');
 			Route::get('to-be-collected','SalesController@toBeCollected')->name('toBeCollected');
+			Route::post('toBeCollectedPdf','SalesController@toBeCollectedPdf')->name('toBeCollectedPdf');
+			
 			Route::post('sales-view','SalesController@salesView')->name('salesView');
 			Route::get('invoice-view/{id}','SalesController@invoiceView')->name('invoiceView');
 
