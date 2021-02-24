@@ -72,7 +72,7 @@
 
               <div class="form-group form-group-wrapper">
                   <label>Input Year</label>
-                  <input class="form-control" type="text" placeholder="Input Year">
+                  <input class="form-control inputYear" type="text" placeholder="Input Year">
               </div>
              
               <div class="select-mont-wrapp form-group-wrapper">
@@ -98,6 +98,7 @@
               <form class="export-form" method="post" action="{{route('dayBookExport')}}">
                   {{csrf_field()}}
                   <input type="hidden" name="month" class="monthvalue" value="">
+                  <input type="hidden" name="year" class="yearvalue" value="">
                   <input type="hidden" name="type" value="0">
                   <input type="hidden" name="segment" value="{{Request::segment(2)}}" id="segment">
                   <input type="submit" name="Export" value="Export" class="btn btn-info">
@@ -261,6 +262,13 @@
   $('#example1').dataTable( {
     "pageLength": 100
   } );
+
+  $('.inputYear').keyup(function(){
+    $('.yearvalue').val($('.inputYear').val())
+  })
+  $('#month').change(function(){
+    $('.monthvalue').val($('#month').val())
+  })
   // $('#example2').dataTable( {
   //   "pageLength": 100
   // } );
@@ -276,7 +284,7 @@
         data:{value:value,segment:segment_2},
         success:function(data){
           $('.table-striped').remove();
-          $('.append').html(data);
+          $('.daybookappend').html(data);
           $('.monthvalue').val(value);
           $("#example1").DataTable();
         }
