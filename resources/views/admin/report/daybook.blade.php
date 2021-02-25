@@ -95,7 +95,7 @@
                     </select>
                   </div>
               </div>
-              <form class="export-form" method="post" action="{{route('dayBookExport')}}">
+              <form class="export-form" method="post" action="{{route('daybookPdf')}}">
                   {{csrf_field()}}
                   <input type="hidden" name="month" class="monthvalue" value="">
                   <input type="hidden" name="year" class="yearvalue" value="">

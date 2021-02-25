@@ -59,6 +59,8 @@ Route::group(['namespace'=>'Admin','middleware'=>['auth'],'prefix'=>'admin'],fun
 			Route::post('report-purchase-view','ReportController@purchaseView')->name('reportPurchaseView');
 			Route::post('monthly-purchase-report','ReportController@monthlyPurchaseReport')->name('reportMonthlyPurchaseReport');
 			Route::get('day-book','ReportController@daybook')->name('reportDaybook');
+			Route::post('daybook-pdf','ReportController@daybookPdf')->name('daybookPdf');
+
 			Route::post('custom-daybook-search','ReportController@customDaybookSearch')->name('customDateDaybookSearch');
 			Route::get('tds-to-be-collected','ReportController@tdsToBeCollected')->name('reportTdsToBeCollected');
 			Route::get('tds-to-be-paid','ReportController@tdsToBePaid')->name('reportTdsToBePaid');

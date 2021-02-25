@@ -24,7 +24,6 @@ class DayBookController extends Controller
      */
     public function index()
     {
-
         $balances=$this->balance->orderBy('created_at','desc')->get();
         $daybook = $this->daybook->orderBy('created_at','desc')->get();
         return view('admin.daybook.daybook',compact('balances','daybook'));

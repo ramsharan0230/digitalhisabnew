@@ -112,6 +112,16 @@ class ReportController extends Controller
         $daybook = $this->daybook->orderBy('created_at','desc')->get();
         return view('admin.report.daybook',compact('balances','daybook'));
     }
+
+    public function daybookPdf(Request $request){
+        // dd($request->all());
+        $balances=$this->balance->whereMonth('date', $request->month)->whereYear('date', $request->year)->orderBy('created_at','desc')->get();
+        $daybook = $this->daybook->whereMonth('date', $request->month)->whereYear('date', $request->year)->orderBy('created_at','desc')->get();
+
+        $pdf = PDF::loadView('pdf.daybookpdf', compact('balances', 'daybook'));
+        return $pdf->stream('purchase-report.pdf');
+    }
+
     public function customDaybookSearch(Request $request){
         $nepali_date=$this->calendar->eng_to_nep(date('Y'),date('m'),date('d'));
         $todaysNepaliDate=$nepali_date['year'].'-'.((strlen($nepali_date['month']) == 2) ? $nepali_date['month'] : "0".$nepali_date['month']).'-'.((strlen($nepali_date['date']) == 2) ? $nepali_date['date'] : "0".$nepali_date['date']);
@@ -312,7 +322,6 @@ class ReportController extends Controller
                array_push($nonVatInvoices, $nonVatInvoice);
             }
         }
-        // dd($vatInvoices);
         
         return view('admin.report.profitAndLoss',compact('invoices','purchases','other_receiveds','payments','months', 'vatInvoices', 'nonVatInvoices'));
     }
