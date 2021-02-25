@@ -197,10 +197,22 @@ class ReportController extends Controller
         return view('admin.report.include.customCollectedVatSearch',compact('vats','todaysNepaliDate'));
     }
     public function monthlyVatCollected(Request $request){
-        $nepali_date=$this->calendar->eng_to_nep(date('Y'),date('m'),date('d'));
-        $vats=$this->vat->orderBy('created_at','desc')->whereYear('vat_date',$nepali_date['year'])->whereMonth('vat_date',$request->value)->get();
+        $todaysNepaliDate = $this->getNepaliDate();
+        $vats=$this->vat->orderBy('created_at','desc')->whereYear('vat_date', $request->year)->whereMonth('vat_date', $request->month)->get();
+        
         return view('admin.report.include.customCollectedVatSearch',compact('vats','todaysNepaliDate'));
     }
+
+    public function monthlyVatCollectedPDF(Request $request){
+        $todaysNepaliDate = $this->getNepaliDate();
+        $details=$this->vat->orderBy('created_at','desc')->whereYear('vat_date', $request->year)->whereMonth('vat_date', $request->month)->get();
+        $year = $request->year; 
+        $month = $request->month;       
+        $pdf = PDF::loadView('admin.report.monthly-vat-collected-pdf', compact('details', 'year', 'month'));
+        return $pdf->stream('monthly-vat-collected-report.pdf');
+    }
+    
+
     public function customVatPaidSearch(Request $request){
         $nepali_date=$this->calendar->eng_to_nep(date('Y'),date('m'),date('d'));
         $todaysNepaliDate=$nepali_date['year'].'-'.((strlen($nepali_date['month']) == 2) ? $nepali_date['month'] : "0".$nepali_date['month']).'-'.((strlen($nepali_date['date']) == 2) ? $nepali_date['date'] : "0".$nepali_date['date']);

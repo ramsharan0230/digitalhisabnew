@@ -42,7 +42,7 @@
                 <div class="erport-wrapp profit-loss-wrapp">
                       <div class="form-group form-group-wrapper">
                           <label>Input Year</label>
-                          <input class="form-control" type="text" placeholder="Input Year">
+                          <input class="form-control inputYear" type="text" placeholder="Input Year">
                       </div>
                       <div class="form-group select-mont-wrapp top-form-wrapp form-group-wrapper">
                           <label>Select Month</label>
@@ -62,12 +62,14 @@
                               <option value="12">Chaitra</option>
                           </select>
                       </div>
-                      <form class="export-form" method="post" action="{{route('dayBookExport')}}">
+                      <form class="export-form" method="post" action="{{route('reportMonthlyVatCollectedPdf')}}">
                           {{csrf_field()}}
                           <input type="hidden" name="month" class="monthvalue" value="">
+                          <input type="hidden" name="year" class="yearvalue" value="">
+                          
                           <input type="hidden" name="type" value="0">
                           <input type="hidden" name="segment" value="{{Request::segment(2)}}" id="segment">
-                          <input type="submit" name="Export" value="Export" class="btn btn-info">
+                          <input type="submit" name="Export" value="Export" class="btn btn-info" formtarget="_blank">
                       </form>
                 </div>
             </div>
@@ -147,12 +149,18 @@
   <script src="{{ asset('backend/plugins/fastclick/fastclick.js') }}"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <script >
-
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
+
+    $('#month').change( function(){
+    $('.monthvalue').val($('#month').val())
+  });
+  $('.inputYear').keyup( function(){
+    $('.yearvalue').val($('.inputYear').val())
+  });
 
   $('#example1').dataTable( {
     "pageLength": 10
@@ -167,8 +175,6 @@
       e.preventDefault();
       start_date = $('#start_date').val();
       end_date = $('#end_date').val();
-      
-      
       $.ajax({
         method:'post',
         url:"{{route('customCollectedVatSearch')}}",
@@ -184,11 +190,12 @@
   $(document).ready(function(){
     $('#month').on('change',function(){
       value = $(this).val();
+      year = $('.yearvalue').val();
 
       $.ajax({
         method:"post",
         url:"{{route('reportMonthlyVatCollected')}}",
-        data:{month:value},
+        data:{month:value, year:year},
         success:function(data){
           $('.table-striped').remove();
           $('.append').html(data);

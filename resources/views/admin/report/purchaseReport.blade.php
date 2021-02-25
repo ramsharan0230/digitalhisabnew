@@ -173,18 +173,15 @@
                 @php($i=1)
                 @foreach($details as $detail)
                 <tr id="{{ $detail->id }}">
+                  <?php //dd($detail) ?>
                   <td>{{$i}}</td>
                   <td>{{$detail->vat_date}}</td>
                   <td>{{$detail->purchased_from}}</td>
                   <td>{{$detail->total}}</td>     
-                  
-                  
-                  <td>{{$detail->round_total}}</td>
-                  
+                  <td>{{$detail->total == $detail->total_paid?"Close":"Open"}}</td>
+
                   <td class="whole-btn-wrapper">
-                    
                     <a class="btn btn-info edit salesView" href="{{route('reportPurchaseView',$detail->id)}}" title="Sales View" data-id="{{$detail->id}}" target="_blank"><span class="fa fa-eye"></span></a>
-                    
                   </td>
                 </tr>
                 @php($i++)

@@ -108,6 +108,7 @@ Route::group(['namespace'=>'Admin','middleware'=>['auth'],'prefix'=>'admin'],fun
 			Route::post('custom-collected-vat-search','ReportController@customCollectedVatSearch')->name('customCollectedVatSearch');
 			Route::post('reportInvoiceSearchByMonth','ReportController@reportInvoiceSearchByMonth')->name('reportInvoiceSearchByMonth');
 			Route::post('monthly-vat-collected','ReportController@monthlyVatCollected')->name('reportMonthlyVatCollected');
+			Route::post('monthly-vat-collected-pdf','ReportController@monthlyVatCollectedPDF')->name('reportMonthlyVatCollectedPdf');
 			Route::post('custom-vat-paid-search','ReportController@customVatPaidSearch')->name('customVatPaidSearch');
 			
 		});
