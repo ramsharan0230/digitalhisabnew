@@ -32,14 +32,19 @@ class PaymentController extends Controller
     }
     /**
      * Display a listing of the resource.
-     *
+     *pay
      * @return \Illuminate\Http\Response
      */
+
+    public function getNepaliDate(){
+        $nepali_date=$this->calendar->eng_to_nep(date('Y'),date('m'),date('d'));    
+        $todaysNepaliDate=$nepali_date['year'].'-'.((strlen($nepali_date['month']) == 2) ? $nepali_date['month'] : "0".$nepali_date['month']).'-'.((strlen($nepali_date['date']) == 2) ? $nepali_date['date'] : "0".$nepali_date['date']);
+    }
+
     public function index()
     {
         $details=$this->payment->orderBy('created_at','desc')->get();
-        $nepali_date=$this->calendar->eng_to_nep(date('Y'),date('m'),date('d'));    
-            $todaysNepaliDate=$nepali_date['year'].'-'.((strlen($nepali_date['month']) == 2) ? $nepali_date['month'] : "0".$nepali_date['month']).'-'.((strlen($nepali_date['date']) == 2) ? $nepali_date['date'] : "0".$nepali_date['date']);
+        $todaysNepaliDate = $this->getNepaliDate();
         return view('admin.payment.list',compact('details','todaysNepaliDate'));
     }
 
@@ -48,6 +53,14 @@ class PaymentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+
+    public function paymentFilterAccDate(Request $request){
+        $details=$this->payment->whereBetween('date', [$request->start_date, $request->end_date])->orderBy('created_at','desc')->get();
+        $todaysNepaliDate = $this->getNepaliDate();
+        return view('admin.payment.list',compact('details','todaysNepaliDate'));
+    }
+
     public function create()
     {
         $digital_wallet=$this->gateway->all();

@@ -12,24 +12,26 @@
           <div class="col-lg-6 col-md-12 col-sm-12">
               <div class="box-header"><h3 class="box-title">Custom Date</h3></div>
               <div class="box-body">
-
-                <div class="col-md-5">
-                  <div class="form-group">
-                    <label>Start Date</label>
-                    <input type="text" id="start_date" class="bod-picker form-control" name="start_date" autocomplete="off" value="">
+                <form action="{{ route('payment-filter-date') }}" method="GET">
+                  @csrf
+                  <div class="col-md-5">
+                    <div class="form-group">
+                      <label>Start Date</label>
+                      <input type="text" id="start_date" class="bod-picker form-control" name="start_date" autocomplete="off" value="">
+                    </div>
                   </div>
-                </div>
-                <div class="col-md-5">
-                  <div class="form-group">
-                    <label>End Date</label>
-                    <input type="text" id="end_date" class="bod-picker form-control" name="end_date" autocomplete="off" value="">
+                  <div class="col-md-5">
+                    <div class="form-group">
+                      <label>End Date</label>
+                      <input type="text" id="end_date" class="bod-picker form-control" name="end_date" autocomplete="off" value="">
+                    </div>
                   </div>
-                </div>
-                <div class="col-md-2">
-                  <div class="form-group pro-submit-btn">
-                    <input type="submit" name="submit" value="submit" class="btn btn-success customDateSearch">
+                  <div class="col-md-2">
+                    <div class="form-group pro-submit-btn">
+                      <input type="submit" name="submit" value="submit" class="btn btn-success" >
+                    </div>
                   </div>
-                </div>
+                </form>
               </div>
           </div>
           <div class="col-lg-6 col-md-12 col-sm-12 select-date-wrapper">
@@ -64,10 +66,10 @@
                     </div>
                     <div class="col-ld-2">
                       <div class="form-group list-export">
-                          <form action="http://localhost:8000/admin/contact/export-client-transaction" method="post">
-                              <input type="hidden" name="_token" value="osvk9ExgHdsG61i9LnDFvVbE7uMPn5sQ1re1JG7X">
+                          <form action="{{ route('admin.contact.export-client-transaction') }}" method="post">
+                              <input type="hidden" name="_token" value="{{ csrf_token() }}">
                               <input type="hidden" name="id" value="3">
-                              <input type="submit" name="Export" class="btn btn-success" value="Export">
+                              <input type="submit" name="Export" class="btn btn-success" value="Export" formtarget="_blank">
                           </form>
                       </div>
                     </div>

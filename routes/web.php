@@ -29,7 +29,7 @@ Route::group(['namespace'=>'Admin','middleware'=>['auth'],'prefix'=>'admin'],fun
 		Route::get('client-invoice-preview/{id}','ClientController@clientInvoicePreview')->name('clientInvoicePreview');
 		Route::get('other-receipts/{id}','ClientController@otherReceipts')->name('otherReceipts');
 		Route::post('search-monthly-client-business-detail','ClientController@searchMonthlyClientBusinessDetail')->name('searchMonthlyClientBusinessDetail');
-		Route::post('export-client-transaction','ClientController@exportClientTransaction')->name('exportClientTransaction');
+		Route::post('export-client-transaction','ClientController@exportClientTransaction')->name('admin.contact.export-client-transaction');
 		Route::post('custom-client-search','ClientController@clientCustomSearch')->name('customClientSearch');
 		Route::resource('client','ClientController');
 		Route::get('transaction-view/{id}','VendorController@transactionView')->name('vendorTransactionView');
@@ -43,6 +43,8 @@ Route::group(['namespace'=>'Admin','middleware'=>['auth'],'prefix'=>'admin'],fun
 		Route::resource('user','UserController');
 		Route::group(['prefix'=>'report'],function(){
 			Route::get('sales-report','ReportController@salesReport')->name('salesReport');
+			Route::post('sales-report-pdf','ReportController@salesReportPdf')->name('salesReportPdf');
+			
 			Route::post('salesSearchByMonth','ReportController@salesSearchByMonth')->name('reportSalesSearchByMonth');
 			Route::post('custom-sales-search','ReportController@customSalesSearch')->name('reportCustomSalesSearch');
 			Route::get('report-invoice-view/{id}','ReportController@reportInvoiceView')->name('reportInvoiceView');
@@ -80,9 +82,13 @@ Route::group(['namespace'=>'Admin','middleware'=>['auth'],'prefix'=>'admin'],fun
 			Route::get('profit-and-loss-by-month','ReportController@profitAndLossByMonth')->name('reportProfitAndLossByMonth');
 			Route::post('custom-profit_and_loss','ReportController@customProfitAndLoss')->name('reportCustomProfitAndLoss');
 			Route::post('daybook-export','ReportController@dayBookExport')->name('dayBookExport');
+
+			
 			//new report 
 
 			Route::post('annual-daybook-export','ReportController@annualBookExport')->name('admin.report.annualbook-export');
+			Route::post('annualsales-export','ReportController@annualSalesExport')->name('admin.report.annualsales-export');
+			
 			Route::post('receipt-list-export','ReportController@receiptListExport')->name('admin.report.receiptListExport');
 			Route::post('invoice-list-export','ReportController@invoiceListExport')->name('admin.report.invoiceListExport');
 			Route::post('tds-to-be-collected-export','ReportController@tdsToBeCollectedExport')->name('admin.report.tdsToBeCollectedExport');
@@ -156,6 +162,8 @@ Route::group(['namespace'=>'Admin','middleware'=>['auth'],'prefix'=>'admin'],fun
 		Route::post('yearly-payment-report','PaymentController@yearlyPaymentReport')->name('yearlyPaymentReport');
 		Route::post('payment/custom-date-search','PaymentController@customDateSearch')->name('customDateSearch');
 		Route::resource('payment','PaymentController');
+		Route::get('payment-filter-date','PaymentController@paymentFilterAccDate')->name('payment-filter-date');
+
 		Route::post('received/monthly-received-report','ReceivedController@monthlyReceivedReport')->name('monthlyReceivedReport');
 		Route::post('received/yearly-received-report','ReceivedController@yearlyReceivedReport')->name('yearlyReceivedReport');
 		Route::post('received/receipt-modal','ReceivedController@receiptModal')->name('receiptModal');

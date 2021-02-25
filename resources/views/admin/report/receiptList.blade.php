@@ -68,28 +68,22 @@
                         <input type="hidden" name="month" class="monthvalue" value="">
                         <input type="hidden" name="type" value="0">
                         <input type="hidden" name="segment" value="{{Request::segment(2)}}" id="segment">
-                        <input type="submit" name="Export" value="Export" class="btn btn-info">
+                        <input type="submit" name="Export" value="Export" class="btn btn-info" formtarget="_blank">
                     </form>
                 </div>
                 </div>
                 <div class="col-sm-6">
-                  <div class="box">
-                    <div class="box-header"><h3 class="box-title">Year</h3></div>
-                    <div class="box-body">
-                      <form class="export-form" method="post" action="{{ route('admin.report.receiptListExport') }}">
-                        @csrf
-                        <div class="erport-wrapp profit-loss-wrapp">
-                            <div class="form-group form-group-wrapper">
-                                <label for="year">Input Year</label>
-                                <input class="form-control" name="year" id="year" type="text" placeholder="Input Year">
-                            </div>
-                            <input type="submit" name="Export" value="Export" target="_blank" class="btn btn-info">
-                        </div>
-                      </form>
-                    </div>
-                  </div>
+                    <form class="export-form" method="post" action="{{ route('admin.report.receiptListExport') }}">
+                      @csrf
+                      <div class="erport-wrapp profit-loss-wrapp">
+                          <div class="form-group form-group-wrapper">
+                              <label for="year">Input Year</label>
+                              <input class="form-control" name="year" id="year" type="text" placeholder="Input Year">
+                          </div>
+                          <input type="submit" name="Export" value="Export" target="_blank" class="btn btn-info" formtarget="_blank">
+                      </div>
+                    </form>
                 </div>
-              </div>
             </div>
 
         </div>
@@ -140,6 +134,7 @@
                 <tbody id="sortable">
                 @php($i=1)
                 @foreach($details as $detail)
+                <?php //dd($detail) ?>
                   <tr id="{{ $detail->id }}">
                       <td>{{$i}}</td>
                       <td>{{$detail->received_from}}</td>

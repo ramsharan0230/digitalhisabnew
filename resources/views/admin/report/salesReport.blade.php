@@ -85,7 +85,7 @@
                 <div class="erport-wrapp profit-loss-wrapp">
                     <div class="form-group form-group-wrapper">
                         <label>Input Year</label>
-                        <input class="form-control" type="text" placeholder="Input Year">
+                        <input class="form-control inputYear" type="text" placeholder="Input Year">
                     </div>
                     <div class="form-group form-group-wrapper">
                         <label>Select Month</label>
@@ -105,12 +105,14 @@
                           <option value="12">Chaitra</option>
                         </select>
                     </div>
-                    <form class="export-form" method="post" action="http://localhost:8000/admin/report/daybook-export">
-                        <input type="hidden" name="_token" value="1BfKgMdhonQDshRGiZ8vu7alAyrxh7zj9VnsvZff">
+                    <form class="export-form" method="post" action="{{ route('salesReportPdf') }}">
+                      @csrf
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
                         <input type="hidden" name="month" class="monthvalue" value="">
+                        <input type="hidden" name="year" class="yearvalue" value="">
                         <input type="hidden" name="type" value="0">
                         <input type="hidden" name="segment" value="report" id="segment">
-                        <input type="submit" name="Export" value="Export" class="btn btn-info">
+                        <input type="submit" name="Export" value="Export" class="btn btn-info" formtarget="_blank">
                     </form>
                 </div>
             </div>
@@ -129,7 +131,7 @@
                         <label for="year">Input Year</label>
                         <input class="form-control" name="year" id="year" type="text" placeholder="Input Year">
                     </div>
-                    <input type="submit" name="Export" value="Export" target="_blank" class="btn btn-info">
+                    <input type="submit" name="Export" value="Export" target="_blank" class="btn btn-info" formtarget="_blank">
                 </div>
               </form>
             </div>
@@ -237,6 +239,9 @@
         });
     });
 
+    $('.inputYear').keyup(function(){
+      $('.yearvalue').val($('.inputYear').val())
+    })
 
     $(function () {
         $("#example1").DataTable();

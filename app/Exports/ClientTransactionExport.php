@@ -24,6 +24,7 @@ class ClientTransactionExport implements FromArray,ShouldAutoSize, WithHeadings
                 return [
                     '#',
                     'Created Date',
+                    'Paid To',
                     'Billing Status',
                     'Amount',
                     
@@ -34,9 +35,7 @@ class ClientTransactionExport implements FromArray,ShouldAutoSize, WithHeadings
 
 	    	$vendor = Client::find($this->client_id);
 	    	$invoices = $vendor->invoice;
-	        
-	        
-	    	
+	        // dd($invoices);
 	        $data=[];
 	        $value=[];
 	        $i=1;
@@ -44,6 +43,7 @@ class ClientTransactionExport implements FromArray,ShouldAutoSize, WithHeadings
 	        	
 	        	$value['#']=$i;
 	        	$value['created_at']=$detail->nepali_date;
+                $value['client_name']=$detail->nepali_date;
 	        	$value['billing_status']=$detail->collected==$detail->grand_total?'Closed':'Open';
 	        	$value['amount']=$detail->grand_total;
 	        	

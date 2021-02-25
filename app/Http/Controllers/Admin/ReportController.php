@@ -58,6 +58,16 @@ class ReportController extends Controller
         // dd($details);
     	return view('admin.report.salesReport',compact('details'));
     }
+
+    public function salesReportPdf(Request $request){
+        // dd($request->all());
+        $details = $this->sales->orderBy('created_at','desc')->whereMonth('vat_date', $request->month)->whereYear('vat_date', $request->year)->get();
+        $pdf = PDF::loadView('admin.report.salesReportPdf', compact('details'));
+        return $pdf->stream('sales-report.pdf');
+        // dd($details);
+    	return view('admin.report.salesReport',compact('details'));
+    }
+
     public function salesSearchByMonth(Request $request){
         $value = $request->value;
         $details = $this->sales->orderBy('created_at','desc')->whereMonth('vat_date',$value)->get();
@@ -152,9 +162,7 @@ class ReportController extends Controller
         return view('admin.report.include.receiptCustomSearch',compact('details'));
     }
     public function paymentList(){
-        $nepali_date=$this->calendar->eng_to_nep(date('Y'),date('m'),date('d'));
-        $todaysNepaliDate=$nepali_date['year'].'-'.((strlen($nepali_date['month']) == 2) ? $nepali_date['month'] : "0".$nepali_date['month']).'-'.((strlen($nepali_date['date']) == 2) ? $nepali_date['date'] : "0".$nepali_date['date']);
-
+        $todaysNepaliDate = $this->getNepaliDate();
         $details = $this->payment->orderBy('created_at','desc')->get();
         return view('admin.report.paymentList',compact('details', 'todaysNepaliDate'));
     }
@@ -339,6 +347,15 @@ class ReportController extends Controller
     //Annual Reports
     public function annualBookExport(Request $request){
         // dd($request->all());
+        $value = $request->year;
+        $details = $this->sales->orderBy('created_at','desc')->whereYear('vat_date',$value)->get();
+        $pdf = PDF::loadView('pdf.annual-report', compact('details'));
+        return $pdf->stream('annual-invoice.pdf');
+    }
+
+    //Annual Reports
+    public function annualSalesExport(Request $request){
+        dd($request->all());
         $value = $request->year;
         $details = $this->sales->orderBy('created_at','desc')->whereYear('vat_date',$value)->get();
         $pdf = PDF::loadView('pdf.annual-report', compact('details'));
