@@ -101,7 +101,7 @@
                   <input type="hidden" name="year" class="yearvalue" value="">
                   <input type="hidden" name="type" value="0">
                   <input type="hidden" name="segment" value="{{Request::segment(2)}}" id="segment">
-                  <input type="submit" name="Export" value="Export" class="btn btn-info">
+                  <input type="submit" name="Export" value="Export" class="btn btn-info" formtarget="_blank">
               </form>
           </div>
       </div>
@@ -140,16 +140,12 @@
           <div class="box-body daybookappend">
               <table id="example2" class="table table-bordered table-striped">
                 <thead>
-                   
                       <th></th>
                       <th colspan="2">Collection</th> 
      
                       <th colspan="3">Purchase</th>
                    
                       <th colspan="3">Paid</th>
-
-               
-                    
                 </thead>
                 <tbody id="sortable">
           
