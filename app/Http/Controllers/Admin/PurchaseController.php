@@ -17,7 +17,9 @@ use App\Repositories\Sales\SalesRepository;
 use App\Repositories\OfficeBalance\OfficeBalanceRepository;
 use App\Repositories\Vendor\VendorRepository;
 use Carbon\Carbon;
-use DB;
+use DB, PDF;
+use Illuminate\Support\Facades\Input; 
+
 
 class PurchaseController extends Controller
 {
@@ -577,6 +579,30 @@ class PurchaseController extends Controller
         $details = $this->purchase->orderBy('created_at','desc')->where('collected',0)->get();
         return view('admin.purchase.toBePaid',compact('details'));
     }
+
+    public function toBePaidDateFilter(){
+        $start_date = Input::get('start_date', 'end_date');
+        $end_date = Input::get('end_date');
+        $details = $this->purchase->whereBetween('vat_date', [$start_date, $end_date])->orderBy('created_at','desc')->where('collected',0)->get();
+        return view('admin.purchase.toBePaid',compact('details'));
+    }
+
+    public function toBePaidPdf(Request $request){
+        $year = $request->year;
+        $month = $request->month;
+        $details=$this->purchase->orderBy('created_at','desc')->whereYear('vat_date', $year)->whereMonth('vat_date', $month)->get();
+        $pdf = PDF::loadView('admin.purchase.to-be-paid-pdf', compact('details', 'year', 'month'));
+        return $pdf->stream('monthly-vat-to-be-paid.pdf');
+    }
+
+    public function customSearched(Request $request){
+        $year = $request->year;
+        $month = $request->month;
+        $details=$this->purchase->orderBy('created_at','desc')->whereYear('vat_date', $year)->whereMonth('vat_date', $month)->get();
+
+        return view('admin.purchase.include.toBePaidCustomSearched',compact('details'));
+    }
+
     public function saveVendor(Request $request){
         
         $this->validate($request,[

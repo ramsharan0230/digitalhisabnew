@@ -36,24 +36,25 @@
             <h3 class="box-title">Custom Date</h3>
           </div>
           <div class="box-body">
-
-            <div class="col-md-5">
-              <div class="form-group">
-                <label>Start Date</label>
-                <input type="text" id="start_date" class="bod-picker form-control" name="start_date" autocomplete="off" value="">
+            <form action="{{ route('to-be-paid-date-filter') }}" method="get">
+              <div class="col-md-5">
+                <div class="form-group">
+                  <label>Start Date</label>
+                  <input type="text" id="start_date" class="bod-picker form-control" name="start_date" autocomplete="off" value="">
+                </div>
               </div>
-            </div>
-            <div class="col-md-5">
-              <div class="form-group">
-                <label>End Date</label>
-                <input type="text" id="end_date" class="bod-picker form-control" name="end_date" autocomplete="off" value="">
+              <div class="col-md-5">
+                <div class="form-group">
+                  <label>End Date</label>
+                  <input type="text" id="end_date" class="bod-picker form-control" name="end_date" autocomplete="off" value="">
+                </div>
               </div>
-            </div>
-            <div class="col-md-2">
-              <div class="form-group sales-btn">
-                <input type="submit" name="submit" value="submit" class="btn btn-success customDateSearch">
+              <div class="col-md-2">
+                <div class="form-group sales-btn">
+                  <input type="submit" name="submit" value="submit" class="btn btn-success customDateSearch">
+                </div>
               </div>
-            </div>
+            </form>
           </div>
         </div>
         <div class="col-md-6">
@@ -62,7 +63,7 @@
                 <div class="erport-wrapp profit-loss-wrapp">
                     <div class="form-group form-group-wrapper">
                         <label>Input Year</label>
-                        <input class="form-control" type="text" placeholder="Input Year">
+                        <input class="form-control inputYear" type="text" placeholder="Input Year">
                     </div>
                     <div class="form-group select-mont-wrapp form-group-wrapper">
                         <label>Select Month</label>
@@ -82,12 +83,13 @@
                           <option value="12">Chaitra</option>
                         </select>
                     </div>
-                    <form class="export-form" method="post" action="{{route('dayBookExport')}}">
+                    <form class="export-form" method="post" action="{{route('to-be-paid-pdf')}}">
                         {{csrf_field()}}
                         <input type="hidden" name="month" class="monthvalue" value="">
+                        <input type="hidden" name="year" class="yearvalue" value="">
                         <input type="hidden" name="type" value="0">
                         <input type="hidden" name="segment" value="{{Request::segment(2)}}" id="segment">
-                        <input type="submit" name="Export" value="Export" class="btn btn-info">
+                        <input type="submit" name="Export" value="Export" class="btn btn-info" formtarget="_blank">
                     </form>
                 </div>
 
@@ -106,7 +108,7 @@
             <div class="box-header">
                 <h3 class="box-title">Data Table</h3>
             </div>
-          <div class="box-body">
+          <div class="box-body append">
               <table id="example1" class="table table-bordered table-striped">
                 <thead>
                     <tr>
@@ -166,7 +168,11 @@
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <script >
 
-    
+  $.ajaxSetup({
+      headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      }
+  });
 
   $('#example1').dataTable( {
     "pageLength": 10
@@ -178,6 +184,31 @@
       closeOnDateSelect: true,
       // minDate: formatedNepaliDate
   });
+
+  $(".inputYear").keyup(function(){
+    $('.yearvalue').val($(".inputYear").val())
+  });
+
+  $(document).ready(function(){
+      $('#month').on('change',function(){
+        month=$(this).val();
+        segment_2=$('#segment').val();
+        year=$('.yearvalue').val();
+
+        $.ajax({
+          method:'post',
+          url:"{{route('toBePaidCustomSearched')}}",
+          data:{month:month, segment:segment_2, year: year },
+          success:function(data){
+            $('.table-striped').remove();
+            $('.append').html(data);
+            
+            $('.export').removeClass('hidden');
+            $('.monthvalue').val(month);
+          }
+        });
+      });
+    });
 
   $(document).ready(function(){
     $(document).on('change','.purchasePayment',function(e){

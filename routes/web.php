@@ -46,7 +46,7 @@ Route::group(['namespace'=>'Admin','middleware'=>['auth'],'prefix'=>'admin'],fun
 			Route::post('salesSearchByMonth','ReportController@salesSearchByMonth')->name('reportSalesSearchByMonth');
 			Route::post('custom-sales-search','ReportController@customSalesSearch')->name('reportCustomSalesSearch');
 			Route::get('report-invoice-view/{id}','ReportController@reportInvoiceView')->name('reportInvoiceView');
-			Route::post('report-print-invoice','ReportController@reportPrintInvoice')->name('reportPrintInvoice');
+			Route::post('report-print-invoito-be-paidce','ReportController@reportPrintInvoice')->name('reportPrintInvoice');
 			Route::get('receipt-list','ReportController@receiptList')->name('reportReceiptList');
 			Route::post('receipt-search-month','ReportController@receiptSearchByMonth')->name('reportReceiptSearchByMonth');
 			Route::post('custom-receipt-search','ReportController@customReceiptSearch')->name('customReceiptSearch');
@@ -138,6 +138,10 @@ Route::group(['namespace'=>'Admin','middleware'=>['auth'],'prefix'=>'admin'],fun
 		//purchase
 		Route::post('purchase/save-vendor','PurchaseController@saveVendor')->name('saveVendor');
 		Route::get('purchase/to-be-paid','PurchaseController@toBePaid')->name('toBePaid');
+		Route::get('to-be-paid-date-filter', 'PurchaseController@toBePaidDateFilter')->name('to-be-paid-date-filter');
+		Route::post('to-be-paid-pdf', 'PurchaseController@toBePaidPdf')->name('to-be-paid-pdf');
+		Route::post('toBePaidCustomSearched', 'PurchaseController@customSearched')->name('toBePaidCustomSearched');
+
 		Route::post('partial-purchase-payment','PurchaseController@partialPurchasePayment')->name('partialPurchasePayment');
 		Route::post('pay-partial-purchase-payment','PurchaseController@payPartialPurchasePayment')->name('payPartialPurchasePayment');
 		Route::post('full-purchase-payment','PurchaseController@fullPurchasePayment')->name('fullPurchasePayment');
