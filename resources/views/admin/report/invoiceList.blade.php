@@ -63,7 +63,7 @@
                     <div class="erport-wrapp profit-loss-wrapp">
                         <div class="form-group form-group-wrapper">
                             <label>Input Year</label>
-                            <input class="form-control" type="text" placeholder="Input Year">
+                            <input class="form-control inputYear" type="text" placeholder="Input Year">
                         </div>
                         <div class="form-group select-mont-wrapp top-form-wrapp form-group-wrapper">
                             <label>Select Month</label>
@@ -84,9 +84,10 @@
                             </select>
                         </div>
 
-                        <form class="export-form" method="post" action="{{route('dayBookExport')}}">
+                        <form class="export-form" method="post" action="{{route('admin.report.invoice-list-month-export')}}">
                             {{csrf_field()}}
                             <input type="hidden" name="month" class="monthvalue" value="">
+                            <input type="hidden" name="year" class="yearvalue" value="">
                             <input type="hidden" name="type" value="0">
                             <input type="hidden" name="segment" value="{{Request::segment(2)}}" id="segment">
                             <input type="submit" name="Export" value="Export" class="btn btn-info">
@@ -183,9 +184,6 @@
                        <a class="btn btn-warning edit" href="{{route('previewInvoice',$detail->id)}}" target="_blank" title="Edit"><span class="fa fa-eye"></span></a>
                        <a class="btn btn-info print" href="#" title="Edit" data-id="{{$detail->id}}"><span class="fa fa-edit"></span>Print</a>
                        
-
-
-
                       </td>
                   </tr>
                   @php($i++)
@@ -234,6 +232,9 @@
 
     $(function () {
         $("#example1").DataTable();
+        $('.inputYear').keyup(function(){
+          $('.yearvalue').val($('.inputYear').val())
+        })
     });
     $('.message').delay(5000).fadeOut(400);
     $('.message1').delay(4000).fadeOut(300);

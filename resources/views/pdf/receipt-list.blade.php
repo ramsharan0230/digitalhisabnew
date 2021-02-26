@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Annual Report</title>
+    <title>Receipt list Report</title>
     <style>
         table, th, td {
             border: 1px solid black;
@@ -14,7 +14,7 @@
     </style>
 </head>
 <body>
-    <h3 style="margin-left: 40%">Annual Report</h3>
+    <h3 style="margin-left: 40%">Receipt List Report</h3>
     <table class="table" style="border">
         <thead>
             <tr>

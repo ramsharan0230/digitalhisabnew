@@ -92,7 +92,10 @@ Route::group(['namespace'=>'Admin','middleware'=>['auth'],'prefix'=>'admin'],fun
 			Route::post('annualsales-export','ReportController@annualSalesExport')->name('admin.report.annualsales-export');
 			
 			Route::post('receipt-list-export','ReportController@receiptListExport')->name('admin.report.receiptListExport');
+			Route::post('receipt-list-month-export','ReportController@receiptListMonthExport')->name('admin.report.receipt-list-month-export');
+			
 			Route::post('invoice-list-export','ReportController@invoiceListExport')->name('admin.report.invoiceListExport');
+			Route::post('invoice-list-month-export','ReportController@monthInvoiceListExport')->name('admin.report.invoice-list-month-export');
 			Route::post('tds-to-be-collected-export','ReportController@tdsToBeCollectedExport')->name('admin.report.tdsToBeCollectedExport');
 			Route::post('salesSearchByYear','ReportController@salesSearchByYear')->name('salesSearchByYear');
 

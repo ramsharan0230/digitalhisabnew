@@ -360,7 +360,7 @@ class ReportController extends Controller
 
     //Annual Reports
     public function annualSalesExport(Request $request){
-        dd($request->all());
+        // dd($request->all());
         $value = $request->year;
         $details = $this->sales->orderBy('created_at','desc')->whereYear('vat_date',$value)->get();
         $pdf = PDF::loadView('pdf.annual-report', compact('details'));
@@ -375,12 +375,30 @@ class ReportController extends Controller
         return $pdf->stream('receipt-list.pdf');
     }
 
+    public function  receiptListMonthExport(Request $request){
+        $year = $request->year;
+        $month = $request->month;
+        $details = $this->received->orderBy('date','desc')->whereYear('date',$year)->whereMonth('date',$month)->get();
+        $pdf = PDF::loadView('pdf.receipt-list', compact('details'));
+        return $pdf->stream('receipt-list.pdf');
+    }
+
     //Invoice Reports
     public function invoiceListExport(Request $request){
         $value = $request->year;
         // dd($this->invoice->orderBy('created_at','desc')->whereYear('date', '=', $value)->get());
         $details = $this->invoice->orderBy('created_at','desc')->get();
         // dd($details);/
+        $pdf = PDF::loadView('pdf.invoice', compact('details'));
+        return $pdf->stream('invoice-report-list.pdf');
+    }
+
+    //Invoice Reports
+    public function monthInvoiceListExport(Request $request){
+        $year = $request->year;
+        $month = $request->month;
+        // dd($this->invoice->orderBy('created_at','desc')->whereYear('date', '=', $value)->get());
+        $details = $this->invoice->whereMonth('nepali_date', $month)->whereYear('nepali_date', $year)->orderBy('created_at','desc')->get();
         $pdf = PDF::loadView('pdf.invoice', compact('details'));
         return $pdf->stream('invoice-report-list.pdf');
     }

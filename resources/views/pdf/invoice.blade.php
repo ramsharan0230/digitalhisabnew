@@ -32,8 +32,8 @@
                 <?php //dd($detail) ?>
                 <td>{{ $key+1 }}.</td>
                 <td>{{ $detail->client_name }}</td>
-                <td>{{ $detail->date }}</td>
-                <td>{{ $detail->collected }}</td>
+                <td>{{ $detail->nepali_date }}</td>
+                <td>{{ ($detail->total - $detail->collected)>0?"Open":"Close" }}</td>
                 <td>Rs. {{ $detail->total }}</td>
                 <?php $totalAmt +=$detail->total ?>
             </tr>
