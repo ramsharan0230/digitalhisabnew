@@ -135,7 +135,7 @@
                       <td>{{$detail->vat_date}}</td>
                       <td>{{$detail->purchased_item}}</td>
                       <td>
-                        <div class="form-group" id="select{{$detail->id}}">
+                        {{-- <div class="form-group" id="select{{$detail->id}}">
                           <select class="form-control purchasePayment">
                             <option disabled="true" selected="true">Make Payment</option>
                             <option value="partial" data-id="{{$detail->id}}">Partial</option>
@@ -143,7 +143,28 @@
                             <option value="full" data-id="{{$detail->id}}">Full</option>
                             @endif
                           </select>
-                        </div>
+                        </div> --}}
+
+                        @if($detail->collected_type==null)
+                    <a class="btn btn-info edit" href="{{route('purchase.edit',$detail->id)}}" title="Edit"><span class="fa fa-edit"></span></a>
+                    <form method= "post" action="{{route('purchase.destroy',$detail->id)}}" class="delete btn btn-danger">
+                    {{csrf_field()}}
+                    <input type="hidden" name="_method" value="DELETE">
+                    <button type="submit" class="btn-delete" style="display:inline"><span class="fa fa-trash"></span></button>
+                    </form>
+                    @endif
+                    @if($detail->collected!=1)
+                    <div class="form-group" id="select{{$detail->id}}">
+                      <select class="form-control purchasePayment">
+                        <option disabled="true" selected="true">Make Payment</option>
+                        <option value="partial" data-id="{{$detail->id}}">Partial</option>
+                        @if($detail->collected_type!='partial')
+                        <option value="full" data-id="{{$detail->id}}">Full</option>
+                        @endif
+                      </select>
+                    </div>
+                    @endif
+                    <a href="{{route('purchasePaymentList',$detail->id)}}" class="btn btn-success">Payments</a>
                       </td>
                   </tr>
                   @php($i++)
