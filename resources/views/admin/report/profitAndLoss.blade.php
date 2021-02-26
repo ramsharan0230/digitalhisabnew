@@ -41,7 +41,7 @@
 
                       <div class="form-group form-group-wrapper">
                           <label>Input Year</label>
-                          <input class="form-control" type="text" placeholder="Input Year">
+                          <input class="form-control inputYear" type="text" placeholder="Input Year">
                       </div>
                       <div class="select-mont-wrapp form-group-wrapper">
                           <div class="form-group form-group-wrapper">
@@ -63,9 +63,10 @@
                             </select>
                           </div>
                       </div>
-                      <form class="export-form" method="post" action="{{route('dayBookExport')}}">
+                      <form class="export-form" method="post" action="{{route('profit-and-loss-by-month-pdf')}}">
                           {{csrf_field()}}
                           <input type="hidden" name="month" class="monthvalue" value="">
+                          <input type="hidden" name="year" class="yearvalue">
                           <input type="hidden" name="type" value="0">
                           <input type="hidden" name="segment" value="{{Request::segment(2)}}" id="segment">
                           <input type="submit" name="Export" value="Export" class="btn btn-info">
@@ -289,7 +290,9 @@
     });
 
     $(document).ready(function(){
-
+      $(".inputYear").keyup(function(){
+        $('.yearvalue').val($(".inputYear").val())
+      })
     })
 
 
