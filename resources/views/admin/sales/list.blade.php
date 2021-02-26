@@ -59,23 +59,26 @@
             <div class="col-lg-6">
                 <div class="box-header"><h3 class="box-title">Custom Date</h3></div>
                 <div class="box-body">
-                  <div class="col-md-5">
-                    <div class="form-group">
-                      <label>Start Date</label>
-                      <input type="text" id="start_date" class="bod-picker form-control" name="start_date" autocomplete="off" value="">
+                  <form action="{{ route('sales-report') }}" method="post">
+                    @csrf
+                    <div class="col-md-5">
+                      <div class="form-group">
+                        <label>Start Date</label>
+                        <input type="text" id="start_date" class="bod-picker form-control" name="start_date" autocomplete="off" value="">
+                      </div>
                     </div>
-                  </div>
-                  <div class="col-md-5">
-                    <div class="form-group">
-                      <label>End Date</label>
-                      <input type="text" id="end_date" class="bod-picker form-control" name="end_date" autocomplete="off" value="">
+                    <div class="col-md-5">
+                      <div class="form-group">
+                        <label>End Date</label>
+                        <input type="text" id="end_date" class="bod-picker form-control" name="end_date" autocomplete="off" value="">
+                      </div>
                     </div>
-                  </div>
-                  <div class="col-md-2">
-                    <div class="form-group pro-submit-btn">
-                      <input type="submit" name="submit" value="submit" class="btn btn-success customDateSearch">
+                    <div class="col-md-2">
+                      <div class="form-group pro-submit-btn">
+                        <input type="submit" name="submit" value="submit" class="btn btn-success customDateSearch">
+                      </div>
                     </div>
-                  </div>
+                  </form>
                 </div>
             </div>
 

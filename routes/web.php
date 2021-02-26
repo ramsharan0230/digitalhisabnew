@@ -139,6 +139,7 @@ Route::group(['namespace'=>'Admin','middleware'=>['auth'],'prefix'=>'admin'],fun
 		});
 
 		Route::resource('sales','SalesController');
+		Route::post('sales-report', 'SalesController@salesReport')->name('sales-report');
 		Route::resource('payment-gateway','PaymentGatewayController');
 		Route::post('searchByMonth','VatController@searchByMonth')->name('searchByMonth');
 		Route::post('vat/export-vat','VatController@exportVat')->name('vatExport');

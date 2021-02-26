@@ -161,4 +161,7 @@ class SalesController extends Controller
         return view('admin.invoice.preview',compact('data','description','dashboard_setting'));
     }
     
+    public function salesReport(Request $request){
+        dd($request->all());
+    }
 }

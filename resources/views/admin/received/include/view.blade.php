@@ -36,7 +36,7 @@
       @if($detail->paymentgateway_id==null)
       <tr class="warning">
         <td>Transfered To</td>
-        <td>{{$detail->wallet->name}}</td>
+        <td>{{@$detail->wallet->name}}</td>
       </tr>
       
       @else

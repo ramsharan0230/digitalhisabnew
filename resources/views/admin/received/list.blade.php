@@ -65,8 +65,8 @@
                   </div>
                   <div class="col-md-2">
                       <div class="form-group list-export">
-                        <form action="http://localhost:8000/admin/contact/export-client-transaction" method="post">
-                            <input type="hidden" name="_token" value="osvk9ExgHdsG61i9LnDFvVbE7uMPn5sQ1re1JG7X">
+                        <form action="{{ route('admin.contact.export-client-transaction') }}" method="post">
+                            {{ csrf_field() }}
                             <input type="hidden" name="id" value="3">
                             <input type="submit" name="Export" class="btn btn-success" value="Export">
                         </form>
@@ -135,9 +135,7 @@
                       <td>{{$detail->date}}</td>
                       <td>{{$detail->amount}}</td>
                       <td>
-                        <a class="btn btn-warning view " title="Edit"
-                            data-id="{{$detail->id}}"
-                            >
+                        <a class="btn btn-warning view " title="Edit" data-id="{{$detail->id}}">
                             <span class="fa fa-eye"></span>
                         </a>
                       </td>
