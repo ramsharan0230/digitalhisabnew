@@ -21,6 +21,8 @@ use App\Repositories\Paid\PaidRepository;
 use App\Repositories\Sales\SalesRepository;
 use App\Repositories\OfficeBalance\OfficeBalanceRepository;
 use App\Repositories\Client\ClientRepository;
+use Illuminate\Support\Facades\Input;
+
 
 use App\Models\Invoice;
 use Mail;
@@ -56,10 +58,14 @@ class InvoiceController extends Controller
      */
     public function index()
     {
-//       $todaysDateInGregorian = Carbon::now();
-    // $currentDateInNepal = $todaysDateInGregorian->addYears(56)->addMonths(8)->addDays(15);
-    // dd($currentDateInNepal);
-        $details=$this->invoice->orderBy('created_at','desc')->get();
+        $start_date = Input::get('start_date');
+        $end_date = Input::get('end_date');
+         
+        if($start_date && $end_date )
+            $details=$this->invoice->orderBy('created_at','desc')->whereBetween('nepali_date',[$start_date, $end_date])->get();
+        else
+            $details=$this->invoice->orderBy('created_at','desc')->get();
+
         return view('admin.invoice.list',compact('details'));
     }
 
@@ -72,6 +78,14 @@ class InvoiceController extends Controller
     {   
         $clients = $this->client->orderBy('created_at','desc')->get();
         return view('admin.invoice.create',compact('clients'));
+    }
+
+    public function invoiceExportPdf(Request $request){
+        $year =$request->year;
+        $month =$request->month;
+        $details=$this->invoice->orderBy('created_at','desc')->whereYear('nepali_date',$year)->whereMonth('nepali_date',$month)->get();
+        $pdf = PDF::loadView('admin.invoice.invoice-report-ym-pdf', compact('details', 'year', 'month'));
+        return $pdf->stream('invoice-report.pdf');
     }
 
     /**
@@ -700,12 +714,18 @@ class InvoiceController extends Controller
     }
     public function invoiceMonthlyReport(Request $request){
         $nepali_date=$this->calendar->eng_to_nep(date('Y'),date('m'),date('d'));
-        
-        
-        $details=$this->invoice->orderBy('created_at','desc')->whereYear('nepali_date',$request->year)->whereMonth('nepali_date',$request->value)->get();
-        
-            
+        $details=$this->invoice->orderBy('created_at','desc')->whereMonth('nepali_date',$request->value)->get();
         return view('admin.invoice.include.monthlyInvoiceReport',compact('details'));
+    }
+
+    public function invoiceFilter(){
+        $start_date = Input::get('start_date');
+        $end_date = Input::get('end_date');
+
+        $nepali_date=$this->calendar->eng_to_nep(date('Y'),date('m'),date('d'));
+        $details=$this->invoice->orderBy('created_at','desc')->where('nepali_date',$start_date)->where('nepali_date',$end_date)->get();
+        
+        return view('admin.invoice.list',compact('details'));
     }
 
     public function createBalanceSheet($todaysNepaliDate){

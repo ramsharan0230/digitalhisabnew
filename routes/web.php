@@ -122,6 +122,8 @@ Route::group(['namespace'=>'Admin','middleware'=>['auth'],'prefix'=>'admin'],fun
 		});
 		
 		Route::resource('invoice','InvoiceController');
+		Route::get('invoice-filter','InvoiceController@invoiceFilter')->name('invoice-filter');
+		Route::post('invoice-report-ym-pdf','InvoiceController@invoiceExportPdf')->name('invoice-report-ym-pdf');
 		//vat
 		Route::group(['prefix'=>'sales'],function(){
 			Route::get('sales-vat','VatController@salesVat')->name('salesVat');

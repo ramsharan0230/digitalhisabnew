@@ -54,25 +54,27 @@
         <div class="row">
             <div class="col-lg-6">
                 <div class="box-header"><h3 class="box-title">Custom Date</h3></div>
-                <div class="box-body">
-                  <div class="col-md-5">
-                    <div class="form-group">
-                      <label>Start Date</label>
-                      <input type="text" id="start_date" class="bod-picker form-control" name="start_date" autocomplete="off" value="">
+                <form action="#" method="GET">
+                  <div class="box-body">
+                    <div class="col-md-5">
+                      <div class="form-group">
+                        <label>Start Date</label>
+                        <input type="text" id="start_date" class="bod-picker form-control" name="start_date" autocomplete="off" value="">
+                      </div>
+                    </div>
+                    <div class="col-md-5">
+                      <div class="form-group">
+                        <label>End Date</label>
+                        <input type="text" id="end_date" class="bod-picker form-control" name="end_date" autocomplete="off" value="">
+                      </div>
+                    </div>
+                    <div class="col-md-2">
+                      <div class="form-group pro-submit-btn">
+                        <input type="submit" name="submit" value="submit" class="btn btn-success customDateSearch">
+                      </div>
                     </div>
                   </div>
-                  <div class="col-md-5">
-                    <div class="form-group">
-                      <label>End Date</label>
-                      <input type="text" id="end_date" class="bod-picker form-control" name="end_date" autocomplete="off" value="">
-                    </div>
-                  </div>
-                  <div class="col-md-2">
-                    <div class="form-group pro-submit-btn">
-                      <input type="submit" name="submit" value="submit" class="btn btn-success customDateSearch">
-                    </div>
-                  </div>
-                </div>
+              </form>
             </div>
 
             <div class="col-lg-6">
@@ -83,7 +85,7 @@
 
                       <div class="form-group form-group-wrapper">
                           <label>Input Year</label>
-                          <input class="form-control" type="text" placeholder="Input Year">
+                          <input class="form-control inputYear" type="text" placeholder="Input Year">
                       </div>
                       <div class="select-mont-wrapp form-group-wrapper">
                           <div class="form-group form-group-wrapper">
@@ -105,12 +107,13 @@
                             </select>
                           </div>
                       </div>
-                      <form class="export-form" method="post" action="{{route('dayBookExport')}}">
+                      <form class="export-form" method="post" action="{{route('invoice-report-ym-pdf')}}">
                           {{csrf_field()}}
                           <input type="hidden" name="month" class="monthvalue" value="">
+                          <input type="hidden" name="year" class="yearvalue" value="">
                           <input type="hidden" name="type" value="0">
                           <input type="hidden" name="segment" value="{{Request::segment(2)}}" id="segment">
-                          <input type="submit" name="Export" value="Export" class="btn btn-info">
+                          <input type="submit" name="Export" value="Export" class="btn btn-info" formtarget="_blank">
                       </form>
                   </div>
               </div>
@@ -267,6 +270,10 @@
         return;
         });
     });
+
+    $('.inputYear').keyup(function(){
+      $('.yearvalue').val($('.inputYear').val())
+    })
 
 
     $(function () {
