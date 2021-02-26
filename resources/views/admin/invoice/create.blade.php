@@ -172,7 +172,7 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="vat_pan">VAT/PAN</label>
-                                        <input type="text" class="form-control" placeholder="Enter your VAT/PAN " name="vat_pan" id="vat_pan" />
+                                        <input type="text" class="form-control" value="{{ $client->vat_no }}" placeholder="Enter your VAT/PAN " name="vat_pan" id="vat_pan" />
                                     </div>
                                 </div>
                                 <div class="col-md-4">
