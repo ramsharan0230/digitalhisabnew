@@ -322,7 +322,44 @@ class ReportController extends Controller
         return view('admin.report.profitAndLoss',compact('invoices','purchases','other_receiveds','payments','months', 'vatInvoices', 'nonVatInvoices'));
     }
     public function profitAndLossByMonth(Request $request){
-        dd('hello');
+        $invoices = [];
+        $vatInvoices = [];
+        $nonVatInvoices = [];
+        $other_receiveds = [];
+        $purchases = [];
+        $payments = [];
+        $months = ['baishak','jesth','asar','shrawan','bhadra','ashoj','kartik','mangsir','poush','magh','falgun','chaitra'];
+        for($i=1;$i<13;$i++){
+            if((strlen($i) == 2)){
+               $value = $i;
+               $invoice = $this->invoice->whereMonth('nepali_date', $value)->sum('grand_total');
+               $vatInvoice = $this->vatInvoice($value);
+               $other_received = $this->other_received->whereMonth('date',$value)->sum('amount');
+               $purchase = $this->purchase->whereMonth('vat_date',$value)->sum('total');
+               $payment = $this->payment->whereMonth('date',$value)->sum('amount');
+               array_push($invoices,$invoice);
+               array_push($other_receiveds,$other_received);
+               array_push($purchases,$purchase);
+               array_push($payments,$payment);
+               array_push($vatInvoices, $vatInvoice);
+            }else{
+               $value = "0".$i;
+               $invoice = $this->invoice->whereMonth('nepali_date',$value)->sum('grand_total');
+            //   not vat
+                $nonVatInvoice = $this->vatInvoice($value);
+            //   non vat end
+               $other_received = $this->other_received->whereMonth('date',$value)->sum('amount');
+               $purchase = $this->purchase->whereMonth('vat_date',$value)->sum('total');
+               $payment = $this->payment->whereMonth('date',$value)->sum('amount');
+               array_push($invoices,$invoice);
+               array_push($other_receiveds,$other_received);
+               array_push($purchases,$purchase);
+               array_push($payments,$payment);
+               array_push($nonVatInvoices, $nonVatInvoice);
+            }
+        }
+        
+        return view('admin.report.profitandloss_custom',compact('invoices','purchases','other_receiveds','payments','months', 'vatInvoices', 'nonVatInvoices'));
     }
     public function customProfitAndLoss(Request $request){
        

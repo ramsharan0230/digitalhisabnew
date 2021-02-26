@@ -81,7 +81,8 @@ Route::group(['namespace'=>'Admin','middleware'=>['auth'],'prefix'=>'admin'],fun
 			Route::post('custom-tds-collected','ReportController@customTdsCollected')->name('reportCustomTdsCollected');
 			Route::post('custom-tds-paid','ReportController@customTdsPaid')->name('reportCustomTdsPaid');
 			Route::get('profit-and-loss','ReportController@profitAndLoss')->name('reportProfitAndLoss');
-			Route::get('profit-and-loss-by-month','ReportController@profitAndLossByMonth')->name('reportProfitAndLossByMonth');
+			Route::post('profit-and-loss-by-month','ReportController@profitAndLossByMonth')->name('reportProfitAndLossByMonth');
+			Route::post('profit-and-loss-by-month-pdf','ReportController@profitAndLossByMonthPdf')->name('profit-and-loss-by-month-pdf');
 			Route::post('custom-profit_and_loss','ReportController@customProfitAndLoss')->name('reportCustomProfitAndLoss');
 			Route::post('daybook-export','ReportController@dayBookExport')->name('dayBookExport');
 

@@ -41,7 +41,7 @@
 
                       <div class="form-group form-group-wrapper">
                           <label>Input Year</label>
-                          <input class="form-control" type="text" placeholder="Input Year">
+                          <input class="form-control inputYear" type="text" placeholder="Input Year">
                       </div>
                       <div class="select-mont-wrapp form-group-wrapper">
                           <div class="form-group form-group-wrapper">
@@ -63,12 +63,13 @@
                             </select>
                           </div>
                       </div>
-                      <form class="export-form" method="post" action="{{route('dayBookExport')}}">
+                      <form class="export-form" method="post" action="{{route('profit-and-loss-by-month-pdf')}}">
                           {{csrf_field()}}
                           <input type="hidden" name="month" class="monthvalue" value="">
+                          <input type="hidden" name="year" class="yearvalue" value="">
                           <input type="hidden" name="type" value="0">
                           <input type="hidden" name="segment" value="{{Request::segment(2)}}" id="segment">
-                          <input type="submit" name="Export" value="Export" class="btn btn-info">
+                          <input type="submit" name="Export" value="Export" class="btn btn-info" formtarget="_blank">
                       </form>
                   </div>
               </div>
@@ -217,14 +218,12 @@
                                   <th>Total Purchased</th>
                                   <th>Payment</th>
                                   <th>Total</th>
-                                
                                 </tr>
                             </thead>
                             
                             <tbody id="sortable">
                               @php($total = 0)
                               @foreach($nonVatInvoices as $key=>$invoice)
-                              
                               <tr>
                                 <td>{{$months[$key]}}</td>
                                 <td>{{$invoice}}</td>
@@ -289,7 +288,9 @@
     });
 
     $(document).ready(function(){
-
+      $('.inputYear').keyup(function(){
+        $('.yearvalue').val($('.inputYear').val())
+      })
     })
 
 
