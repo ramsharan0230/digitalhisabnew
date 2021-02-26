@@ -54,6 +54,11 @@ class PaymentController extends Controller
      * @return \Illuminate\Http\Response
      */
 
+    public function paymentModal(Request $request){
+        $detail=$this->payment->find($request->id);
+        return view('admin.payment.include.view')->with('detail',$detail);
+    }
+
 
     public function paymentFilterAccDate(Request $request){
         $details=$this->payment->whereBetween('date', [$request->start_date, $request->end_date])->orderBy('created_at','desc')->get();

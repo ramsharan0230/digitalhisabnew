@@ -170,10 +170,11 @@ Route::group(['namespace'=>'Admin','middleware'=>['auth'],'prefix'=>'admin'],fun
 		Route::post('payment/custom-date-search','PaymentController@customDateSearch')->name('customDateSearch');
 		Route::resource('payment','PaymentController');
 		Route::get('payment-filter-date','PaymentController@paymentFilterAccDate')->name('payment-filter-date');
+		Route::post('payment/payment-modal','PaymentController@paymentModal')->name('paymentModal');
 
 		Route::post('received/monthly-received-report','ReceivedController@monthlyReceivedReport')->name('monthlyReceivedReport');
 		Route::post('received/yearly-received-report','ReceivedController@yearlyReceivedReport')->name('yearlyReceivedReport');
-		Route::post('received/receipt-modal','ReceivedController@receiptModal')->name('receiptModal');
+		Route::post('received/receipt-modal','ReceivedController@receiptModal')->name('receiptModal');		
 		Route::post('received/custom-received-search','ReceivedController@customReceivedSearch')->name('customReceivedSearch');
 		Route::resource('received','ReceivedController');
 		Route::post('daybook/monthly-report','DayBookController@monthlyReport')->name('monthlydaybookReport');

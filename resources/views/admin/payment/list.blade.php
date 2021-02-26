@@ -139,6 +139,10 @@
                         <button type="submit" class="btn-delete" style="display:inline"><span class="fa fa-trash"></span></button>
                         </form>
                         @endif
+
+                        <a class="btn btn-warning view " title="Edit" data-id="{{$detail->id}}">
+                          <span class="fa fa-eye"></span>
+                      </a>
                       </td>
                   </tr>
                   @php($i++)
@@ -150,7 +154,7 @@
     </div>
 </div>
 </div>
-@include('admin.include.modal')
+@include('admin.payment.include.modal')
 @endsection
 @push('script')
   <!-- DataTables -->
@@ -190,6 +194,23 @@
       });
     });
   });
+  $(document).ready(function(){
+      $(document).on('click','.view',function(e){
+        e.preventDefault();
+        var id = $(this).data('id');
+        $.ajax({
+          url: "{{route('paymentModal')}}",
+          method: 'post',
+          async: true,
+          data: { id: id},
+          success:function(data){
+            console.log(data);
+            $('#myModal .modal-body').html(data);
+            $('#myModal').modal('show');
+          }
+        });
+      });
+    });
   $(document).ready(function(){
     $('.year').on('change',function(){
       value=$(this).val();
