@@ -28,7 +28,6 @@ class SalesController extends Controller
      */
     public function index()
     {
-        // dd($this->sales->orderBy('created_at', 'desc')->get());
         $details = $this->sales->orderBy('created_at','desc')->get();
         
         return view('admin.sales.list',compact('details'));
@@ -162,6 +161,18 @@ class SalesController extends Controller
     }
     
     public function salesReport(Request $request){
-        dd($request->all());
+        $start_date = $request->start_date;
+        $end_date = $request->end_date;
+        $details = $this->sales->whereBetween('vat_date', [$request->start_date, $request->end_date])->orderBy('created_at','desc')->get();
+        $pdf = PDF::loadView('admin.sales.sales-report-pdf', compact('details', 'start_date', 'end_date'));
+        return $pdf->stream('sales-report-pdf.pdf');
+    }
+
+    public function salesReportPdf(Request $request){
+        $year = $request->year;
+        $month = $request->month;
+        $details = $this->sales->whereMonth('vat_date', $month)->whereYear('vat_date', $year)->orderBy('created_at','desc')->get();
+        $pdf = PDF::loadView('admin.sales.sales-report-ym-pdf', compact('details', 'year', 'month'));
+        return $pdf->stream('sales-report-pdf.pdf');
     }
 }

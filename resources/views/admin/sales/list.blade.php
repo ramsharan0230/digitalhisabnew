@@ -75,7 +75,7 @@
                     </div>
                     <div class="col-md-2">
                       <div class="form-group pro-submit-btn">
-                        <input type="submit" name="submit" value="submit" class="btn btn-success customDateSearch">
+                        <input type="submit" name="submit" value="submit" class="btn btn-success customDateSearch" formtarget="_blank">
                       </div>
                     </div>
                   </form>
@@ -90,7 +90,7 @@
 
                       <div class="form-group form-group-wrapper">
                           <label>Input Year</label>
-                          <input class="form-control" type="text" placeholder="Input Year">
+                          <input class="form-control inputYear" type="text" placeholder="Input Year">
                       </div>
                       <div class="select-mont-wrapp form-group-wrapper">
                           <div class="form-group form-group-wrapper">
@@ -112,12 +112,13 @@
                             </select>
                           </div>
                       </div>
-                      <form class="export-form" method="post" action="{{route('vatExport')}}">
+                      <form class="export-form" method="post" action="{{route('sales-report-pdf')}}">
                         {{csrf_field()}}
                         <input type="hidden" name="month" class="monthvalue" value="">
+                        <input type="hidden" name="year" class="yearvalue" value="">
                         <input type="hidden" name="type" value="1">
                         <input type="hidden" name="segment" value="{{Request::segment(2)}}" id="segment">
-                        <input type="submit" name="Export" value="Export" class="btn btn-info">
+                        <input type="submit" name="Export" value="Export" class="btn btn-info" formtarget="_blank">
                       </form>
                   </div>
               </div>
@@ -255,6 +256,10 @@
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
+
+    $('.inputYear').keyup(function(){
+      $('.yearvalue').val($('.inputYear').val())
+    })
 
     $(document).ready(function(){
         $('.delete').submit(function(e){

@@ -29,7 +29,7 @@
                     </div>
                     <div class="col-md-2">
                       <div class="form-group sub-btn-wrapper">
-                        <input type="submit" name="submit" value="submit" class="btn btn-success customDateSearch">
+                        <input type="submit" name="submit" value="submit" class="btn btn-success customDateSearch" formtarget="_blank">
                       </div>
                     </div>
                 </div>
@@ -68,7 +68,7 @@
                         <form action="{{ route('admin.contact.export-client-transaction') }}" method="post">
                             {{ csrf_field() }}
                             <input type="hidden" name="id" value="3">
-                            <input type="submit" name="Export" class="btn btn-success" value="Export">
+                            <input type="submit" name="Export" class="btn btn-success" value="Export" formtarget="_blank">
                         </form>
                     </div>
                   </div>
