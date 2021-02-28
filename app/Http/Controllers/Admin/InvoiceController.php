@@ -300,9 +300,7 @@ class InvoiceController extends Controller
     }
     public function sendInvoice(Request $request){
         try{
-            
             $setting=$this->setting->first();
-            
             set_time_limit(300);
             if($setting->email_to_send_invoice){
                 $client=$this->invoice->find($request->id);

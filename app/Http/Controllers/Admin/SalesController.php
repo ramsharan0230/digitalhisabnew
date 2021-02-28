@@ -175,4 +175,10 @@ class SalesController extends Controller
         $pdf = PDF::loadView('admin.sales.sales-report-ym-pdf', compact('details', 'year', 'month'));
         return $pdf->stream('sales-report-pdf.pdf');
     }
+
+    public function toBeCollectedYearFilter(Request $request){
+        $year = $request->year;
+        $details = $this->sales->whereYear('vat_date', $year)->orderBy('created_at','desc')->get();
+        return view('admin.sales.include.salesSearchedByYear', compact('details'));
+    }
 }

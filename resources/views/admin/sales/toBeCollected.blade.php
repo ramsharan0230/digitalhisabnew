@@ -30,7 +30,7 @@
 
     <div class="box">
       <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-5">
           <div class="box-header">
             <h3 class="box-title">Custom Date</h3>
           </div>
@@ -56,7 +56,7 @@
             </div>
           </form>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-5">
             <div class="box-header"><h3 class="box-title">Year and Month</h3></div>
             <div class="box-body">
                 <div class="erport-wrapp profit-loss-wrapp">
@@ -94,6 +94,13 @@
 
             </div>
 
+        </div>
+        <div class="col-md-2">
+          <form action="{{ route('sales.to-be-collected-year') }}" method="POST">
+            {{ csrf_field() }}
+            <input type="text" placeholder="Type Year..." class="form-control" id="year" name="year">
+            <button type="submit" class="btn btn-primary btn-sm">Submit</button>
+          </form>
         </div>
       </div>
       
@@ -190,6 +197,23 @@
       }
   });
   
+  $('#year').keyup(function(){
+    if($('#year').val().length == 4){
+      year = $('#year').val();
+      $.ajax({
+          method:"post",
+          url:"{{route('sales.to-be-collected-year')}}",
+          data:{year: year},
+          success:function(data){
+            $('.table-striped').remove();
+            $('.append').html(data);
+            $('.monthvalue').val(year);
+            $("#example1").DataTable();
+          }
+        });
+    }
+
+  })
 
   $('#example1').dataTable( {
     "pageLength": 10
