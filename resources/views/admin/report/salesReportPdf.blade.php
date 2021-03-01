@@ -15,7 +15,7 @@
     </style>
 </head>
 <body>
-    <h3 style="margin-left: 40%">Invoice To be Collected Report</h3>
+    <h3 style="margin-left: 40%">Sales Report</h3>
     <table class="table" style="border">
         <thead>
             <tr>
@@ -24,22 +24,20 @@
                 <th>Amount</th>
                 <th>Due</th>
                 <th>Billing Status</th>
-                <th>Collected</th>
-                
+                <th>Total</th>
             </tr>
         </thead>
         <tbody>
             <?php $total = 0; ?>
             @forelse ($details as $key=>$detail)
             <tr>
-                <?php //dd($detail) ?>
                 <td>{{$key+1}}.</td>
                 <td>{{$detail->sales_to}}</td>
                 <td>{{ $detail->vat_date }}</td>
                 <td>{{$detail->total-$detail->collected}}</td>
                 <td>{{($detail->total-$detail->collected)>0?"Open":"Close"}}</td>
-                <td>{{$detail->collected}}</td>
-                <?php $total +=$detail->collected; ?>
+                <td>{{ $detail->total }}</td>
+                <?php $total +=$detail->total; ?>
             </tr>
             @empty
             
