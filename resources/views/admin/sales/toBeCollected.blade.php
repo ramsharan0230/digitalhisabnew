@@ -65,7 +65,6 @@
                         <input class="form-control inputYear" type="text" placeholder="Input Year">
                     </div>
 
-                    <input type="submit" name="Export" value="Export" class="btn btn-info" formtarget="_blank">
                     
                     <div class="form-group select-mont-wrapp form-group-wrapper">
                         <label>Select Month</label>
