@@ -10,15 +10,18 @@ use App\Repositories\Invoice\InvoiceRepository;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\ClientTransactionExport;
 use App\Repositories\Setting\SettingRepository;
+use App\Repositories\Payment\PaymentRepository;
+use PDF, DB;
 
 
 class ClientController extends Controller
 {
-    public function __construct(ClientRepository $client,nepali_date $calendar,InvoiceRepository $invoice,SettingRepository $setting){
+    public function __construct(PaymentRepository $payment, ClientRepository $client,nepali_date $calendar,InvoiceRepository $invoice,SettingRepository $setting){
         $this->client=$client;
         $this->calendar=$calendar;
         $this->invoice=$invoice;
         $this->setting = $setting;
+        $this->payment=$payment;
     }
     /**
      * Display a listing of the resource.
@@ -128,8 +131,11 @@ class ClientController extends Controller
         return view('admin.client.monthlyView',compact('invoices'));
     }
     public function exportClientTransaction(Request $request){
-        $client= $this->client->findOrFail($request->id);
-        return Excel::download(new ClientTransactionExport($client->id), 'Client Transaction.xlsx');
+        $year = $request->year;
+        $details=DB::table('payments')->whereYear('date', $request->year)->orderBy('created_at','desc')->get();
+
+        $pdf = PDF::loadView('admin.payment.paymentsPdf', compact('details', 'year'));
+        return $pdf->stream('payments.pdf');
     }
     public function clientInvoicePreview($id){
         $data=$this->invoice->find($id);

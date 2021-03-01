@@ -69,6 +69,7 @@
                           <form action="{{ route('admin.contact.export-client-transaction') }}" method="post">
                               <input type="hidden" name="_token" value="{{ csrf_token() }}">
                               <input type="hidden" name="id" value="3">
+                              <input type="hidden" class="yearValue" name="year">
                               <input type="submit" name="Export" class="btn btn-success" value="Export" formtarget="_blank">
                           </form>
                       </div>
@@ -229,6 +230,15 @@
       });
     });
   });
+
+  $(document).ready(function(){
+    $('.year').on('keyup',function(){
+      value=$(this).val();
+      $('.yearValue').val($('.year').val())
+    });
+  });
+
+
   $(document).ready(function(){
     $('.customDateSearch').click(function(e){
       e.preventDefault();
