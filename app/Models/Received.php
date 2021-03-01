@@ -15,4 +15,8 @@ class Received extends Model
     public function wallet(){
     	return $this->belongsTo('App\Models\PaymentGateway','paymentgateway_id');
     }
+
+    public function invoice(){
+        return $this->belongsTo('App\Models\Invoice');
+    }
 }

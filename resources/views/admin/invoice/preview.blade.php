@@ -32,7 +32,6 @@
                 <th style="text-align: left;font-weight: 500; "> <span style="font-weight: 700;">Address : </span> {{$data->client_address}}</th>
                 <th style="text-align: right;font-weight: 500; "> <span style="font-weight: 700;">Estimate Number : </span> {{$data->number}}</th>
             </tr>
-
             <tr>
                 <th style="text-align: left;font-weight: 500; "> <span style="font-weight: 700;">Contact : </span> {{$data->contact}}</th>
             </tr>

@@ -22,4 +22,8 @@ class Invoice extends Model
     public function sales(){
     	return $this->hasOne('App\Models\Sales', 'invoice_id');
     }
+
+    public function receiveds(){
+    	return $this->hasMany('App\Models\Received', 'invoice_id');
+    }
 }

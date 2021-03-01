@@ -178,7 +178,7 @@
             </div>
             <!-- /.box-body -->
             <div class="box-footer text-center">
-              <a href="{{route('vat.index')}}" class="uppercase">View All</a>
+              <a href="{{route('purchase.index')}}" class="uppercase">View All</a>
             </div>
             <!-- /.box-footer -->
           </div>
@@ -251,11 +251,11 @@
                   </tr>
                 </thead>
                 <tbody>
-                  @foreach($tds as $tds)
+                  @foreach($receiveds as $received)
                   <tr>
-                    <td>{{$tds->company_name}}</td>
-                    <td>{{$tds->date}}</td>
-                    <td>{{$tds->amount}}</td>
+                    <td>{{$received->received_from}}</td>
+                    <td>{{$received->date}}</td>
+                    <td>{{$received->amount}}</td>
                   </tr>
                   @endforeach
                 </tbody>
@@ -265,7 +265,7 @@
           </div>
             <!-- /.box-body -->
           <div class="box-footer clearfix">
-            <a href="{{route('tds.index')}}" class="btn btn-sm btn-info btn-flat pull-left">View All Collections</a>
+            <a href="{{route('received.index')}}" class="btn btn-sm btn-info btn-flat pull-left">View All Collections</a>
           </div>
             <!-- /.box-footer -->
         </div>

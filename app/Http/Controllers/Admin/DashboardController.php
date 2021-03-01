@@ -35,7 +35,7 @@ class DashboardController extends Controller
     public function index()
     {
         $invoices=$this->invoice->orderBy('date','desc')->take(5)->get();
-        $tds=$this->tds->orderBy('created_at','desc')->take(5)->get();
+        $receiveds=$this->received->orderBy('created_at','desc')->take(5)->get();
         
         
         $salesAndPurchaseVat = $this->salesAndPurchaseVat();
@@ -50,7 +50,7 @@ class DashboardController extends Controller
 
         
         $purchaseItem=$this->purchase->orderBy('created_at','desc')->take(4)->get();
-        return view('admin.dashboard',compact('invoices','tds','salesAndPurchaseVat','users','amountToBeCollected','purchaseItem','totalPayment','totalReceived','purchase','totalPurchasePaymentMade'));
+        return view('admin.dashboard',compact('invoices','receiveds','salesAndPurchaseVat','users','amountToBeCollected','purchaseItem','totalPayment','totalReceived','purchase','totalPurchasePaymentMade'));
     }
 
     /**

@@ -126,69 +126,75 @@
                                     <input type="text" class="form-control qty1" id="amount" name="fee_amount[]" placeholder="Amount...">
                                 </div>
                             </div>
-                            <div class="col-lg-6">
-                                <div class="form-group invoice1 vat-wrapp">
-                                    <label for="vatShow"><input type="checkbox" id="vatShow" name="vatShow"  > Vat</label>
+                            <div class="col-lg-12">
+                                <div class="row fee hidden">
+                                    <div class="col-md-6">
+                                        <label>Description</label>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <label>Amount</label>
+                                    </div>
+                                    <div class="col-md-1"></div>
                                 </div>
-                                <button class="add btn btn-warning">Add Fee Description</button>
+                                <div class="row addRow">
+                                   
+                                </div>
+                                <div class="row vat hidden">
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <label for="vat">Vat</label>
+                                            <input type="text" class="form-control vattotal" value="" readonly name="vat" id="vat" />
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <label>Total</label>
+                                            <input type="number" class="form-control total" value="" readonly name="total" id="total" />
+                                        </div> 
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <label>Grand Total</label>
+                                            <input type="text" class="form-control grand_total_value" value=""  name="grand_total" id="grand_total" />
+                                        </div>
+                                    </div>  
+                                </div>
+
+                                <div class="total hidden">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="vat_pan">VAT/PAN</label>
+                                                <input type="text" class="form-control" value="{{ $client->vat_no }}" placeholder="Enter your VAT/PAN " name="vat_pan" id="vat_pan" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="bill_no">Bill Number</label>
+                                                <input type="text" class="form-control" placeholder="Enter your Bill Number... " name="bill_no" id="bill_no" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>Amount In Words</label>
+                                                <input type="text" name="words" class="form-control" placeholder="Amount in word...">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-8">
+                                        <button class="add btn btn-warning"><i class="fa fa-plus"></i> Add Fee Description</button>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="form-group invoice1 vat-wrapp">
+                                            <label for="vatShow" class="pull-right"><input type="checkbox" id="vatShow" name="vatShow"  > Vat</label>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                        </div>
-                        
-                        
-                        <div class="row fee hidden">
-                        	<div class="col-md-6">
-                        		<label>Description</label>
-                        	</div>
-                        	<div class="col-md-5">
-                        		<label>Amount</label>
-                        	</div>
-                            <div class="col-md-1"></div>
-                        </div>
-                        <div class="row addRow">
-                           
-                        </div>
-                        <div class="row vat hidden">
-                            <div class="col-sm-4">
-                                <div class="form-group">
-                                    <label for="vat">Vat</label>
-                                    <input type="text" class="form-control vattotal" value="" readonly name="vat" id="vat" />
-                                </div>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="form-group">
-                                    <label>Total</label>
-                                    <input type="number" class="form-control total" value="" readonly name="total" id="total" />
-                                </div> 
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="form-group">
-                                    <label>Grand Total</label>
-                                    <input type="text" class="form-control grand_total_value" value=""  name="grand_total" id="grand_total" />
-                                </div>
-                            </div>  
-                        </div>
-                        <div class="total hidden">
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label for="vat_pan">VAT/PAN</label>
-                                        <input type="text" class="form-control" value="{{ $client->vat_no }}" placeholder="Enter your VAT/PAN " name="vat_pan" id="vat_pan" />
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label for="bill_no">Bill Number</label>
-                                        <input type="text" class="form-control" placeholder="Enter your Bill Number... " name="bill_no" id="bill_no" />
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label>Amount In Words</label>
-                                        <input type="text" name="words" class="form-control" placeholder="Amount in word...">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                         
                         <div class="form-group">
                             <input type="submit" name="submit" class="btn btn-success" value="submit">
