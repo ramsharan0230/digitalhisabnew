@@ -436,7 +436,7 @@ class ReportController extends Controller
 
     public function salesSearchByYear(Request $request){
         $value = $request->value;
-        $details = $this->sales->orderBy('created_at','desc')->whereYear('vat_date',$value)->get();
+        $details = $this->sales->orderBy('created_at','desc')->whereYear('vat_date', $value)->get();
         return view('admin.report.include.salesSearchByYear',compact('details'));
     }
 

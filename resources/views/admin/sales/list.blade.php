@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title','Vat List')
+@section('title','Sales List')
 @push('styles')
 
 <style>
@@ -161,7 +161,7 @@
 
     <ol class="breadcrumb">
       <li><a href=""><i class="fa fa-dashboard"></i>Dashboard</a></li>
-      <li><a href="">Vat</a></li>
+      <li><a href="">Sales</a></li>
       <li><a href="">List</a></li>
     </ol>
 </section>
@@ -295,6 +295,27 @@
             $('.monthvalue').val(value);
           }
         });
+      });
+    });
+
+    $(document).ready(function(){
+      $('.inputYear').on('keyup',function(){
+        year=$(this).val();
+        segment_2=$('#segment').val();
+        if(year.length ==4){
+            $.ajax({
+            method:'post',
+            url:"{{route('salesSearchByYear')}}",
+            data:{value:year,segment:segment_2},
+            success:function(data){
+              $('.table-striped').remove();
+              $('.append').html(data);
+              
+              $('.export').removeClass('hidden');
+              $('.monthvalue').val(year);
+            }
+          });
+        }
       });
     });
 

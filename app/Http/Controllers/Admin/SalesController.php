@@ -10,7 +10,8 @@ use App\Repositories\Invoice\InvoiceRepository;
 use App\Repositories\Setting\SettingRepository;
 use App\Repositories\nepalicalendar\nepali_date;
 use App\Models\Invoice;
-use PDF;
+use PDF, DB;
+
 
 class SalesController extends Controller
 {
@@ -29,7 +30,6 @@ class SalesController extends Controller
     public function index()
     {
         $details = $this->sales->orderBy('created_at','desc')->get();
-        
         return view('admin.sales.list',compact('details'));
     }
 
@@ -141,7 +141,7 @@ class SalesController extends Controller
     }
 
     public function toBeCollectedPdf(Request $request){
-        $details=$this->invoice->orderBy('created_at','desc')->whereYear('nepali_date',$request->year)->whereMonth('nepali_date',$request->month)->get();
+        $details=$this->invoice->orderBy('created_at','desc')->whereMonth('nepali_date',$request->month)->get();
 
         // $details=Invoice::whereMonth('nepali_date', $request->month)->whereYear('nepali_date', $request->year)->where('vat',0)->orderBy('created_at','desc')->get();
         
@@ -178,7 +178,7 @@ class SalesController extends Controller
 
     public function toBeCollectedYearFilter(Request $request){
         $year = $request->year;
-        $details = $this->sales->whereYear('vat_date', $year)->orderBy('created_at','desc')->get();
+        $details = DB::table('invoices')->whereYear('nepali_date', $year)->get();
         return view('admin.sales.include.salesSearchedByYear', compact('details'));
     }
 }

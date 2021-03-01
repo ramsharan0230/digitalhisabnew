@@ -30,7 +30,7 @@
 
     <div class="box">
       <div class="row">
-        <div class="col-md-5">
+        <div class="col-md-6">
           <div class="box-header">
             <h3 class="box-title">Custom Date</h3>
           </div>
@@ -49,14 +49,14 @@
                 </div>
               </div>
               <div class="col-md-2">
-                <div class="form-group sales-btn">
-                  <button type="submit" class="btn btn-success customDateSearch"> Submit</button>
+                <div class="form-group sales-btn" >
+                  <button type="submit" class="btn btn-success customDateSearch" style="maring-top: 10px"> Submit</button>
                 </div>
               </div>
             </div>
           </form>
         </div>
-        <div class="col-md-5">
+        <div class="col-md-6">
             <div class="box-header"><h3 class="box-title">Year and Month</h3></div>
             <div class="box-body">
                 <div class="erport-wrapp profit-loss-wrapp">
@@ -64,6 +64,9 @@
                         <label>Input Year</label>
                         <input class="form-control inputYear" type="text" placeholder="Input Year">
                     </div>
+
+                    <input type="submit" name="Export" value="Export" class="btn btn-info" formtarget="_blank">
+                    
                     <div class="form-group select-mont-wrapp form-group-wrapper">
                         <label>Select Month</label>
                         <select name="month" class="form-control" id="month">
@@ -93,15 +96,17 @@
                 </div>
 
             </div>
-
         </div>
-        <div class="col-md-2">
-          <form action="{{ route('sales.to-be-collected-year') }}" method="POST">
-            {{ csrf_field() }}
-            <input type="text" placeholder="Type Year..." class="form-control" id="year" name="year">
-            <button type="submit" class="btn btn-primary btn-sm">Submit</button>
-          </form>
-        </div>
+        {{-- <div class="col-md-2">
+            <div class="box-header"><h3 class="box-title">Year</h3></div>
+              <div class="box-body">
+                <form action="{{ route('sales.to-be-collected-year') }}" method="POST">
+                  {{ csrf_field() }}
+                  <input type="text" placeholder="Type Year..." class="form-control" id="year" name="year">
+                  <button type="submit" class="btn btn-primary btn-sm">Submit</button>
+                </form>
+              </div>
+        </div> --}}
       </div>
       
     </div>
@@ -197,12 +202,12 @@
       }
   });
   
-  $('#year').keyup(function(){
-    if($('#year').val().length == 4){
-      year = $('#year').val();
+  $('.inputYear').keyup(function(){
+    if($('.inputYear').val().length == 4){
+      year = $('.inputYear').val();
       $.ajax({
           method:"post",
-          url:"{{route('sales.to-be-collected-year')}}",
+          url:"{{route('to-be-collected-year')}}",
           data:{year: year},
           success:function(data){
             $('.table-striped').remove();

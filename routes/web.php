@@ -137,7 +137,7 @@ Route::group(['namespace'=>'Admin','middleware'=>['auth'],'prefix'=>'admin'],fun
 			Route::post('salesSearchBySalesWithoutVat','SalesController@salesSearchBySalesWithoutVat')->name('salesSearchBySalesWithoutVat');
 			Route::get('to-be-collected','SalesController@toBeCollected')->name('toBeCollected');
 			
-			Route::post('to-be-collected-year','SalesController@toBeCollectedYearFilter')->name('sales.to-be-collected-year');
+			Route::post('to-be-collected-year','SalesController@toBeCollectedYearFilter')->name('to-be-collected-year');
 			Route::post('toBeCollectedPdf','SalesController@toBeCollectedPdf')->name('toBeCollectedPdf');
 			
 			Route::post('sales-view','SalesController@salesView')->name('salesView');
