@@ -51,40 +51,49 @@
                         <h3 class="box-title">Edit Client</h3>
                     </div>
                     <div class="box-body">
-                        <div class="col-lg-6 col-md-6 col-sm-12">
-                            <div class="form-group">
-                                <label>Name</label>
-                                <input type="text" name="name" class="form-control" value="{{$detail->name}}">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label>Name</label>
+                                    <input type="text" name="name" class="form-control" value="{{$detail->name}}">
+                                </div>
+                            </div>
+    
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label>Email</label>
+                                    <input type="text" name="email" class="form-control" value="{{$detail->email}}">
+                                </div>
+                            </div>
+    
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label>Phone</label>
+                                    <input type="text" name="phone" class="form-control" value="{{$detail->phone}}">
+                                </div>
+                            </div>
+    
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label>Address</label>
+                                    <input type="text" name="address" class="form-control" value="{{$detail->address}}">
+                                </div>
+                            </div>
+    
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label>Vat Number</label>
+                                    <input type="text" name="vat_no" class="form-control" value="{{$detail->vat_no}}">
+                                </div>
                             </div>
                         </div>
-
-                        <div class="col-lg-6 col-md-6 col-sm-12">
-                            <div class="form-group">
-                                <label>Email</label>
-                                <input type="text" name="email" class="form-control" value="{{$detail->email}}">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <input type="submit" name="submit" value="submit" class="btn btn-success">
+                                </div>
                             </div>
                         </div>
-
-                        <div class="col-lg-6 col-md-6 col-sm-12">
-                            <div class="form-group">
-                                <label>Phone</label>
-                                <input type="text" name="phone" class="form-control" value="{{$detail->phone}}">
-                            </div>
-                        </div>
-
-                        <div class="col-lg-6 col-md-6 col-sm-12">
-                            <div class="form-group">
-                                <label>Address</label>
-                                <input type="text" name="address" class="form-control" value="{{$detail->address}}">
-                            </div>
-                        </div>
-
-                        <div class="col-lg-6 col-md-6 col-sm-12">
-                            <div class="form-group">
-                                <input type="submit" name="submit" value="submit" class="btn btn-success">
-                            </div>
-                        </div>
-
                     </div>
                     </div>
                 </div>

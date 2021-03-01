@@ -125,7 +125,7 @@
                       <th>Clent</th>
                       <th>Date</th>
                       <th>Total</th>
-                      <th>Paid</th>
+                      <th>Billing Status</th>
                       <th>Need To Be Collected</th>
                       <th>Action</th>
                     </tr>
@@ -140,8 +140,8 @@
                       <td>{{\Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $detail->date )
                         ->format('d-m-Y')}}</td>
                       <td>{{$detail->grand_total}}</td>
-                      <td>{{$detail->collected_amount}}</td>
-                      <td>{{$detail->grand_total-$detail->collected_amount}}</td>
+                      <td>{{($detail->grand_total-$detail->collected_amount) > 0?"Open":"Close"}}</td>
+                      <td>{{ $detail->grand_total-$detail->collected_amount }}</td>
                       <td>
                         @if($detail->vat_id!=null && $detail->vat!=0 && $detail->collected==0)
                         

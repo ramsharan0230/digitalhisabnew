@@ -376,10 +376,13 @@
                         url:"{{route('findClient')}}",
                         data:{value:value},
                         success:function(data){
+                            
                             if(data.message=='success'){
                                 $('#contact').val(data.client.phone);
                                 $('#email').val(data.client.email);
                                 $('#address').val(data.client.address);
+                                $('#vat_pan').val(data.client.vat_no);
+                                
                             }else{
 
                             }

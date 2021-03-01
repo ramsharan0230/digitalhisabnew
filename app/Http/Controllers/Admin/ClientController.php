@@ -84,7 +84,7 @@ class ClientController extends Controller
     {
 
         $detail = $this->client->findOrFail($id);
-        return view('admin.client.edit',compact('detail'));
+        return view('admin.client.edit', compact('detail'));
     }
 
     /**
@@ -102,8 +102,6 @@ class ClientController extends Controller
             'phone'=>'required|numeric',
             'address'=>'required|max:200',
             'vat_no'=>'required|string',
-            'contact_person'=>'required|max:person',
-
         ]);
         $this->client->update($request->all(),$id);
         return redirect()->route('client.index')->with('message','Client Updated Successfully');

@@ -205,7 +205,7 @@
                       <td>{{$detail->nepali_date}}</td>
                       <td>{{@$detail->client_name}}</td>
                       <td>{{$detail->total}}</td>
-                      <td>{{$detail->collected_amount=$detail->grand_total?'collected':'not complete'}}</td>
+                      <td>{{$detail->collected_amount==$detail->grand_total?'Close':'Open'}}</td>
                       
                       <td><a class="btn btn-info edit salesView" href="{{route('invoiceView',$detail->id)}}" title="Sales View" data-id="{{$detail->id}}" target="_blank"><span class="fa fa-eye"></span></a></td>
                     </tr>
