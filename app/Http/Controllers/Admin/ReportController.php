@@ -106,14 +106,13 @@ class ReportController extends Controller
     public function daybook(){
         $balances=$this->balance->orderBy('created_at','desc')->get();
         $daybook = $this->daybook->orderBy('created_at','desc')->get();
+
         return view('admin.report.daybook',compact('balances','daybook'));
     }
 
     public function daybookPdf(Request $request){
-        // dd($request->all());
-        $balances=$this->balance->whereMonth('date', $request->month)->whereYear('date', $request->year)->orderBy('created_at','desc')->get();
-        $daybook = $this->daybook->whereMonth('date', $request->month)->whereYear('date', $request->year)->orderBy('created_at','desc')->get();
-
+        $balances=$this->balance->whereMonth('date', $request->month)->orderBy('created_at','desc')->get();
+        $daybook = $this->daybook->whereMonth('date', $request->month)->orderBy('created_at','desc')->get();
         $pdf = PDF::loadView('pdf.daybookpdf', compact('balances', 'daybook'));
         return $pdf->stream('purchase-report.pdf');
     }
