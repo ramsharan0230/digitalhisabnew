@@ -24,7 +24,7 @@
               <th>Added Receipt</th>
               <th>Total Purchased</th>
               <th>Payment</th>
-            
+              <th>Profit</th>
             </tr>
         </thead>
         
@@ -35,6 +35,7 @@
              <td>Rs. {{$other_received}}</td>
              <td>Rs. {{$purchase}}</td>
              <td>Rs. {{$payment}}</td>
+             <td>Rs. {{$total}}</td>
            </tr>
         </tbody>
       </table>

@@ -346,10 +346,9 @@ class ReportController extends Controller
         $purchase = $this->purchase->whereMonth('vat_date',$month)->sum('total');
         $payment = $this->payment->whereMonth('date',$month)->sum('amount');
         $total = ($invoice+$other_received)-($purchase+$payment);
-        //  dd($invoice, $other_received, $purchase, $payment, $total);
 
         $pdf = PDF::loadView('pdf.profit-and-loss-pdf', compact('month', 'months', 'invoice','other_received','purchase','payment','total'));
-        return $pdf->stream('rofit-and-loss.pdf');
+        return $pdf->stream('profit-and-loss.pdf');
     }
     public function customProfitAndLoss(Request $request){
        
