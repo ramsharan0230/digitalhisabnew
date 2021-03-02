@@ -322,6 +322,9 @@ class ReportController extends Controller
         return view('admin.report.profitAndLoss',compact('invoices','purchases','other_receiveds','payments','months', 'vatInvoices', 'nonVatInvoices'));
     }
     public function profitAndLossByMonth(Request $request){
+        $months = ['01'=>'baishak', '02'=>'jesth', '03'=>'asar', '04'=>'shrawan', '05'=>'bhadra', '06'=>'ashoj', '07'=>'kartik',
+        '08'=>'mangsir', '09'=>'poush', '10'=>'magh', '11'=>'falgun', '12'=>'chaitra'];
+
         $start_date = $request->start_date;
         $end_date = $request->end_date;
         $invoice = $this->invoice->whereMonth('nepali_date',$request->value)->sum('grand_total');
@@ -329,20 +332,23 @@ class ReportController extends Controller
         $purchase = $this->purchase->whereMonth('vat_date',$request->value)->sum('total');
         $payment = $this->payment->whereMonth('date',$request->value)->sum('amount');
         $total = ($invoice+$other_received)-($purchase+$payment);
-
-        return view('admin.report.include.customProfitAndLoss',compact('start_date','end_date','invoice','other_received','purchase','payment','total'));
+        $monthValue = $request->value;
+        // dd($invoice, $other_received, $purchase, $payment, $total);
+        return view('admin.report.include.customProfitAndLoss',compact('months', 'monthValue', 'end_date', 'invoice','other_received','purchase','payment','total'));
     }
 
     public function profitAndLossPdf(Request $request){
+        $months = ['01'=>'baishak', '02'=>'jesth', '03'=>'asar', '04'=>'shrawan', '05'=>'bhadra', '06'=>'ashoj', '07'=>'kartik',
+        '08'=>'mangsir', '09'=>'poush', '10'=>'magh', '11'=>'falgun', '12'=>'chaitra'];
         $month = $request->month;
-        $year = $request->year;
-        $invoice = $this->invoice->whereMonth('nepali_date',$month)->whereYear('nepali_date', $year)->sum('grand_total');
-        $other_received = $this->other_received->whereMonth('date',$month)->whereYear('date',$year)->sum('amount');
-        $purchase = $this->purchase->whereMonth('vat_date',$month)->whereYear('vat_date',$year)->sum('total');
-        $payment = $this->payment->whereMonth('date',$month)->whereYear('date',$year)->sum('amount');
+        $invoice = $this->invoice->whereMonth('nepali_date',$month)->sum('grand_total');
+        $other_received = $this->other_received->whereMonth('date',$month)->sum('amount');
+        $purchase = $this->purchase->whereMonth('vat_date',$month)->sum('total');
+        $payment = $this->payment->whereMonth('date',$month)->sum('amount');
         $total = ($invoice+$other_received)-($purchase+$payment);
+        //  dd($invoice, $other_received, $purchase, $payment, $total);
 
-        $pdf = PDF::loadView('pdf.profit-and-loss-pdf', compact('month','year','invoice','other_received','purchase','payment','total'));
+        $pdf = PDF::loadView('pdf.profit-and-loss-pdf', compact('month', 'months', 'invoice','other_received','purchase','payment','total'));
         return $pdf->stream('rofit-and-loss.pdf');
     }
     public function customProfitAndLoss(Request $request){
