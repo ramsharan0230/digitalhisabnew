@@ -52,7 +52,7 @@
         </ul>
     </div>
     @endif
-     <h1>Vat <small>List</small></h1>
+     <h1>Sales <small>List</small></h1>
 
      <div class="box">
         <div class="row">
@@ -88,7 +88,7 @@
                 <div class="box-body">
                     <div class="erport-wrapp profit-loss-wrapp">
 
-                      <div class="form-group form-group-wrapper">
+                      <div class="row form-group form-group-wrapper">
                           <label>Input Year</label>
                           <input class="form-control inputYear" type="text" placeholder="Input Year">
                       </div>
