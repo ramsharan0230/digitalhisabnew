@@ -106,7 +106,7 @@ class ReportController extends Controller
     public function daybook(){
         $balances=$this->balance->orderBy('created_at','desc')->get();
         $daybook = $this->daybook->orderBy('created_at','desc')->get();
-
+// dd(234);
         return view('admin.report.daybook',compact('balances','daybook'));
     }
 
