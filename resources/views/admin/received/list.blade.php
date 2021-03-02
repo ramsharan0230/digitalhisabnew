@@ -68,6 +68,7 @@
                         <form action="{{ route('admin.contact.export-client-transaction') }}" method="post">
                             {{ csrf_field() }}
                             <input type="hidden" name="id" value="3">
+                            <input type="hidden" name="year" class="yearValue">
                             <input type="submit" name="Export" class="btn btn-success" value="Export" formtarget="_blank">
                         </form>
                     </div>
@@ -212,6 +213,7 @@
   $(document).ready(function(){
     $('.year').on('keyup',function(){
       value=$(this).val();
+      $('.yearValue').val(value);
       segment_2=$('#segment').val();
       console.log(segment_2);
       $.ajax({
