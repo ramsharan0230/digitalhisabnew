@@ -69,6 +69,7 @@
                             {{ csrf_field() }}
                             <input type="hidden" name="id" value="3">
                             <input type="hidden" name="year" class="yearValue">
+                            <input type="hidden" name="month" class="monthValue">
                             <input type="submit" name="Export" class="btn btn-success" value="Export" formtarget="_blank">
                         </form>
                     </div>
@@ -194,7 +195,7 @@
       $('#month').on('change',function(){
         value=$(this).val();
         segment_2=$('#segment').val();
-        console.log(segment_2);
+        $('.monthValue').val(value)
         $.ajax({
           method:'post',
           url:"{{route('monthlyReceivedReport')}}",

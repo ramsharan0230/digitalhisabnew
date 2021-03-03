@@ -20,7 +20,7 @@
             <tr>
                 <th>S.N.</th>
                 <th>Date</th>
-                <th>Paid To</th>
+                <th>Reveived From</th>
                 <th>Payment Type</th>
                 <th>Amount</th>
             </tr>
@@ -29,9 +29,11 @@
               <?php $total = 0 ?>
             @forelse($details as $key =>$detail)
               <tr>
+                <?php //dd($detail) ?>
+
                 <td>{{$key +1}}</td>
                 <td>{{$detail->date}}</td>
-                <td>{{$detail->paid_to}}</td>
+                <td>{{$detail->received_from}}</td>
 
                 <td>{{$detail->payment_type}}</td>
                 <td>{{$detail->amount}}</td>

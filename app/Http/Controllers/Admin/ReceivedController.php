@@ -116,7 +116,7 @@ class ReceivedController extends Controller
     public function monthlyReceivedReport(Request $request){
         $nepali_date=$this->calendar->eng_to_nep(date('Y'),date('m'),date('d'));
         
-        $details=Received::whereYear('date',$nepali_date['year'])->whereMonth('date',$request->value)->orderBy('created_at','desc')->get();
+        $details=Received::whereYear('date', $nepali_date['year'])->whereMonth('date',$request->value)->orderBy('created_at','desc')->get();
         return view('admin.received.include.monthlyReceivedReport',compact('details'));
     }
     public function yearlyReceivedReport(Request $request){
