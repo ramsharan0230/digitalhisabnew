@@ -31,6 +31,7 @@ class ClientController extends Controller
     public function index()
     {
         $details = $this->client->orderBy('created_at','desc')->get();
+        
         return view('admin.client.list',compact('details'));
     }
 
@@ -126,17 +127,38 @@ class ClientController extends Controller
         
         $todaysNepaliDate=$nepali_date['year'].'-'.((strlen($nepali_date['month']) == 2) ? $nepali_date['month'] : "0".$nepali_date['month']).'-'.((strlen($nepali_date['date']) == 2) ? $nepali_date['date'] : "0".$nepali_date['date']);
         
-        $invoices = $this->invoice->whereMonth('nepali_date',$request->month)->get();
+        $invoices = $this->invoice->whereMonth('nepali_date', $request->month)->get();
         
         return view('admin.client.monthlyView',compact('invoices'));
     }
     public function exportClientTransaction(Request $request){
         $year = $request->year;
-        $details=DB::table('payments')->whereYear('date', $request->year)->orderBy('created_at','desc')->get();
+        $month = $request->month;
+        if($year!=null ||  $month !=null)
+            $details=DB::table('payments')->whereYear('date', $request->year)->whereMonth('date', $request->month)->orderBy('created_at','desc')->get();
+        if($year==null ||  $month !=null)
+            $details=DB::table('payments')->whereMonth('date', $request->month)->orderBy('created_at','desc')->get();
 
         $pdf = PDF::loadView('admin.payment.paymentsPdf', compact('details', 'year'));
         return $pdf->stream('payments.pdf');
     }
+
+    public function exportClientTransactionPdf(Request $request){
+        $year = $request->year;
+        $month = $request->month;
+        
+        if($year!=null &&  $month !=null){
+            $invoices = $this->invoice->whereMonth('nepali_date', $month)->whereYear('nepali_date', $year)->get();
+        }
+        if($year==null ||  $month !=null){
+            $invoices=$this->invoice->whereMonth('nepali_date', $month)->orderBy('created_at','desc')->get();
+        }
+
+        $pdf = PDF::loadView('admin.client.exportClientTransactionPdf', compact('invoices', 'year', 'month'));
+        return $pdf->stream('client-transactions.pdf');
+    }
+
+
     public function clientInvoicePreview($id){
         $data=$this->invoice->find($id);
         $description=$data->invoiceDetail;

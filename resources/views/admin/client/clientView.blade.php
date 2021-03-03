@@ -106,7 +106,7 @@
                   <div class="erport-wrapp">
                       <div class="form-group form-group-wrapper">
                           <label>Input Year</label>
-                          <input class="form-control" type="text" placeholder="Input Year">
+                          <input class="form-control inputYear" type="text" placeholder="Input Year">
                       </div>
                       <div class="form-group form-group-wrapper ">
                         <label>Select Month</label>
@@ -126,10 +126,13 @@
                           <option value="12">Chaitra</option>
                         </select>
                       </div>
-                      <form action="{{route('exportClientTransaction')}}" method="post">
+                      {{-- <form action="{{route('exportClientTransaction')}}" method="post"> --}}
+                        <form action="{{route('admin.contact.export-client-transaction-pdf')}}" method="post">
                           {{csrf_field()}}
                           <input type="hidden" name="id" value="{{$detail->id}}">
-                          <input type="submit" name="Export" class="btn btn-success" value="Export">
+                          <input type="hidden" name="month" class="monthValue">
+                          <input type="hidden" name="year" class="yearValue">
+                          <input type="submit" name="Export" class="btn btn-success" value="Export" formtarget="_blank">
                       </form>
                   </div>
                   </div>
@@ -177,7 +180,7 @@
                       <td>{{$data->collected==$data->grand_total?'Closed':'Open'}}</td>
                       <td>{{$data->grand_total}}</td>
                       <td>
-                        <a class="btn btn-info edit" href="{{route('clientInvoicePreview',$data->id)}}" title="Edit"><span class="fa fa-eye"></span></a>
+                        <a class="btn btn-info edit" href="{{route('clientInvoicePreview',$data->id)}}" title="Edit" target="_blank"><span class="fa fa-eye" ></span></a>
                       </td>
                   </tr>
                   @php($i++)
@@ -218,9 +221,14 @@
     "pageLength": 10
   } );
 
+  $('.inputYear').keyup(function(){
+    $('.yearValue').val($('.inputYear').val())
+  })
+
   $(document).ready(function(){
     $('#month').on('change',function(){
       value = $(this).val();
+      $('.monthValue').val(value)
 
       $.ajax({
         method:"post",
@@ -245,7 +253,6 @@
       start_date = $('#start_date').val();
       end_date = $('#end_date').val();
       client_id = $('#client_id').data('id');
-      alert(start_date);
       $.ajax({
         method:'post',
         url:"{{route('customClientSearch')}}",

@@ -30,6 +30,8 @@ Route::group(['namespace'=>'Admin','middleware'=>['auth'],'prefix'=>'admin'],fun
 		Route::get('other-receipts/{id}','ClientController@otherReceipts')->name('otherReceipts');
 		Route::post('search-monthly-client-business-detail','ClientController@searchMonthlyClientBusinessDetail')->name('searchMonthlyClientBusinessDetail');
 		Route::post('export-client-transaction','ClientController@exportClientTransaction')->name('admin.contact.export-client-transaction');
+		Route::post('export-client-transaction-pdf','ClientController@exportClientTransactionPdf')->name('admin.contact.export-client-transaction-pdf');
+		
 		Route::post('custom-client-search','ClientController@clientCustomSearch')->name('customClientSearch');
 		Route::resource('client','ClientController');
 		Route::get('transaction-view/{id}','VendorController@transactionView')->name('vendorTransactionView');

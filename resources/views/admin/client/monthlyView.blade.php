@@ -20,10 +20,6 @@
         <td>
           <a class="btn btn-info edit" href="" title="Edit"><span class="fa fa-eye"></span></a>
          
-          
-
-
-
         </td>
     </tr>
     @php($i++)
