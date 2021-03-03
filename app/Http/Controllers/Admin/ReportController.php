@@ -59,7 +59,6 @@ class ReportController extends Controller
     }
 
     public function salesReportPdf(Request $request){
-        dd($request->all());
         $details = $this->sales->orderBy('created_at','desc')->whereMonth('vat_date', $request->month)->whereYear('vat_date', $request->year)->get();
         $pdf = PDF::loadView('admin.report.salesReportPdf', compact('details'));
         return $pdf->stream('sales-report.pdf');
@@ -377,9 +376,8 @@ class ReportController extends Controller
     }
     //Annual Reports
     public function annualBookExport(Request $request){
-        // dd($request->all());
         $value = $request->year;
-        $details = $this->sales->orderBy('created_at','desc')->whereYear('vat_date',$value)->get();
+        $details = $this->sales->orderBy('created_at','desc')->whereYear('vat_date', $value)->get();
         $pdf = PDF::loadView('pdf.annual-report', compact('details'));
         return $pdf->stream('annual-invoice.pdf');
     }

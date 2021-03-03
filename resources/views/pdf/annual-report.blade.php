@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Annual Report</title>
+    <title>Sales Report</title>
     <style>
         table, th, td {
             border: 1px solid black;
@@ -14,7 +14,7 @@
     </style>
 </head>
 <body>
-    <h3 style="margin-left: 40%">Annual Report</h3>
+    <h3 style="margin-left: 40%">Sales Report</h3>
     <table class="table" style="border">
         <thead>
             <tr>
@@ -32,7 +32,7 @@
                 <td>{{ $key+1 }}.</td>
                 <td>{{ $detail->sales_to }}</td>
                 <td>{{ $detail->vat_date }}</td>
-                <td>{{ $detail->collected==0?"Open":"Close" }}</td>
+                <td>{{ $detail->invoice->collected_amount == $detail->invoice->grand_total?"Close":"Open" }}</td>
                 <td>Rs. {{ $detail->total }}</td>
                 <?php $total +=$detail->total ?>
             </tr>
