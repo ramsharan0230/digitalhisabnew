@@ -169,10 +169,10 @@ class SalesController extends Controller
     }
 
     public function salesReportPdf(Request $request){
-        $year = $request->year;
-        $month = $request->month;
-        $details = $this->sales->whereMonth('vat_date', $month)->whereYear('vat_date', $year)->orderBy('created_at','desc')->get();
-        $pdf = PDF::loadView('admin.sales.sales-report-ym-pdf', compact('details', 'year', 'month'));
+        $start_date = $request->start_date;
+        $end_date = $request->end_date;
+        $details = $this->sales->whereBetween('vat_date', [$start_date, $end_date])->orderBy('created_at','desc')->get();
+        $pdf = PDF::loadView('admin.sales.sales-report-ym-pdf', compact('details'));
         return $pdf->stream('sales-report-pdf.pdf');
     }
 

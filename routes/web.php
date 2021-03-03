@@ -48,6 +48,7 @@ Route::group(['namespace'=>'Admin','middleware'=>['auth'],'prefix'=>'admin'],fun
 			Route::post('sales-report-pdf','ReportController@salesReportPdf')->name('salesReportPdf');
 			
 			Route::post('salesSearchByMonth','ReportController@salesSearchByMonth')->name('reportSalesSearchByMonth');
+			Route::post('salesSearchByDates','ReportController@salesSearchByDates')->name('salesSearchByDates');
 			Route::post('custom-sales-search','ReportController@customSalesSearch')->name('reportCustomSalesSearch');
 			Route::get('report-invoice-view/{id}','ReportController@reportInvoiceView')->name('reportInvoiceView');
 			Route::post('report-print-invoito-be-paidce','ReportController@reportPrintInvoice')->name('reportPrintInvoice');

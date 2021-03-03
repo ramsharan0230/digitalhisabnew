@@ -59,15 +59,15 @@
             <div class="col-lg-6">
                 <div class="box-header"><h3 class="box-title">Custom Date</h3></div>
                 <div class="box-body">
-                  <form action="{{ route('sales-report') }}" method="post">
+                  <form action="{{ route('sales-report-pdf') }}" method="post">
                     @csrf
-                    <div class="col-md-5">
+                    <div class="col-md-4">
                       <div class="form-group">
                         <label>Start Date</label>
                         <input type="text" id="start_date" class="bod-picker form-control" name="start_date" autocomplete="off" value="">
                       </div>
                     </div>
-                    <div class="col-md-5">
+                    <div class="col-md-4">
                       <div class="form-group">
                         <label>End Date</label>
                         <input type="text" id="end_date" class="bod-picker form-control" name="end_date" autocomplete="off" value="">
@@ -75,10 +75,16 @@
                     </div>
                     <div class="col-md-2">
                       <div class="form-group pro-submit-btn">
-                        <input type="submit" name="submit" value="submit" class="btn btn-success customDateSearch" formtarget="_blank">
+                        <input type="button" name="submit" value="Submit" style="margin-top: 10px" class="btn btn-success customDateSearch" formtarget="_blank">
+                      </div>
+                    </div>
+                    <div class="col-md-2">
+                      <div class="form-group pro-submit-btn">
+                        <input type="submit" name="Export" value="export" class="btn btn-info customDateSearch1" style="margin-top: 10px" formtarget="_blank">
                       </div>
                     </div>
                   </form>
+                  
                 </div>
             </div>
 
@@ -271,6 +277,24 @@
         return;
         });
     });
+
+    $('.customDateSearch').click(function(){
+      var start_date = $('#start_date').val()
+      var end_date = $('#end_date').val()
+      
+      $.ajax({
+          method:'post',
+          url:"{{route('salesSearchByDates')}}",
+          data:{start_date:start_date, end_date:end_date},
+          success:function(data){
+            $('.table-striped').remove();
+            $('.append').html(data);
+            
+            $('.export').removeClass('hidden');
+            $('.monthvalue').val(value);
+          }
+        });
+    })
 
 
     $(function () {

@@ -59,6 +59,7 @@ class ReportController extends Controller
     }
 
     public function salesReportPdf(Request $request){
+        dd($request->all());
         $details = $this->sales->orderBy('created_at','desc')->whereMonth('vat_date', $request->month)->whereYear('vat_date', $request->year)->get();
         $pdf = PDF::loadView('admin.report.salesReportPdf', compact('details'));
         return $pdf->stream('sales-report.pdf');
@@ -442,6 +443,11 @@ class ReportController extends Controller
         $value = $request->value;
         $details = $this->sales->orderBy('created_at','desc')->whereYear('vat_date', $value)->get();
         return view('admin.report.include.salesSearchByYear',compact('details'));
+    }
+
+    public function salesSearchByDates(Request $request){
+        $details = $this->sales->whereBetween('vat_date',[$request->start_date,$request->end_date])->get();
+        return view('admin.report.include.salesSearchByMonth',compact('details'));
     }
 
 
