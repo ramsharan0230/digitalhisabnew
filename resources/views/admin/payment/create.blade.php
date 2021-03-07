@@ -81,9 +81,9 @@
                                 <label>Bank</label>
                                 <select name="bank" class="form-control">
                                     <option selected="true" disabled="true">Select Bank</option>
-                                @foreach($dashboard_bank->where('our_bank') as $bank)
-                                <option value="{{$bank->id}}">{{$bank->name}}</option>
-                                @endforeach
+                                    @foreach($dashboard_bank->where('our_bank') as $bank)
+                                        <option value="{{$bank->id}}">{{$bank->name}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>

@@ -129,7 +129,18 @@
 
                       <td>{{$detail->payment_type}}</td>
                       <td>{{$detail->amount}}</td>
-                      <td>{{$detail->bank}}</td>
+                      <td>
+                        <?php 
+                        $bankName = "";
+                        if($detail->bank_id !=null){
+                          $banks = \DB::table("banks")->where('id', $detail->bank_id)->select('name')->get();
+                          foreach($banks as $bank){
+                            $bankName = $bank->name;
+                            echo $bank->name;
+                          }
+                        }
+                        ?>
+                      </td>
                       <td>
                         
                         @if($detail->date==$todaysNepaliDate)
@@ -141,8 +152,8 @@
                         </form>
                         @endif
 
-                        <a class="btn btn-warning view " title="Edit" data-id="{{$detail->id}}">
-                          <span class="fa fa-eye"></span>
+                        <a class="btn btn-warning view " title="Edit" data-id="{{$detail->id}}" data-name_bank="{{ $bankName }}">
+                          <span class="fa fa-eye"> </span>
                       </a>
                       </td>
                   </tr>
@@ -199,6 +210,7 @@
       $(document).on('click','.view',function(e){
         e.preventDefault();
         var id = $(this).data('id');
+        var bank_name = $(this).data('name_bank');
         $.ajax({
           url: "{{route('paymentModal')}}",
           method: 'post',
@@ -207,6 +219,7 @@
           success:function(data){
             console.log(data);
             $('#myModal .modal-body').html(data);
+            $('.bank_name').text(bank_name)
             $('#myModal').modal('show');
           }
         });

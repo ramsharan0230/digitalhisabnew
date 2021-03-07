@@ -132,9 +132,8 @@
                             <tbody id="sortable">
                               @php($total = 0)
                               @foreach($invoices as $key=>$invoice)
-                              
                               <tr>
-                                <td>{{$months[$key]}}</td>
+                                <td>{{ ucfirst($months[$key])}}</td>
                                 <td>{{$invoice}}</td>
                                 <td>{{$other_receiveds[$key]}}</td>
                                 <td>{{$purchases[$key]}}</td>
@@ -172,7 +171,6 @@
                                   <th>Total Purchased</th>
                                   <th>Payment</th>
                                   <th>Total</th>
-                                
                                 </tr>
                             </thead>
                             
@@ -181,14 +179,14 @@
                               @foreach($vatInvoices as $key=>$invoice)
                               
                               <tr>
-                                <td>{{$months[$key]}}</td>
+                                <td>{{ ucfirst($months[$key]) }}</td>
                                 <td>{{$invoice}}</td>
-                                <td>{{$other_receiveds[$key]}}</td>
+                                <td>0.00</td>
                                 <td>{{$purchases[$key]}}</td>
-                                <td>{{$payments[$key]}}</td>
+                                <td>0.00</td>
                                 <td>
                                   <?php
-                                  $ans = ($invoice+$other_receiveds[$key])-($purchases[$key]+$payments[$key]);
+                                  $ans = ($invoice+$other_receiveds[$key])-($purchases[$key]+$vatPaids[$key]);
                                   $total+=$ans;
                                   ?>
                                   <span style="color:{{ $ans<0?"red":"" }}">{{$ans}}</span>
@@ -227,14 +225,14 @@
                               @foreach($nonVatInvoices as $key=>$invoice)
                               
                               <tr>
-                                <td>{{$months[$key]}}</td>
+                                <td>{{ ucfirst($months[$key])}}</td>
                                 <td>{{$invoice}}</td>
                                 <td>{{$other_receiveds[$key]}}</td>
-                                <td>{{$purchases[$key]}}</td>
-                                <td>{{$payments[$key]}}</td>
+                                <td>{{$nonVatPurchases[$key]}}</td>
+                                <td>{{$nonVatPaids[$key]}}</td>
                                 <td>
                                   <?php
-                                  $ans = ($invoice+$other_receiveds[$key])-($purchases[$key]+$payments[$key]);
+                                  $ans = ($invoice+$other_receiveds[$key])-($purchases[$key]+$nonVatPaids[$key]);
                                   $total+=$ans;
                                   ?>
                                   <span style="color:{{ $ans<0?"red":"" }}">{{$ans}}</span>

@@ -26,6 +26,8 @@ class CreateReceivedsTable extends Migration
             $table->string('transfered_to_wallet')->nullable();
             $table->integer('paymentgateway_id')->nullable();
             $table->string('cheque_of_bank')->nullable();
+            $table->string('cheque_number')->nullable();
+            $table->boolean('keep_at_office', 0, 1)->default(0);
             $table->text('narration')->nullable();
             $table->string('received_from')->nullable();
             $table->timestamps();

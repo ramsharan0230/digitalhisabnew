@@ -2,6 +2,7 @@
 @section('title','Receipt List')
 @push('styles')
 <link rel="stylesheet" href="{{ asset('backend/plugins/datatables/dataTables.bootstrap.css') }}">
+
 @endpush
 @section('content')
 <section class="content-header">

@@ -18,6 +18,7 @@ use App\Repositories\Setting\SettingRepository;
 use App\Repositories\Received\ReceivedRepository;
 use App\Repositories\Payment\PaymentRepository;
 use App\Repositories\OtherReceived\OtherReceivedRepository;
+use App\Repositories\Paid\PaidRepository;
 use App\Models\Received;
 use App\Models\Payment;
 use App\Models\Tds;
@@ -27,7 +28,8 @@ use App\Exports\DaybookExport;
 
 class ReportController extends Controller
 {
-	public function __construct(SalesRepository $sales,PurchaseRepository $purchase,DaybookRepository $daybook,
+    private $paids;
+	public function __construct(PaidRepository $paids, SalesRepository $sales,PurchaseRepository $purchase,DaybookRepository $daybook,
     BalanceRepository $balance,nepali_date $calendar,TdsRepository $tds,VatRepository $vat,VendorRepository $vendor,
     ClientRepository $client,InvoiceRepository $invoice,SettingRepository $setting,ReceivedRepository $received,PaymentRepository $payment,OtherReceivedRepository $other_received){
         $this->sales = $sales;
@@ -44,7 +46,7 @@ class ReportController extends Controller
         $this->received = $received;
         $this->payment = $payment;
         $this->other_received = $other_received;
-        
+        $this->paids = $paids;
 	}
 
     public function getNepaliDate(){
@@ -273,11 +275,47 @@ class ReportController extends Controller
     }
 
     public function vatInvoice($val){
-        $vatInvoice = $this->invoice->whereMonth('nepali_date',$val)->where('vat', '>', 0)->sum('grand_total');
+        return $this->invoice->whereMonth('nepali_date',$val)->where('vat', '>', 0)->sum('grand_total');
     }
 
     public function nonVatInvoice($val){
-        $nonVatInvoice = $this->invoice->whereMonth('nepali_date',$val)->where('vat', '=', 0)->sum('grand_total');
+        return $this->invoice->whereMonth('nepali_date',$val)->where('vat', '=', 0)->sum('grand_total');
+    }
+
+    public function invoiceByMonth($val){
+        return $this->invoice->whereMonth('nepali_date', $val)->sum('grand_total');
+    }
+
+    public function otherReveivedNonVatInvoice($val){
+        return $this->other_received->whereMonth('date',$val)->sum('amount');
+    }
+
+    public function purchaseNonVatInvoice($val){
+        return $this->purchase->whereMonth('vat_date',$val)->where('not_vat', 1)->sum('total');
+    }
+
+    public function purchaseVatInvoice($val){
+        return $this->purchase->whereMonth('vat_date',$val)->where('not_vat', 0)->sum('total');
+    }
+
+    public function vatPaids($val){
+        $purchaseslist = [];
+        $purchases = $this->purchase->whereMonth('vat_date',$val)->where('not_vat', 0)->get();
+        foreach($purchases as $purchase){
+            array_push($purchaseslist, $purchase->id);
+        }
+
+        return $this->paids->whereIn('purchase_id', $purchases)->sum('amount');
+    }
+
+    public function nonVatPaids($val){
+        $purchaseslist = [];
+        $purchases = $this->purchase->whereMonth('vat_date',$val)->where('not_vat', 1)->get();
+        foreach($purchases as $purchase){
+            array_push($purchaseslist, $purchase->id);
+        }
+
+        return $this->paids->whereIn('purchase_id', $purchaseslist)->sum('amount');
     }
 
     public function profitAndLoss(){
@@ -285,14 +323,26 @@ class ReportController extends Controller
         $vatInvoices = [];
         $nonVatInvoices = [];
         $other_receiveds = [];
+        $other_receivedsNonInvoice = [];
+        $nonVatPurchases = [];
         $purchases = [];
         $payments = [];
+        $vatPaids = [];
+        $nonVatPaids = [];
         $months = ['baishak','jesth','asar','shrawan','bhadra','ashoj','kartik','mangsir','poush','magh','falgun','chaitra'];
         for($i=1;$i<13;$i++){
             if((strlen($i) == 2)){
                $value = $i;
-               $invoice = $this->invoice->whereMonth('nepali_date',$value)->sum('grand_total');
+               $invoice = $this->invoiceByMonth($value);
                $vatInvoice = $this->vatInvoice($value);
+               $vatPaid = $this->vatPaids($value);
+               $nonVatPaid = $this->nonVatPaids($value);
+
+               //   not vat
+               $nonVatInvoice = $this->nonVatInvoice($value);
+               $otherReceivedAmt = $this->otherReveivedNonVatInvoice($value);
+               $nonVatPurchase = $this->purchaseNonVatInvoice($value);
+               //   non vat end
                $other_received = $this->other_received->whereMonth('date',$value)->sum('amount');
                $purchase = $this->purchase->whereMonth('vat_date',$value)->sum('total');
                $payment = $this->payment->whereMonth('date',$value)->sum('amount');
@@ -301,24 +351,43 @@ class ReportController extends Controller
                array_push($purchases,$purchase);
                array_push($payments,$payment);
                array_push($vatInvoices, $vatInvoice);
+               array_push($nonVatInvoices, $nonVatInvoice);
+               array_push($nonVatPurchases, $nonVatPurchase);
+
+               //nonVat Invoice
+               array_push($other_receivedsNonInvoice, $otherReceivedAmt);
+               array_push($vatPaids, $vatPaid);
+               array_push($nonVatPaids, $nonVatPaid);
+               
             }else{
                $value = "0".$i;
-               $invoice = $this->invoice->whereMonth('nepali_date',$value)->sum('grand_total');
+               $invoice = $this->invoiceByMonth($value);
+            //    vat invoices
+                $vatPaid = $this->vatPaids($value);
+                $vatInvoice = $this->vatInvoice($value);
+                $nonVatPaid = $this->nonVatPaids($value);
+            // end
+
             //   not vat
-                $nonVatInvoice = $this->vatInvoice($value);
+                $nonVatInvoice = $this->nonVatInvoice($value);
+                $nonVatPurchase = $this->purchaseNonVatInvoice($value);
             //   non vat end
                $other_received = $this->other_received->whereMonth('date',$value)->sum('amount');
                $purchase = $this->purchase->whereMonth('vat_date',$value)->sum('total');
                $payment = $this->payment->whereMonth('date',$value)->sum('amount');
-               array_push($invoices,$invoice);
+               array_push($invoices, $invoice);
                array_push($other_receiveds,$other_received);
                array_push($purchases,$purchase);
                array_push($payments,$payment);
                array_push($nonVatInvoices, $nonVatInvoice);
+               array_push($vatInvoices, $vatInvoice);
+               array_push($nonVatPurchases, $nonVatPurchase);
+               array_push($vatPaids, $vatPaid);
+               array_push($nonVatPaids, $nonVatPaid);
             }
         }
         
-        return view('admin.report.profitAndLoss',compact('invoices','purchases','other_receiveds','payments','months', 'vatInvoices', 'nonVatInvoices'));
+        return view('admin.report.profitAndLoss',compact('invoices', 'nonVatPaids', 'vatPaids','purchases', 'nonVatPurchases', 'other_receiveds','payments','months', 'vatInvoices', 'nonVatInvoices', 'other_receivedsNonInvoice'));
     }
     public function profitAndLossByMonth(Request $request){
         $months = ['01'=>'baishak', '02'=>'jesth', '03'=>'asar', '04'=>'shrawan', '05'=>'bhadra', '06'=>'ashoj', '07'=>'kartik',
@@ -353,10 +422,10 @@ class ReportController extends Controller
        
         $start_date = $request->start_date;
         $end_date = $request->end_date;
-       $invoice = $this->invoice->whereBetween('nepali_date',[$request->start_date,$request->end_date])->sum('grand_total');
-       $other_received = $this->other_received->whereBetween('date',[$request->start_date,$request->end_date])->sum('amount');
-       $purchase = $this->purchase->whereBetween('vat_date',[$request->start_date,$request->end_date])->sum('total');
-       $payment = $this->payment->whereBetween('date',[$request->start_date,$request->end_date])->sum('amount');
+        $invoice = $this->invoice->whereBetween('nepali_date',[$request->start_date,$request->end_date])->sum('grand_total');
+        $other_received = $this->other_received->whereBetween('date',[$request->start_date,$request->end_date])->sum('amount');
+        $purchase = $this->purchase->whereBetween('vat_date',[$request->start_date,$request->end_date])->sum('total');
+        $payment = $this->payment->whereBetween('date',[$request->start_date,$request->end_date])->sum('amount');
         $total = ($invoice+$other_received)-($purchase+$payment);
         return view('admin.report.include.customProfitAndLoss',compact('start_date','end_date','invoice','other_received','purchase','payment','total'));
     }

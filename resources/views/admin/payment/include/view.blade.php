@@ -15,9 +15,9 @@
         <td>{{$detail->payment_type}}</td>
       </tr>
       @if($detail->payment_type=='Cheque')
-      <tr class="info">
-        <td>Cheque Of Bank</td>
-        <td>{{$detail->cheque_of_bank}}</td>
+      <tr class="info" >
+        <td>Bank</td>
+        <td class="bank_name">{{$detail->cheque_of_bank}}</td>
       </tr>
       @endif
       <tr class="warning">
@@ -34,16 +34,7 @@
       </tr>
       @if($detail->payment_type!='Cash')
       @if($detail->paymentgateway_id==null)
-      <tr class="warning">
-        <td>Transfered To</td>
-        <td>{{@$detail->wallet->name}}</td>
-      </tr>
       
-      @else
-      <tr class="warning">
-        <td>Deposited At Bank</td>
-        <td>{{@$detail->bank->name}}</td>
-      </tr>
       @endif
       @endif
 

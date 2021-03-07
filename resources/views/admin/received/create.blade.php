@@ -90,7 +90,57 @@
                                 <input type="text" id="nepaliDate1" class="bod-picker form-control" name="date" autocomplete="off" value="{{old('nepali_date')}}">
                             </div>
                         </div>
-                       
+
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label>Payment Type</label>
+                                <select name="payment_type" class="form-control payment_type">
+                                    <option selected="true" disabled="true">Select Payment Type</option>
+                                    <option value="Cash">Cash</option>
+                                    <option value="Cheque">Cheque</option>
+                                    <option value="Digital Wallet">Digital Wallet</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-2">
+                            <div class="office" >
+                                <label style="maring-top:20px" id="keep_at_office">Keep At Office</label>
+                                <input type="checkbox" name="keep_at_office" id="keep_at_office" checked>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="form-group hidden bank">
+                                <label>Bank</label>
+                                <select name="bank_id" class="form-control">
+                                    <option selected="true" disabled="true">Select Bank</option>
+                                    @foreach($dashboard_bank->where('our_bank') as $bank)
+                                        <option value="{{$bank->id}}">{{$bank->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="form-group hidden bank">
+                              <label>Cheque Number</label>
+                              <input type="text" name="cheque_number" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="form-group wallet hidden">
+                              <label>Select Digital Wallet</label>
+                              <select name="paymentgateway_id" class="form-control">
+                                @foreach($digital_wallet as $wallet)
+                                <option value="{{$wallet->id}}">{{$wallet->name}}</option>
+                                @endforeach
+                              </select>
+                            </div>
+                        </div>
+
+                        
                         <div class="col-lg-6 col-md-6 col-sm-12">
                             <div class="form-group reciept-btn">
                             <input type="submit" name="submit" value="submit" class="btn btn-success">
@@ -116,5 +166,27 @@
             closeOnDateSelect: true,
             // minDate: formatedNepaliDate
         });
+
+        $(document).ready(function(){
+        $('.payment_type').on('change',function(){
+          value = $(this).val();
+          
+          if(value=='Cheque'){
+            $('.bank').removeClass('hidden');
+            $('.wallet').addClass('hidden');
+            $('.office').addClass('hidden');
+          }
+          if(value=='Cash'){
+            $('.bank').addClass('hidden');
+            $('.wallet').addClass('hidden');
+            $('.office').removeClass('hidden')
+          }
+          if(value=='Digital Wallet'){
+            $('.office').addClass('hidden');
+            $('.bank').addClass('hidden');
+            $('.wallet').removeClass('hidden');
+          }
+        });
+    });
   </script>
 @endpush

@@ -9,17 +9,20 @@ use App\Repositories\nepalicalendar\nepali_date;
 use App\Repositories\Client\ClientRepository;
 use App\Repositories\OtherReceived\OtherReceivedRepository;
 use App\Repositories\Daybook\DaybookRepository;
+use App\Repositories\Payment\PaymentRepository;
+use App\Repositories\PaymentGateway\PaymentGatewayRepository;
 use App\Models\Received;
 use DB;
 
 class ReceivedController extends Controller
 {
-    public function __construct(ReceivedRepository $received,nepali_date $calendar,ClientRepository $client,OtherReceivedRepository $other_received,DaybookRepository $daybook){
+    public function __construct(PaymentRepository $payment,PaymentGatewayRepository $gateway, ReceivedRepository $received,nepali_date $calendar,ClientRepository $client,OtherReceivedRepository $other_received,DaybookRepository $daybook){
         $this->received=$received;
         $this->calendar=$calendar;
         $this->client=$client;
         $this->other_received = $other_received;
         $this->daybook=$daybook;
+        $this->gateway=$gateway;
     }
     /**
      * Display a listing of the resource.
@@ -39,8 +42,9 @@ class ReceivedController extends Controller
      */
     public function create()
     {
+        $digital_wallet=$this->gateway->all();
         $clients = $this->client->orderBy('created_at','desc')->get();
-        return view('admin.received.create',compact('clients'));
+        return view('admin.received.create',compact('clients', 'digital_wallet'));
     }
 
     /**
@@ -51,18 +55,30 @@ class ReceivedController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
         $message = ['client_id.required'=>'Client is required'];
         $this->validate($request,['client_id'=>'required|numeric','amount'=>'required','for'=>'required','date'=>'required'],$message);
         try{
             DB::beginTransaction();
             $client = $this->client->findOrFail($request->client_id);       
             $data= $request->all();
+
+            if($data['payment_type']=='Cash' && $data['payment_type'] !='Digital Wallet' && $data['payment_type'] !='Cheque'){
+                $data['keep_at_office']=1;
+            }
+            else{
+                $data['keep_at_office']=0;
+
+            }
+
+            $data['payment_type'] =='Digital Wallet'?$data['paymentgateway_id']=1:$data['paymentgateway_id']=NULL;
+            
             $data['from']=$client->name;
+
             $received = $this->other_received->create($data);
-            $this->createDaybook($received,$request->date);
+            $this->createDaybook($received, $request->date);
+
             DB::commit();
-            return redirect()->back()->with('message','Received Created Successfully');
+            return redirect()->route('received.index')->with('message','Received Created Successfully');
         }catch(\Exception $e){
             throw $e;
         }

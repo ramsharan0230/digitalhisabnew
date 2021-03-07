@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title','Vat List')
+@section('title','Sales Without Vat List')
 @push('styles')
 
 <style>
@@ -52,7 +52,7 @@
         </ul>
     </div>
     @endif
-     <h1>Vat <small>List</small></h1>
+     <h1>Sales Without Vat <small>List</small></h1>
 
      <div class="box">
         <div class="row">

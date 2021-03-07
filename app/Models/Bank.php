@@ -17,4 +17,8 @@ class Bank extends Model
     public function purchasePayments(){
     	return $this->hasMany('App\Models\Paid','paid_through_bank');
     }
+
+    public function payment(){
+        return $this->hasMany('App\Models\Payment');
+    }
 }
