@@ -344,14 +344,14 @@
         @if($role=="admin" || ($role=="staff" && (in_array("bank",$user_access))))
         <li class="treeview ">
           <a href="#">
-            <i class="fa fa-sliders"></i> <span>Bank</span>
+            <i class="fa fa-sliders"></i> <span>Bank & Balance</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
-            <li class=""><a href="{{route('bank.create')}}"><i class="fa fa-circle-o text-yellow"></i> Add Bank</a></li>
             <li class=""><a href="{{route('bank.index')}}"><i class="fa fa-circle-o text-aqua"></i> All Banks</a></li>
+            <li class=""><a href="{{route('balance.index')}}"><i class="fa fa-circle-o text-yellow"></i> Balance</a></li>
             <li class=""><a href="{{route('payment-gateway.index')}}"><i class="fa fa-circle-o text-aqua"></i> Payment Gateways</a></li>
           </ul>
         </li>
