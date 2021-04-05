@@ -350,7 +350,7 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li class=""><a href="{{route('bank.index')}}"><i class="fa fa-circle-o text-aqua"></i> All Banks</a></li>
+            <li class=""><a href="{{route('bank.index')}}"><i class="fa fa-circle-o text-aqua"></i> Banks</a></li>
             <li class=""><a href="{{route('balance.index')}}"><i class="fa fa-circle-o text-yellow"></i> Balance</a></li>
             <li class=""><a href="{{route('payment-gateway.index')}}"><i class="fa fa-circle-o text-aqua"></i> Payment Gateways</a></li>
           </ul>
