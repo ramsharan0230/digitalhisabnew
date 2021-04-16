@@ -125,7 +125,6 @@
                             </tr> -->
                             @endforeach
                             <?php
-                            dd($collected_amount, $grand_total);
                                 $remaining_amount=$grand_total-$collected_amount;
                             ?>
                             <!-- <tr>
