@@ -104,6 +104,7 @@ Route::group(['namespace'=>'Admin','middleware'=>['auth'],'prefix'=>'admin'],fun
 			Route::post('salesSearchByYear','ReportController@salesSearchByYear')->name('salesSearchByYear');
 
 		});
+
 		Route::group(['prefix'=>'invoice'],function(){
 			Route::post('print-invoice','InvoiceController@printInvoice')->name('printInvoice');
 			Route::post('saveClient','InvoiceController@saveClient')->name('saveClient');
