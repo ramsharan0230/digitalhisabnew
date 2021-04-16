@@ -66,6 +66,7 @@ class InvoiceController extends Controller
         else
             $details=$this->invoice->orderBy('created_at','desc')->get();
 
+
         return view('admin.invoice.list',compact('details'));
     }
 
@@ -306,11 +307,16 @@ class InvoiceController extends Controller
                 $client=$this->invoice->find($request->id);
                 $description=$client->invoiceDetail;
                 $otheruser=unserialize($client->serialized_cc);
-                
+                $dashboard_setting=$this->setting->first();
+                $invoicePayments = $this->invoice_payment->where('invoice_id', $request->id)->get();
+
                 $data = array(
                     'name'=>$client->client_name,
+                    'client_name'=>$client->client_name,
+                    'client_address'=>$client->client_address,
                     'email' => $client->email, 
                     'phone' => $client->contact, 
+                    'contact'=>$client->contact,
                     'total' => $client->total,
                     'description'=>$description,
                     'address'=>$client->client_address,
@@ -328,11 +334,14 @@ class InvoiceController extends Controller
                     'office_phone'=>$setting->phone_number,
                     'office_address'=>$setting->address,
                     'website'=>$setting->website,
-                    'office_email'=>$setting->email
+                    'office_email'=>$setting->email,
+                    'dashboard_setting'=> $dashboard_setting,
+                    'invoicePayments'=> $invoicePayments,
+                    'collected_amount' =>$client->collected_amount
                 );
-                //dd($client->collected_amount);
+               
+
                 if($client->collected_amount==0){
-                    
                     $pdf = PDF::loadView('testt',$data)->setPaper('a4'); 
                     Mail::send('admin.invoice.template', $data, function ($message) use ($data,$request,$pdf) {
 
@@ -343,7 +352,6 @@ class InvoiceController extends Controller
                             if($data['cc']){
                                 $message->cc($data['otheruser']);  
                             }
-                            
                             
                     });
                     Mail::send('admin.invoice.template', $data, function ($message) use ($data,$request,$pdf) {
@@ -363,21 +371,16 @@ class InvoiceController extends Controller
                     Mail::send('admin.invoice.resendInvoice', $data, function ($message) use ($data,$request,$pdf) {
 
                         $message->to($data['email'])->from($data['sender_email'],$data['organization_name'])->replyTo($data['email']);
-
                             $message->subject('Invoice');
                             $message->attachData($pdf->output(),'invoice.pdf'); 
                             if($data['cc']){
                                 $message->cc($data['otheruser']);  
                             }
-                            
-                            
                     });
                     Mail::send('admin.invoice.resendInvoice', $data, function ($message) use ($data,$request,$pdf) {
-
                         $message->to($data['collection_email'])->from($data['sender_email'],$data['organization_name']);
-
-                            $message->subject($data['name']);
-                            $message->attachData($pdf->output(),'invoice.pdf'); 
+                        $message->subject($data['name']);
+                        $message->attachData($pdf->output(),'invoice.pdf'); 
                     });
                     return "success";
                 }
