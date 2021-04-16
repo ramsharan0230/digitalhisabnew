@@ -12,7 +12,11 @@
         <table style="width: 100%; border-bottom: 5px solid #5757e7;">
             <tr>
                 <td>
+<<<<<<< HEAD
                     <img src="{{asset('images/'.$dashboard_setting->invoice_logo !=null? $dashboard_setting->invoice_logo:$dashboard_setting->logo)}}" alt="" style="width: 140px; height: 70px; text-align: left;">
+=======
+                    <img src="{{asset('images/'.$dashboard_setting->invoice_logo !=null? $dashboard_setting->invoice_logo:public_path().'/images/logo.png')}}" alt="" style="width: 140px; height: 70px; text-align: left;">
+>>>>>>> 58b0ba28cd8ebdc0c7244a1b317687af81a88cd3
                 </td>
                 <td style="text-align: right; font-size: 20px; text-transform: uppercase;">
                     <h2 style="font-weight: 900; color:#5757e7;">Cost Estimation</h2>
@@ -125,7 +129,10 @@
                             </tr> -->
                             @endforeach
                             <?php
+<<<<<<< HEAD
                             dd($collected_amount, $grand_total);
+=======
+>>>>>>> 58b0ba28cd8ebdc0c7244a1b317687af81a88cd3
                                 $remaining_amount=$grand_total-$collected_amount;
                             ?>
                             <!-- <tr>
