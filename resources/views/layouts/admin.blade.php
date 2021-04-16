@@ -137,7 +137,8 @@
       <!-- Sidebar user panel -->
       <div class="user-panel">
         <div class="pull-left image">
-          <img src="{{asset('images/'.$dashboard_setting->logo)}}"  alt="User Image" style="max-width: 120px;" >
+            <?php //dd($dashboard_setting) ?>
+          <img src="{{asset('images/'.@$dashboard_setting->logo)}}"  alt="User Image" style="max-width: 120px;" >
         </div>
        
       </div>
