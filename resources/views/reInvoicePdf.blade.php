@@ -12,7 +12,7 @@
         <table style="width: 100%; border-bottom: 5px solid #5757e7;">
             <tr>
                 <td>
-                    <img src="{{asset('images/logo.png')}}" alt="" style="width: 140px; height: 70px; text-align: left;">
+                    <img src="{{ public_path().'/images/logo.png' }}" alt="" style="width: 140px; height: 70px; text-align: left;">
                 </td>
                 <td style="text-align: right; font-size: 20px; text-transform: uppercase;">
                     <h2 style="font-weight: 900; color:#5757e7;">Cost Estimation</h2>

@@ -211,6 +211,7 @@
                             </select>
                           </div>
                           @endif
+                          
                         @endif --}}
                         <!-- for sales without vat -->
                         {{-- @if($detail->vat==0 && $detail->sales_without_vat_collected==0 && $detail->collected==0) --}}
