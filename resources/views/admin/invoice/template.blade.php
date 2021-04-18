@@ -183,7 +183,7 @@
         <div style="display:flex;justify-content:space-between;padding:10px 0;">
             <div style="display:flex;">
                 <p style="font-size:14px;margin:0; width:90px;">Status :</p>
-                <span style="font-size:14px;">Open</span>
+                <span style="font-size:14px;">Open </span>
             </div>
             <div style="display:flex;">
                 <p style="font-size:14px;margin:0;width:120px;"><b>Due Amount :</b></p>
