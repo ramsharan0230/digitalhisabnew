@@ -149,24 +149,22 @@
                 </th>
             </tfoot>
         </table>
-        <table  style="width:700px;">
-            <tbody>
-                <tr>
-                    <td style="width:100px;">
-                    <p style="font-size:14px;margin:0; ">Status :</p>
-                    </td>
-                    <td style="width:200px;">
-                    <p style="font-size:14px">Open</p>
-                    </td>
-                    <td style="width:500px;">
-                    <p style="font-size: 14px; margin: 0px;text-align: right;"><strong>Due Amount :</strong></p>
-                    </td>
-                    <td colspan="1" style="width:100px;  text-align:right;">
-                    <p>Rs. {{$grand_total-$collected_amount}}</p>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+        <div style="width:700px; border-top: 1px solid #cecece;">
+                    <div style="width:99px; display: inline-block;">
+                        <p style="font-size:14px;margin:0; ">Status :</p>
+                    </div>
+                    <div style="width:99px;display: inline-block;">
+                        <p style="font-size:14px">Open</p>
+                    </div>
+                    <div style="width:340px;display: inline-block;">
+                        <p style="font-size: 14px; margin: 0px; text-align:right;"><strong>Due Amount :</strong></p>
+                    </div>
+                    <div style="width:99px;display: inline-block; text-align:right;">
+                        <p>Rs. {{$grand_total-$collected_amount}}</p>
+                    </div>
+
+                </div>
+        
         
     </section>
  
