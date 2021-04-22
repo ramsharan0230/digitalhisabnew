@@ -116,14 +116,14 @@
         <table  style="width:700px;">
             <tbody>
                 <tr>
-                    <td style="width:100px;">
+                    <td colspan="1" style="width:100px;">
                     <p style="font-size:14px;margin:0; ">Status :</p>
                     </td>
-                    <td style="width:200px;">
+                    <td  colspan="1"  style="width:200px;">
                     <p style="font-size:14px">Open</p>
                     </td>
-                    <td style="width:500px;">
-                    <p style="font-size: 14px; margin: 0px;text-align: right;"><strong>Due Amount :</strong></p>
+                    <td colspan="2"  style="width:500px;">
+                    <p style="font-size: 14px; margin-left: 20px;text-align: right;"><strong>Due Amount :</strong></p>
                     </td>
                     <td colspan="1" style="width:100px;  text-align:right;">
                     <p>Rs. {{$grand_total-$collected_amount}}</p>
