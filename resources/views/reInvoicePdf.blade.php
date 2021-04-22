@@ -149,7 +149,7 @@
                 </th>
             </tfoot>
         </table>
-        <table  width="700">
+        <table  style="width:700px;">
             <tbody>
                 <tr>
                     <td style="width:100px;">
