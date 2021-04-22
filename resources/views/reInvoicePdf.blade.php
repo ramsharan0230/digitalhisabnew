@@ -113,20 +113,19 @@
                 </th>
             </tfoot>
         </table>
-
-        <table width="100%">
+        <table  width="700">
             <tbody>
                 <tr>
-                    <td colspan="1">
+                    <td style="width:100px;">
                     <p style="font-size:14px;margin:0; ">Status :</p>
                     </td>
-                    <td colspan="1">
+                    <td style="width:200px;">
                     <p style="font-size:14px">Open</p>
                     </td>
-                    <td colspan="2">
-                    <p style="font-size: 14px; margin: 0px; width: 120px; text-align: right;"><strong>Due Amount :</strong></p>
+                    <td style="width:500px;">
+                    <p style="font-size: 14px; margin: 0px;text-align: right;"><strong>Due Amount :</strong></p>
                     </td>
-                    <td colspan="1" style="width:24.5%; text-align:right;">
+                    <td colspan="1" style="width:100px;  text-align:right;">
                     <p>Rs. {{$grand_total-$collected_amount}}</p>
                     </td>
                 </tr>
@@ -136,7 +135,7 @@
     </section>
  
     <footer>
-        <table style="width: 100%;">
+        <table style="width: 100%; border-top: 1px solid #cecece;">
             <tr>
                 <td >
                     <span style="color:red; display:table; text-align:right; vertical-align:top"><strong>Note :</strong> This is not tax invoice</span>
