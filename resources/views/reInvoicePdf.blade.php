@@ -67,45 +67,10 @@
             </tbody>   
         </table>
     </section>
+{{-- /dfasdf --}}
 
-<section>
-        <table>
-            <thead>
-                <tr>
-                    <th>In Word: </strong></th>
-                    <th >
-                    <table >
-                        <tbody>
-                            <tr>
-                                <td >Total(Rs.) :</td>
-                            </tr>
-                            <tr>
-                                <td >Vat 13% :</td>
-                            </tr>
-                            <tr>
-                                <td >Grand Total(Rs.) :</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    </th>
-                    <th >
-                    <table >
-                        <tbody>
-                            <tr>
-                                <td >100/-</td>
-                            </tr>
-                            <tr>
-                                <td >13/-</td>
-                            </tr>
-                            <tr>
-                                <td >113/-</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    </th>
-                </tr>
-            </thead>
-        </table>
+
+
 </section>
     <section style="margin:20px 0">
         <h2 style="font-size:17px;font-weight:600;margin:10px 0;text-align:center;display:block;">Statement</h2>
