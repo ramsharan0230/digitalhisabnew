@@ -113,7 +113,8 @@
                 </th>
             </tfoot>
         </table>
-        <table>
+
+        <table width="100%">
             <tbody>
                 <tr>
                     <td colspan="1">
