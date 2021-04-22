@@ -152,16 +152,16 @@
         <table>
             <tbody>
                 <tr>
-                    <td style="width:15.33%">
+                    <td colspan="1">
                     <p style="font-size:14px;margin:0; ">Status :</p>
                     </td>
-                    <td style="width:43.33%">
+                    <td colspan="1">
                     <p style="font-size:14px">Open</p>
                     </td>
-                    <td style="width:30.33%">
+                    <td colspan="2">
                     <p style="font-size: 14px; margin: 0px; width: 120px; text-align: right;"><strong>Due Amount :</strong></p>
                     </td>
-                    <td style="width:24.5%; text-align:right;">
+                    <td colspan="1" style="width:24.5%; text-align:right;">
                     <p>Rs. {{$grand_total-$collected_amount}}</p>
                     </td>
                 </tr>
