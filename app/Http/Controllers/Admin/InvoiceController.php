@@ -823,6 +823,7 @@ class InvoiceController extends Controller
             'contact_person'=>'required|max:200',
 
         ]);
+        // dd($request->all());
         $this->client->create($request->all());
         return redirect()->back()->with('message','Client Added Successfully');
     }

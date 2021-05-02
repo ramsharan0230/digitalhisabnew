@@ -50,7 +50,7 @@
                         <h3 class="box-title">Add Receipt</h3>
                     </div>
                     <div class="box-body row">
-                        <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="col-lg-4 col-md-4 col-sm-10">
                             <div class="form-group">
                                 <label>From</label>
                                 <select class="form-control" name="client_id">
@@ -60,6 +60,13 @@
                                     @endforeach
                                 </select>
                                 
+                            </div>
+                        </div>
+
+                        <div class="col-lg-2 col-md-2 col-sm-2">
+                            <div class="form-group add-client-plus">
+                                <label></label>
+                                <button class="btn btn-success addClient">+</button>
                             </div>
                         </div>
 
@@ -154,6 +161,7 @@
         </div>
     </div>
 </div>
+@include('admin.client.modal')
 @endsection
 @push('script')
   <script src="{{ asset('backend/plugins/datatables/jquery.dataTables.min.js') }}"></script>
@@ -186,6 +194,37 @@
             $('.bank').addClass('hidden');
             $('.wallet').removeClass('hidden');
           }
+        });
+    });
+
+    $(document).ready(function(){
+        $('.addClient').click(function(e){
+            e.preventDefault();
+            $('#myModal').modal('show');
+        });
+
+        $('.client').change(function(e){
+            e.preventDefault();
+            value = $(this).val();
+            if($.isNumeric(value)){
+                $.ajax({
+                    method:"post",
+                    url:"{{route('findClient')}}",
+                    data:{value:value},
+                    success:function(data){
+                        
+                        if(data.message=='success'){
+                            $('#contact').val(data.client.phone);
+                            $('#email').val(data.client.email);
+                            $('#address').val(data.client.address);
+                            $('#vat_pan').val(data.client.vat_no);
+                            
+                        }else{
+
+                        }
+                    }
+                });
+            }
         });
     });
   </script>
