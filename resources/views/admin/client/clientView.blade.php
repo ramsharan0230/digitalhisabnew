@@ -34,6 +34,7 @@
               <!-- <a href="{{route('otherReceipts',$detail->id)}}" class="btn btn-success">Other Receipts</a> -->
           </div>
           <ul class="box-body">
+            
               <li class="caient-detail-wrapper">
                   <p>name:</p><span>{{$detail->name}}</span>
               </li>
@@ -54,12 +55,21 @@
                 <p>vat no:</p><span>{{$detail->vat_no}}</span>
               </li>
 
+              
               <li class="caient-detail-wrapper">
-                <p>contact person:</p><span>{{$detail->contact_person}}</span>
+                <p>contact person:</p>
+                <?php $last_key = array_key_last(json_decode($detail->contact_person, true)) ?>
+                @foreach(json_decode($detail->contact_person, true) as $key=>$contact)
+                  <span>{{$contact}} @if($key != $last_key), &nbsp; @endif</span>
+                @endforeach
               </li>
 
               <li class="caient-detail-wrapper">
-                <p>designation:</p> <span>{{$detail->designation}}</span>
+                <p>Designation:</p>
+                <?php $last_key = array_key_last(json_decode($detail->designation, true)) ?>
+                @foreach(json_decode($detail->designation, true) as $key=>$designation)
+                  <span>{{$designation}} @if($key != $last_key), &nbsp; @endif</span>
+                @endforeach
               </li>
           </ul>
         </div>

@@ -29,16 +29,47 @@
               <label>Vat No.</label>
               <input type="text" name="vat_no" class="form-control">
             </div>
-            <div class="form-group">
-              <label>Contact person</label>
-              <input type="text" name="contact_person" class="form-control">
+
+            {{-- new  --}}
+            <div class="input-group control-group after-add-more">
+              <div class="row">
+                <div class="col-sm-5 col-md-5 col-lg-5">
+                  <input type="text" name="contact_person[]" class="form-control" placeholder="Enter Contact person">
+                </div>
+                <div class="col-sm-5 col-md-5 col-lg-5">
+                  <input type="text" name="designation[]" class="form-control" placeholder="Enter Desigation">
+                </div>
+                <div class="col-sm-2 col-md-2 col-lg-2">
+                  <button class="btn btn-success add-more" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
+                </div>
+              </div>
+              
             </div>
-            <div class="form-group">
-              <label>Designation</label>
-              <input type="text" name="designation" class="form-control">
+    
+            <!-- Copy Fields -->
+            <div class="copy hide">
+              <div class="control-group input-group" style="margin-top:10px">
+                <div class="row">
+                  
+                  <div class="col-sm-5 col-md-5 col-lg-5">
+                    <input type="text" name="contact_person[]" class="form-control" placeholder="Enter Contact person">
+                  </div>
+
+                  <div class="col-sm-5 col-md-5 col-lg-5">
+                    <input type="text" name="designation[]" class="form-control" placeholder="Enter Desigation">
+                  </div>
+
+                  <div class="col-sm-2 col-md-2 col-lg-2">
+                    <button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
+                  </div>
+                </div>
+
+              </div>
             </div>
+            {{-- new end --}}
+
             <div class="form-group">
-              <input type="submit" name="submit" value="submit" class="btn btn-success">
+              <input type="submit" name="submit" value="submit" class="btn btn-success mt-3">
             </div>
           </form>
         </div>

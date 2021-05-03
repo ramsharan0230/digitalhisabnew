@@ -33,7 +33,7 @@ class ClientController extends Controller
     public function index()
     {
         $details = $this->client->orderBy('created_at','desc')->get();
-        
+
         return view('admin.client.list',compact('details'));
     }
 
@@ -55,15 +55,22 @@ class ClientController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request,[
+        $this->validate($request, [
             'name'=>'required|string|max:200',
             'email'=>'required|email|unique:clients',
-            'phone'=>'required|numeric',
+            'phone'=>'required|string',
             'address'=>'required|max:200',
-            'vat_no'=>'required|string',
-            'contact_person'=>'required|string|max:200'
+            'vat_no'=>'sometimes|string'
         ]);
-        $this->client->create($request->all());
+
+        $data = $request->except(['contact_person', '_token', 'designation', 'submit']);
+        $contact_persons = array_filter($request->contact_person);
+        $designations = array_filter($request->designation);
+        
+        $data['contact_person'] = json_encode($contact_persons);
+        $data['designation'] = json_encode($designations);
+        $this->client->create($data);
+
         return redirect()->route('client.index')->with('message','Client Added Successfully');
 
     }
@@ -77,6 +84,7 @@ class ClientController extends Controller
     public function show($id)
     {
         $detail = $this->client->findOrFail($id);
+        
         return view('admin.client.clientView',compact('detail'));
     }
 

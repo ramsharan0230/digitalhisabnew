@@ -86,19 +86,39 @@
                             </div>
                         </div>
 
-                        <div class="col-lg-6 col-md-6 col-sm-12">
-                            <div class="form-group">
-                                <label>Contact person</label>
-                                <input type="text" name="contact_person" class="form-control">
+                       {{-- new  --}}
+                        <div class="input-group control-group after-add-more">
+                            <div class="col-sm-5 col-md-5 col-lg-5">
+                                <input type="text" name="contact_person[]" class="form-control" placeholder="Enter Contact person">
+                            </div>
+                            <div class="col-sm-5 col-md-5 col-lg-5">
+                                <input type="text" name="designation[]" class="form-control" placeholder="Enter Desigation">
+                            </div>
+                            <div class="col-sm-2 col-md-2 col-lg-2">
+                                <button class="btn btn-success add-more" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
+                            </div>
+                            
+                        </div>
+                
+                        <!-- Copy Fields -->
+                        <div class="copy hide">
+                            <div class="control-group input-group" style="margin-top:10px">
+                                
+                                <div class="col-sm-5 col-md-5 col-lg-5">
+                                <input type="text" name="contact_person[]" class="form-control" placeholder="Enter Contact person">
+                                </div>
+            
+                                <div class="col-sm-5 col-md-5 col-lg-5">
+                                <input type="text" name="designation[]" class="form-control" placeholder="Enter Desigation">
+                                </div>
+            
+                                <div class="col-sm-2 col-md-2 col-lg-2">
+                                <button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
+                                </div>
+            
                             </div>
                         </div>
-
-                        <div class="col-lg-6 col-md-6 col-sm-12">
-                            <div class="form-group">
-                                <label>Designation</label>
-                                <input type="text" name="designation" class="form-control">
-                            </div>
-                        </div>
+                        {{-- new end --}}
 
                         <div class="col-lg-6 col-md-6 col-sm-12">
                             <div class="form-group">
@@ -119,7 +139,15 @@
   <script src="{{ asset('backend/plugins/datatables/dataTables.bootstrap.min.js') }}"></script>
   <!-- daterangepicker -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
-  <script>
-        
+    <script type="text/javascript">
+    $(document).ready(function() {
+      $(".add-more").click(function(){ 
+          var html = $(".copy").html();
+          $(".after-add-more").after(html);
+      });
+      $("body").on("click",".remove",function(){ 
+          $(this).parents(".control-group").remove();
+      });
+    });
   </script>
 @endpush
