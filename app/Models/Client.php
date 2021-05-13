@@ -14,4 +14,8 @@ class Client extends Model
     public function otherReceipts(){
     	return $this->hasMany('App\Models\OtherReceived','client_id');
     }
+
+    public function getDesignation($data){
+        return $data;
+    }
 }

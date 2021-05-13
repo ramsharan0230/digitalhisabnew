@@ -54,7 +54,7 @@
                         <div class="row">
                             <div class="col-lg-6 col-md-6 col-sm-12">
                                 <div class="form-group">
-                                    <label>Name</label>
+                                    <label>Name </label>
                                     <input type="text" name="name" class="form-control" value="{{$detail->name}}">
                                 </div>
                             </div>
@@ -63,13 +63,6 @@
                                 <div class="form-group">
                                     <label>Email</label>
                                     <input type="text" name="email" class="form-control" value="{{$detail->email}}">
-                                </div>
-                            </div>
-    
-                            <div class="col-lg-6 col-md-6 col-sm-12">
-                                <div class="form-group">
-                                    <label>Phone</label>
-                                    <input type="text" name="phone" class="form-control" value="{{$detail->phone}}">
                                 </div>
                             </div>
     
@@ -86,6 +79,68 @@
                                     <input type="text" name="vat_no" class="form-control" value="{{$detail->vat_no}}">
                                 </div>
                             </div>
+                    
+                        </div>
+                        <div class="col-sm-12" style="margin-bottom:20px">
+                            {{-- staerrrr --}}
+                        <div class="input-grodup controld-group after-add-more">
+                            <div class="form-group">
+                                <?php 
+                                    $phones =  json_decode($detail->phone);
+                                    $designations = json_decode($detail->designation);
+                                    // dd($detail->contact_person);
+                                ?>
+                                @if($detail->phone!=null)
+                                @foreach(json_decode($detail->phone) as $phone)
+                                <div class="col-sm-3">
+                                    <input type="text" name="contact_person[]" class="form-control" value="{{ $phone }}" placeholder="Enter Contact person">
+                                </div>
+                                @endforeach
+                                @endif
+
+                                @if($detail->contact_person!=null)
+                                @foreach($contact_persons as $person)
+                                <div class="col-sm-3">
+                                    <input type="text" value="{{ $person }}" name="contact_person[]" class="form-control" placeholder="Enter Desigation">
+                                </div>
+                                @endforeach
+                                @endif
+
+                                @if($detail->designation!=null)
+                                @foreach(json_decode($detail->designation) as $designation)
+                                <div class="col-sm-4">
+                                    <input type="text" name="phone[]" class="form-control" placeholder="Enter Phone" value="{{ $designation }}">
+                                </div>
+                                @endforeach
+                                @endif
+
+                                <div class="col-sm-2">
+                                    <button class="btn btn-success add-more" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
+                                </div>
+                            </div>
+                        </div>
+                
+                        <!-- Copy Fields -->
+                        <div class="copy hide">
+                            <div class="control-grosup input-grosup" >
+                                <div class="col-sm-3 inputs">
+                                    <input type="text" name="contact_person[]" class="form-control" placeholder="Enter Contact person">
+                                </div>
+                                <div class="col-sm-3 inputs">
+                                    <input type="text" name="designation[]" class="form-control" placeholder="Enter Desigation">
+                                </div>
+
+                                <div class="col-sm-4 inputs">
+                                    <input type="text" name="phone[]" class="form-control" placeholder="Enter Phone...">
+                                </div>
+
+                                <div class="col-sm-2 inputs">
+                                    <button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
+                                </div>
+            
+                            </div>
+                        </div>
+                        {{-- end  --}}
                         </div>
                         <div class="row">
                             <div class="col-lg-6 col-md-6 col-sm-12">
@@ -108,6 +163,14 @@
   <!-- daterangepicker -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
   <script>
-        
+    $(document).ready(function() {
+      $(".add-more").click(function(){ 
+          var html = $(".copy").html();
+          $(".after-add-more").after(html);
+      });
+      $("body").on("click",".remove",function(){ 
+          $(this).parents(".input-grosup").remove();
+      });
+    });
   </script>
 @endpush

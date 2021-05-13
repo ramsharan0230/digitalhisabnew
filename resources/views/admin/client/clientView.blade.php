@@ -44,7 +44,12 @@
               </li>
 
               <li class="caient-detail-wrapper">
-                  <p>phone:</p> <span>{{$detail->phone}}</span>
+                <p>phone:</p>
+                <?php $last_key = array_key_last(json_decode($detail->contact_person, true)) ?>
+                @foreach(json_decode($detail->contact_person, true) as $key=>$contact)
+                  <span>{{$contact}} @if($key != $last_key), &nbsp; @endif</span>
+                @endforeach
+
               </li>
 
               <li class="caient-detail-wrapper">

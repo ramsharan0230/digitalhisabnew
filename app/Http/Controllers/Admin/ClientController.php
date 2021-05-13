@@ -58,17 +58,19 @@ class ClientController extends Controller
         $this->validate($request, [
             'name'=>'required|string|max:200',
             'email'=>'required|email|unique:clients',
-            'phone'=>'required|string',
             'address'=>'required|max:200',
             'vat_no'=>'sometimes|string'
         ]);
 
-        $data = $request->except(['contact_person', '_token', 'designation', 'submit']);
+        $data = $request->except(['contact_person', '_token', 'designation', 'phone', 'submit']);
         $contact_persons = array_filter($request->contact_person);
         $designations = array_filter($request->designation);
-        
+        $phones = array_filter($request->phone);
+
         $data['contact_person'] = json_encode($contact_persons);
         $data['designation'] = json_encode($designations);
+        $data['phone'] = json_encode($phones);
+
         $this->client->create($data);
 
         return redirect()->route('client.index')->with('message','Client Added Successfully');
@@ -113,11 +115,17 @@ class ClientController extends Controller
         $this->validate($request,[
             'name'=>'required|string|max:200',
             'email'=>'required|email|unique:clients,email,'.$id,
-            'phone'=>'required|numeric',
+            'phone'=>'required',
             'address'=>'required|max:200',
             'vat_no'=>'required|string',
         ]);
-        $this->client->update($request->all(),$id);
+        
+        $data = $request->except(['contact_person', '_token', 'designation', 'phone', 'submit']);
+        $data['contact_person'] = $this->filterArray($request->contact_person);
+        $data['designation'] = $this->filterArray($request->designation);
+        $data['phone'] = $this->filterArray($request->phone);
+
+        $this->client->update($data, $id);
         return redirect()->route('client.index')->with('message','Client Updated Successfully');
     }
 
@@ -189,5 +197,13 @@ class ClientController extends Controller
 
         $invoices = $client->invoice()->whereBetween('nepali_date',[$request->start_date,$request->end_date])->get();
         return view('admin.client.monthlyView',compact('invoices'));
+    }
+
+    public function filterArray($data){
+        return $this->jsonEncode(array_filter($data));
+    }
+
+    public function jsonEncode($data){
+        return json_encode($data);
     }
 }

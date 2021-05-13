@@ -40,20 +40,45 @@
                       <th>S.N.</th>
                       <th>Name</th>
                       <th>Email</th>
+                      <th>Designation</th>
                       <th>Phone</th>
-                      <th>Address</th>
+                      <th>Contact</th>
                       <th>Action</th>
                     </tr>
                 </thead>
                 <tbody id="sortable">
-                @php($i=1)
-                @foreach($details as $detail)
+                @foreach($details as $key=>$detail)
                   <tr id="{{ $detail->id }}">
-                      <td>{{$i}}</td>
+                      <td>{{ $key+1 }}</td>
                       <td>{{$detail->name}}</td>
                       <td>{{$detail->email}}</td>
-                      <td>{{$detail->phone}}</td>
-                      <td>{{$detail->address}}</td>
+                      <td>
+                        @if(count(json_decode($detail->designation))>0)
+                        @forelse (json_decode($detail->designation) as $key=>$item)
+                            {{ $item }},
+                        @empty
+                        @endforelse
+                        @endif
+                      </td>
+                      <td>
+                      @if(count(json_decode($detail->phone))>0)
+                      @forelse (json_decode($detail->phone) as $key=>$item)
+                          {{ $item }},
+                      @empty
+                      @endforelse
+                      @endif
+                      </td>
+
+                      <td>
+                      @if($detail->contact_person !=null && count(json_decode($detail->contact_person))>0)
+                        @forelse (json_decode($detail->contact_person) as $key=>$item)
+                            {{ $item }},
+                        @empty
+                        @endforelse
+                        @endif
+                      </td>
+
+
                       <td>
                         <a class="btn btn-info edit" href="{{route('client.edit',$detail->id)}}" title="Edit"><span class="fa fa-edit"></span></a>
                         <form method= "post" action="{{route('client.destroy',$detail->id)}}" class="delete btn btn-danger">
@@ -65,7 +90,6 @@
                         
                       </td>
                   </tr>
-                  @php($i++)
                   @endforeach
                 </tbody>
               </table>
