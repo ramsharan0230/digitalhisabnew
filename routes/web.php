@@ -34,6 +34,9 @@ Route::group(['namespace'=>'Admin','middleware'=>['auth'],'prefix'=>'admin'],fun
 		
 		Route::post('custom-client-search','ClientController@clientCustomSearch')->name('customClientSearch');
 		Route::resource('client','ClientController');
+		Route::post('client_ledger','ClientController@ledger')->name('client_ledger');
+		Route::post('vendor_ledger', 'VendorController@vendor_ledger')->name('vendor_ledger');
+
 		Route::get('transaction-view/{id}','VendorController@transactionView')->name('vendorTransactionView');
 		Route::post('search-monthly-vendor-business-detail','VendorController@searchMonthlyVendorBusinessDetail')->name('searchMonthlyVendorBusinessDetail');
 		Route::post('export-vendor-transaction','VendorController@exportVendorTransaction')->name('exportVendorTransaction');

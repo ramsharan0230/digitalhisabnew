@@ -1,11 +1,11 @@
 @extends('layouts.admin')
-@section('title','Client List')
+@section('title','Admin | Client Ledger')
 @push('styles')
 <link rel="stylesheet" href="{{ asset('backend/plugins/datatables/dataTables.bootstrap.css') }}">
 @endpush
 @section('content')
 <section class="content-header">
-  <h1>Client<small>List</small></h1>
+  <h1>Client<small>Ledger</small></h1>
     <a href="{{route('client.create')}}" class="btn btn-success">Add Client</a>
     <ol class="breadcrumb">
       <li><a href=""><i class="fa fa-dashboard"></i>Dashboard</a></li>
@@ -80,22 +80,7 @@
 
 
                       <td>
-                        <a class="btn btn-info edit" href="{{route('client.edit',$detail->id)}}" title="Edit"><span class="fa fa-edit"></span></a>
-                        <form method= "post" action="{{route('client.destroy',$detail->id)}}" class="delete btn btn-danger">
-                        {{csrf_field()}}
-                        <input type="hidden" name="_method" value="DELETE">
-                        <button type="submit" class="btn-delete" style="display:inline"><span class="fa fa-trash"></span></button>
-                        </form>
-                       <a class="btn btn-info edit" href="{{route('client.show',$detail->id)}}" title="Edit"><span class="fa fa-eye"></span></a>
-
-                       <div class="form-group" id="select{{$detail->id}}">
-                        <select class="form-control collectionWithVat">
-                          <option disabled="true" selected="true">Ledger</option>
-                          <option value="partial" data-id="{{$detail->id}}">{{ $detail->name }}</option>
-                          
-                        </select>
-                      </div>
-
+                        <a class="btn btn-info edit" href="{{route('client.show',$detail->id)}}" title="Edit"><span class="fa fa-eye"></span></a>
                       </td>
                   </tr>
                   @endforeach
@@ -107,8 +92,6 @@
 </div>
 </div>
 @include('admin.include.modal')
-@include('admin.invoice.include.modal')
-
 @endsection
 @push('script')
   <!-- DataTables -->
@@ -120,39 +103,7 @@
   <script src="{{ asset('backend/plugins/fastclick/fastclick.js') }}"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <script >
-    $(document).ready(function(){
-      $(document).on('change','.collectionWithVat',function(e){
-          e.preventDefault();
-          let _token   = $('meta[name="csrf-token"]').attr('content');
-          id=$(this).find(':selected').data('id');
 
-          $.ajax({
-            type:'POST',
-            url:"/admin/contact/client_ledger",
-            data:{ id:id, _token:_token },
-            success:function(data){
-              debugger
-              if(data.message=='success'){
-                $('#myModal .modal-body').html(data.html);
-                $('#myModal').modal('show').on('hide', function() {
-                  $('#new_passenger').modal('hide')
-                  });
-                $('.collectionWithVat').prop('selectedIndex',0);
-              }
-            }
-          });
-
-
-        $(document).on('keyup','.amount',function(){
-          remaining_amount=$('.remaining_amount').val();
-          if(parseInt(remaining_amount)>=parseInt($(this).val())){
-            $('.submitButton').removeClass('hidden');
-          }else{
-            $('.submitButton').addClass('hidden');
-          }
-        });
-      });
-    });
     
 
   $('#example1').dataTable( {

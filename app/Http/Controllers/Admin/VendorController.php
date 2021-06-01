@@ -27,7 +27,10 @@ class VendorController extends Controller
     public function index()
     {
         $details = $this->vendor->orderBy('created_at','desc')->get();
-        return view('admin.vendor.list',compact('details'));
+        $vendor = [];
+        $purchases = [];
+        $daybooks = [];
+        return view('admin.vendor.list',compact('details', 'vendor', 'purchases', 'daybooks'));
     }
 
     /**
@@ -160,5 +163,17 @@ class VendorController extends Controller
 
         $purchases = $vendor->purchases()->whereBetween('vat_date',[$request->start_date,$request->end_date])->get();
         return view('admin.vendor.monthlyView',compact('purchases'));
+    }
+
+
+    public function vendor_ledger(Request $request){
+        $vendor = $this->vendor->where('id', $request->id)->first();
+        $purchases = $this->purchase->where('vendor_id', $vendor->id)->get();
+        $daybooks = [];   
+        foreach($purchases as $purchase){
+            array_push($daybooks, \DB::table('daybooks')->where('purchase_id', $purchase->id)->get());
+        }
+        return response()->json(['message'=>'success','html'=>view('admin.vendor.ledgerModal',
+        compact('vendor','purchases', 'daybooks'))->render()]);
     }
 }

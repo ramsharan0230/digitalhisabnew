@@ -62,7 +62,14 @@
                         <button type="submit" class="btn-delete" style="display:inline"><span class="fa fa-trash"></span></button>
                         </form>
                         <a class="btn btn-info edit" href="{{route('vendor.show',$detail->id)}}" title="Edit"><span class="fa fa-eye"></span></a>
-                       
+                       <?php //dd($detail) ?>
+                        <div class="form-group" id="select{{$detail->id}}">
+                          <select class="form-control selectVendor">
+                            <option disabled="true" selected="true">Ledger</option>
+                            <option value="partial" data-vendor_id="{{$detail->id}}">{{ $detail->name }}</option>
+                            
+                          </select>
+                        </div>
                         
                       </td>
                   </tr>
@@ -76,6 +83,7 @@
 </div>
 </div>
 @include('admin.include.modal')
+{{-- @include('admin.vendor.ledgerModal') --}}
 @endsection
 @push('script')
   <!-- DataTables -->
@@ -88,10 +96,45 @@
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <script >
 
-    
+  $('#myModal').modal('hide')
 
   $('#example1').dataTable( {
     "pageLength": 10
   } );
+
+
+  $(document).ready(function(){
+      $(document).on('change','.selectVendor',function(e){
+          e.preventDefault();
+          let _token   = $('meta[name="csrf-token"]').attr('content');
+          id=$(this).find(':selected').data('vendor_id');
+
+          $.ajax({
+            type:'POST',
+            url:"/admin/contact/vendor_ledger",
+            data:{ id:id, _token:_token },
+            success:function(data){
+              debugger
+              if(data.message=='success'){
+                $('#myModal .modal-body').html(data.html);
+                $('#myModal').modal('show').on('hide', function() {
+                  $('#new_passenger').modal('hide')
+                  });
+                $('.selectVendor').prop('selectedIndex',0);
+              }
+            }
+          });
+
+
+        $(document).on('keyup','.amount',function(){
+          remaining_amount=$('.remaining_amount').val();
+          if(parseInt(remaining_amount)>=parseInt($(this).val())){
+            $('.submitButton').removeClass('hidden');
+          }else{
+            $('.submitButton').addClass('hidden');
+          }
+        });
+      });
+    });
 </script>
 @endpush

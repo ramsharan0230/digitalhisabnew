@@ -317,7 +317,6 @@
     $(document).ready(function(){
       $(document).on('change','.collectionWithVat',function(e){
         e.preventDefault();
-        debugger
         var fieldName = $(this).attr('name'),
                 field = $('input[name=' + fieldName + ']'),
                 optionValue = $(this).val();

@@ -12,18 +12,20 @@ use App\Exports\ClientTransactionExport;
 use App\Repositories\Setting\SettingRepository;
 use App\Repositories\Payment\PaymentRepository;
 use App\Repositories\Received\ReceivedRepository;
+use App\Repositories\Vendor\VendorRepository;
 use PDF, DB;
 
 
 class ClientController extends Controller
 {
-    public function __construct(ReceivedRepository $received, PaymentRepository $payment, ClientRepository $client,nepali_date $calendar,InvoiceRepository $invoice,SettingRepository $setting){
+    public function __construct(VendorRepository $vendor, ReceivedRepository $received, PaymentRepository $payment, ClientRepository $client,nepali_date $calendar,InvoiceRepository $invoice,SettingRepository $setting){
         $this->client=$client;
         $this->calendar=$calendar;
         $this->invoice=$invoice;
         $this->setting = $setting;
         $this->payment=$payment;
         $this->received=$received;
+        $this->vendor=$vendor;
     }
     /**
      * Display a listing of the resource.
@@ -205,5 +207,23 @@ class ClientController extends Controller
 
     public function jsonEncode($data){
         return json_encode($data);
+    }
+
+    public function ledger(Request $request){
+        $client = $this->client->where('id', $request->id)->first();
+        $invoices = $this->invoice->where('id', $client->id)->get();
+        $invoice_detail = [];   
+        $invoice_payments = [];
+        $invoice_receiveds = [];
+        $sales = [];
+        foreach($invoices as $invoice){
+            array_push($invoice_detail, \DB::table('invoice_details')->where('invoice_id', $invoice->id)->get());
+            array_push($invoice_payments, \DB::table('invoice_payments')->where('invoice_id', $invoice->id)->get());
+            array_push($invoice_receiveds, \DB::table('receiveds')->where('invoice_id', $invoice->id)->get());
+            array_push($sales, \DB::table('sales')->where('invoice_id', $invoice->id)->get());
+        }
+        
+        return response()->json(['message'=>'success','html'=>view('admin.client.ledgerData',
+        compact('client','invoices', 'invoice_receiveds', 'invoice_detail', 'invoice_payments', 'sales'))->render()]);
     }
 }
